@@ -1,27 +1,32 @@
 {
   "name": "الرسائل المشفرة - نشوان البدري",
-  "short_name": "مشفرة",
-  "description": "تطبيق تشفير وفك تشفير الرسائل - يعمل بدون إنترنت",
-  "start_url": "./index.html",
-  "scope": "./",
-  "display": "standalone",
-  "orientation": "portrait",
-  "background_color": "#0f172a",
-  "theme_color": "#0f172a",
+  "short_name": "رسائل مشفرة",
+  "description": "برنامج تشفير وفك تشفير رسائل - يعمل بدون انترنت - AES-GCM",
   "lang": "ar",
   "dir": "rtl",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
   "icons": [
     {
       "src": "icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
       "src": "icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ]
 }
