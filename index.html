@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>الرسائل المشفرة | نشوان البدري</title>
+<meta name="theme-color" content="#0f172a">
+<meta name="description" content="تطبيق تشفير الرسائل — يعمل بدون إنترنت — تصميم نشوان البدري">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<style>
+  /* ============ المتغيرات — الثيمات ============ */
+  :root {
+    --bg-1: #0f172a; --bg-2: #1e293b; --bg-3: #334155;
+    --text: #e2e8f0; --text-muted: #94a3b8;
+    --accent: #38bdf8; --accent-hover: #7dd3fc;
+    --success: #22c55e; --warn: #f59e0b; --danger: #ef4444;
+    --card: #1e293b; --border: #334155; --input-bg: #0f172a;
+    --shadow: 0 20px 40px -20px rgba(0,0,0,0.6);
+  }
+  [data-theme="ocean"] {
+    --bg-1: #0c1e2c; --bg-2: #123548; --bg-3: #1e4d68;
+    --accent: #22d3ee; --accent-hover: #67e8f9;
+    --card: #123548; --border: #1e4d68; --input-bg: #0c1e2c;
+  }
+  [data-theme="purple"] {
+    --bg-1: #1a0b2e; --bg-2: #2d1b4e; --bg-3: #3f2a63;
+    --accent: #a78bfa; --accent-hover: #c4b5fd;
+    --card: #2d1b4e; --border: #3f2a63; --input-bg: #1a0b2e;
+  }
+  [data-theme="emerald"] {
+    --bg-1: #052e16; --bg-2: #0d3d22; --bg-3: #166534;
+    --accent: #34d399; --accent-hover: #6ee7b7;
+    --card: #0d3d22; --border: #166534; --input-bg: #052e16;
+  }
+  [data-theme="light"] {
+    --bg-1: #f1f5f9; --bg-2: #ffffff; --bg-3: #e2e8f0;
+    --text: #0f172a; --text-muted: #64748b;
+    --accent: #0284c7; --accent-hover: #0369a1;
+    --card: #ffffff; --border: #cbd5e1; --input-bg: #f8fafc;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background: linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 100%);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 16px;
+    display: flex; justify-content: center; align-items: flex-start;
+    transition: background 0.4s, color 0.4s;
+  }
+  .app { width: 100%; max-width: 680px; }
+
+  /* ============ الرأس ============ */
+  header {
+    text-align: center; margin-bottom: 20px; position: relative;
+  }
+  header h1 {
+    font-size: 24px; color: var(--accent); margin-bottom: 6px;
+    letter-spacing: -0.5px;
+  }
+  header p { color: var(--text-muted); font-size: 13px; }
+
+  /* ============ شريط الثيمات ============ */
+  .theme-bar {
+    display: flex; justify-content: center; gap: 10px;
+    margin-bottom: 20px; flex-wrap: wrap;
+  }
+  .theme-btn {
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 2px solid var(--border); cursor: pointer;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .theme-btn:hover { transform: scale(1.15); }
+  .theme-btn.active { border-color: var(--accent); transform: scale(1.1); }
+  .theme-btn[data-th="dark"]    { background: linear-gradient(135deg, #0f172a, #38bdf8); }
+  .theme-btn[data-th="ocean"]   { background: linear-gradient(135deg, #0c1e2c, #22d3ee); }
+  .theme-btn[data-th="purple"]  { background: linear-gradient(135deg, #1a0b2e, #a78bfa); }
+  .theme-btn[data-th="emerald"] { background: linear-gradient(135deg, #052e16, #34d399); }
+  .theme-btn[data-th="light"]   { background: linear-gradient(135deg, #f1f5f9, #0284c7); }
+
+  /* ============ البطاقات ============ */
+  .card {
+    background: var(--card); border-radius: 18px; padding: 22px;
+    margin-bottom: 16px; box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    transition: background 0.4s, border-color 0.4s;
+  }
+  .card h2 {
+    font-size: 16px; color: var(--accent); margin-bottom: 14px;
+    display: flex; align-items: center; gap: 8px;
+    font-weight: 700;
+  }
+  .card h2 .badge-count {
+    background: var(--accent); color: var(--bg-1);
+    font-size: 11px; padding: 2px 8px; border-radius: 10px;
+    font-weight: 700;
+  }
+
+  label { display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 6px; margin-top: 12px; }
+  input, textarea, select {
+    width: 100%; padding: 12px 15px; border-radius: 12px;
+    border: 1px solid var(--border); background: var(--input-bg);
+    color: var(--text); font-size: 14px; font-family: inherit;
+    resize: vertical; transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  input:focus, textarea:focus, select:focus {
+    outline: none; border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(56,189,248,0.15);
+  }
+  textarea { min-height: 80px; }
+
+  /* ============ الأزرار ============ */
+  .btn {
+    padding: 12px 20px; border-radius: 12px; border: none;
+    cursor: pointer; font-size: 14px; font-weight: 600;
+    transition: all 0.2s; font-family: inherit;
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .btn-primary { background: var(--accent); color: var(--bg-1); }
+  .btn-primary:hover:not(:disabled) { background: var(--accent-hover); transform: translateY(-1px); }
+  .btn-success { background: var(--success); color: #fff; }
+  .btn-success:hover:not(:disabled) { filter: brightness(1.1); }
+  .btn-warn { background: var(--warn); color: #0f172a; }
+  .btn-warn:hover:not(:disabled) { filter: brightness(1.1); }
+  .btn-danger { background: var(--danger); color: #fff; }
+  .btn-ghost {
+    background: transparent; color: var(--accent); border: 1px solid var(--accent);
+  }
+  .btn-ghost:hover:not(:disabled) { background: rgba(56,189,248,0.1); }
+  .btn-row { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+  .btn-row .btn { flex: 1; min-width: 130px; }
+
+  /* ============ صندوق الناتج ============ */
+  .output-box {
+    margin-top: 14px; padding: 16px; border-radius: 12px;
+    background: var(--input-bg); border: 1px dashed var(--border);
+    font-family: 'Courier New', monospace; font-size: 12px;
+    word-break: break-all; min-height: 55px; color: var(--accent);
+    white-space: pre-wrap; line-height: 1.6;
+    max-height: 200px; overflow-y: auto;
+  }
+  .output-box.empty { color: var(--text-muted); font-style: italic; font-family: inherit; }
+
+  /* ============ قائمة الأرقام ============ */
+  .contact-list { margin-top: 12px; display: flex; flex-direction: column; gap: 8px; }
+  .contact-item {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 14px; background: var(--input-bg);
+    border-radius: 10px; font-size: 14px;
+    border: 1px solid var(--border);
+    transition: all 0.2s;
+  }
+  .contact-item:hover { border-color: var(--accent); }
+  .contact-item .info { display: flex; flex-direction: column; gap: 2px; }
+  .contact-item .name { font-weight: 600; font-size: 13px; }
+  .contact-item .number { font-size: 12px; color: var(--text-muted); font-family: monospace; }
+  .contact-item .actions { display: flex; gap: 6px; }
+  .contact-item .remove {
+    background: var(--danger); color: #fff; border: none; border-radius: 8px;
+    padding: 5px 10px; cursor: pointer; font-size: 11px;
+  }
+
+  /* ============ التوست ============ */
+  .toast {
+    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(80px);
+    background: var(--success); color: #fff; padding: 12px 22px; border-radius: 12px;
+    font-size: 13px; opacity: 0; pointer-events: none; transition: 0.3s;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4); z-index: 999;
+    max-width: 90vw; text-align: center;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .toast.error { background: var(--danger); }
+
+  /* ============ بطاقة المصمم ============ */
+  .designer-badge {
+    text-align: center; padding: 22px 18px; margin-top: 8px;
+    background: linear-gradient(135deg, var(--bg-2), var(--bg-1));
+    border-radius: 18px; border: 1px solid var(--border);
+    font-size: 13px; color: var(--text-muted); position: relative; overflow: hidden;
+  }
+  .designer-badge::before {
+    content: ''; position: absolute; top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle, var(--accent) 0%, transparent 40%);
+    opacity: 0.06; pointer-events: none;
+  }
+  .designer-badge strong {
+    color: var(--accent); font-size: 17px; display: block; margin: 6px 0;
+    letter-spacing: 0.5px;
+  }
+  .designer-badge .badge {
+    display: inline-block; margin-top: 8px; padding: 5px 14px;
+    background: rgba(56,189,248,0.12); border-radius: 20px;
+    color: var(--accent); font-size: 11px; font-weight: 600;
+  }
+
+  .hint { font-size: 11px; color: var(--text-muted); margin-top: 8px; line-height: 1.6; }
+
+  /* ============ التبويبات ============ */
+  .tabs {
+    display: flex; gap: 6px; margin-bottom: 16px;
+    background: var(--bg-1); padding: 5px; border-radius: 14px;
+  }
+  .tab {
+    flex: 1; padding: 10px; border-radius: 10px; border: none;
+    background: transparent; color: var(--text-muted); cursor: pointer;
+    font-size: 13px; font-weight: 600; transition: all 0.2s;
+    font-family: inherit;
+  }
+  .tab.active { background: var(--accent); color: var(--bg-1); }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* ============ QR ============ */
+  #qrCanvas {
+    display: block; margin: 14px auto; max-width: 220px;
+    background: #fff; border-radius: 12px; padding: 8px;
+  }
+
+  @media (max-width: 500px) {
+    header h1 { font-size: 20px; }
+    .card { padding: 18px; }
+    .btn-row .btn { min-width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <header>
+    <h1>🔐 الرسائل المشفرة</h1>
+    <p>تشفير وفك تشفير — يعمل بدون إنترنت</p>
+  </header>
+
+  <div class="theme-bar">
+    <div class="theme-btn active" data-th="dark"    title="داكن"></div>
+    <div class="theme-btn"        data-th="ocean"   title="محيطي"></div>
+    <div class="theme-btn"        data-th="purple"  title="بنفسجي"></div>
+    <div class="theme-btn"        data-th="emerald" title="زمردي"></div>
+    <div class="theme-btn"        data-th="light"   title="فاتح"></div>
+  </div>
+
+  <!-- التبويبات -->
+  <div class="tabs">
+    <button class="tab active" data-tab="encrypt">🔒 تشفير</button>
+    <button class="tab"        data-tab="decrypt">🔓 فك</button>
+    <button class="tab"        data-tab="contacts">📇 الأرقام</button>
+    <button class="tab"        data-tab="settings">⚙️ إعدادات</button>
+  </div>
+
+  <!-- تبويب التشفير -->
+  <div class="tab-content active" id="tab-encrypt">
+    <div class="card">
+      <h2>✍️ إنشاء رسالة مشفرة</h2>
+
+      <label for="recipientSelect">الرقم المرسل إليه (اختياري)</label>
+      <select id="recipientSelect">
+        <option value="">— بدون رقم محدد —</option>
+      </select>
+
+      <label for="messageInput">الرسالة</label>
+      <textarea id="messageInput" placeholder="اكتب رسالتك هنا..."></textarea>
+
+      <label for="keyInput">كلمة مفتاح التشفير</label>
+      <input type="password" id="keyInput" placeholder="كلمة سر التشفير (اتفق عليها مسبقاً)">
+
+      <div class="btn-row">
+        <button class="btn btn-success" id="encryptBtn">🔒 تشفير</button>
+        <button class="btn btn-ghost" id="copyBtn" disabled>📋 نسخ</button>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-ghost" id="shareBtn" disabled>📤 مشاركة</button>
+        <button class="btn btn-ghost" id="smsBtn" disabled>📱 فتح SMS</button>
+        <button class="btn btn-ghost" id="qrBtn" disabled>📷 QR</button>
+      </div>
+
+      <div class="output-box empty" id="encryptOutput">ستظهر الشيفرة هنا...</div>
+      <canvas id="qrCanvas" class="hidden"></canvas>
+
+      <p class="hint">💡 بعد النسخ، افتح تطبيق الرسائل، الصق الشيفرة وأرسلها للرقم المحدد.</p>
+    </div>
+  </div>
+
+  <!-- تبويب فك التشفير -->
+  <div class="tab-content" id="tab-decrypt">
+    <div class="card">
+      <h2>🔓 ترجمة رسالة مشفرة</h2>
+
+      <label for="cipherInput">الصق الشيفرة المستلمة</label>
+      <textarea id="cipherInput" placeholder="ENC:..."></textarea>
+
+      <label for="decryptKeyInput">كلمة مفتاح التشفير</label>
+      <input type="password" id="decryptKeyInput" placeholder="نفس الكلمة المتفق عليها">
+
+      <div class="btn-row">
+        <button class="btn btn-warn" id="decryptBtn">🔓 فك التشفير</button>
+        <button class="btn btn-ghost" id="clearBtn">🗑️ مسح</button>
+      </div>
+
+      <div class="output-box empty" id="decryptOutput">ستظهر الرسالة الأصلية هنا...</div>
+    </div>
+  </div>
+
+  <!-- تبويب الأرقام -->
+  <div class="tab-content" id="tab-contacts">
+    <div class="card">
+      <h2>📇 الأرقام المحفوظة <span class="badge-count" id="contactCount">0</span></h2>
+
+      <label for="contactName">اسم الرقم (اختياري)</label>
+      <input type="text" id="contactName" placeholder="مثال: أحمد">
+
+      <label for="phoneInput">رقم الهاتف</label>
+      <input type="tel" id="phoneInput" placeholder="+967771234567">
+
+      <button class="btn btn-primary" style="margin-top:12px; width:100%;" id="addPhoneBtn">+ إضافة رقم</button>
+
+      <div class="contact-list" id="contactList"></div>
+    </div>
+  </div>
+
+  <!-- تبويب الإعدادات -->
+  <div class="tab-content" id="tab-settings">
+    <div class="card">
+      <h2>⚙️ الإعدادات</h2>
+
+      <div class="btn-row">
+        <button class="btn btn-ghost" id="exportBtn">📤 تصدير الأرقام</button>
+        <button class="btn btn-ghost" id="importBtn">📥 استيراد</button>
+      </div>
+      <input type="file" id="importFile" accept=".json" style="display:none;">
+
+      <div class="btn-row">
+        <button class="btn btn-danger" id="clearAllBtn">🗑️ حذف كل البيانات</button>
+      </div>
+
+      <p class="hint" style="margin-top:16px;">
+        🔒 جميع بياناتك محفوظة على جهازك فقط (localStorage).
+        لا يتم إرسالها لأي خادم. التطبيق يعمل بدون إنترنت.
+      </p>
+      <p class="hint">
+        📲 لتثبيت التطبيق: افتحه في Chrome → قائمة → "إضافة إلى الشاشة الرئيسية".
+      </p>
+    </div>
+  </div>
+
+  <!-- بطاقة المصمم -->
+  <div class="designer-badge">
+    صُمم وبُرمج بعناية بواسطة
+    <strong>نشوان البدري</strong>
+    <span class="badge">HTML • CSS • JavaScript • Web Crypto API • PWA</span>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ============================================================
+// تطبيق الرسائل المشفرة — نشوان البدري
+// يعمل بدون إنترنت — Web Crypto API + localStorage
+// ============================================================
+
+const STORAGE_CONTACTS = "nashwan_contacts";
+const STORAGE_THEME    = "nashwan_theme";
+
+/* ---------- الثيمات ---------- */
+function applyTheme(name) {
+  if (name === "dark") document.documentElement.removeAttribute("data-theme");
+  else document.documentElement.setAttribute("data-theme", name);
+  document.querySelectorAll(".theme-btn").forEach(b =>
+    b.classList.toggle("active", b.dataset.th === name));
+  localStorage.setItem(STORAGE_THEME, name);
+}
+document.querySelectorAll(".theme-btn").forEach(b =>
+  b.addEventListener("click", () => applyTheme(b.dataset.th)));
+
+/* ---------- التبويبات ---------- */
+document.querySelectorAll(".tab").forEach(tab => {
+  tab.addEventListener("click", () => {
+    document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+    document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
+    tab.classList.add("active");
+    document.getElementById("tab-" + tab.dataset.tab).classList.add("active");
+  });
+});
+
+/* ---------- العناصر ---------- */
+const phoneInput       = document.getElementById("phoneInput");
+const contactName      = document.getElementById("contactName");
+const addPhoneBtn      = document.getElementById("addPhoneBtn");
+const contactList      = document.getElementById("contactList");
+const contactCount     = document.getElementById("contactCount");
+const recipientSelect  = document.getElementById("recipientSelect");
+const messageInput     = document.getElementById("messageInput");
+const keyInput         = document.getElementById("keyInput");
+const encryptBtn       = document.getElementById("encryptBtn");
+const copyBtn          = document.getElementById("copyBtn");
+const shareBtn         = document.getElementById("shareBtn");
+const smsBtn           = document.getElementById("smsBtn");
+const qrBtn            = document.getElementById("qrBtn");
+const encryptOutput    = document.getElementById("encryptOutput");
+const qrCanvas         = document.getElementById("qrCanvas");
+const cipherInput      = document.getElementById("cipherInput");
+const decryptKeyInput  = document.getElementById("decryptKeyInput");
+const decryptBtn       = document.getElementById("decryptBtn");
+const clearBtn         = document.getElementById("clearBtn");
+const decryptOutput    = document.getElementById("decryptOutput");
+const exportBtn        = document.getElementById("exportBtn");
+const importBtn        = document.getElementById("importBtn");
+const importFile       = document.getElementById("importFile");
+const clearAllBtn      = document.getElementById("clearAllBtn");
+const toastEl          = document.getElementById("toast");
+
+/* ---------- الأرقام ---------- */
+function loadContacts() {
+  try {
+    const d = JSON.parse(localStorage.getItem(STORAGE_CONTACTS) || "[]");
+    return Array.isArray(d) ? d : [];
+  } catch { return []; }
+}
+function saveContacts(list) {
+  localStorage.setItem(STORAGE_CONTACTS, JSON.stringify(list));
+}
+function renderContacts() {
+  const contacts = loadContacts();
+  contactList.innerHTML = "";
+  recipientSelect.innerHTML = '<option value="">— بدون رقم محدد —</option>';
+  contactCount.textContent = contacts.length;
+
+  contacts.forEach((c, idx) => {
+    const item = document.createElement("div");
+    item.className = "contact-item";
+    item.innerHTML = `
+      <div class="info">
+        <span class="name">${escapeHtml(c.name || "بدون اسم")}</span>
+        <span class="number">${escapeHtml(c.number)}</span>
+      </div>
+    `;
+    const actions = document.createElement("div");
+    actions.className = "actions";
+    const rm = document.createElement("button");
+    rm.className = "remove";
+    rm.textContent = "حذف";
+    rm.addEventListener("click", () => {
+      const u = loadContacts(); u.splice(idx, 1); saveContacts(u);
+      renderContacts(); showToast("تم الحذف");
+    });
+    actions.appendChild(rm);
+    item.appendChild(actions);
+    contactList.appendChild(item);
+
+    const opt = document.createElement("option");
+    opt.value = c.number;
+    opt.textContent = (c.name ? c.name + " — " : "") + c.number;
+    recipientSelect.appendChild(opt);
+  });
+}
+addPhoneBtn.addEventListener("click", () => {
+  const num = phoneInput.value.trim();
+  const name = contactName.value.trim();
+  if (!num) return showToast("أدخل رقماً", true);
+  if (!/^\+?[\d\s\-]{6,20}$/.test(num)) return showToast("صيغة الرقم غير صحيحة", true);
+  const contacts = loadContacts();
+  if (contacts.some(c => c.number === num)) return showToast("الرقم مضاف مسبقاً", true);
+  contacts.push({ name, number: num });
+  saveContacts(contacts);
+  phoneInput.value = ""; contactName.value = "";
+  renderContacts(); showToast("✅ تمت الإضافة");
+});
+
+/* ---------- التشفير ---------- */
+async function deriveKey(password, salt) {
+  const enc = new TextEncoder();
+  const km = await crypto.subtle.importKey(
+    "raw", enc.encode(password), "PBKDF2", false, ["deriveKey"]);
+  return crypto.subtle.deriveKey(
+    { name: "PBKDF2", salt: enc.encode(salt), iterations: 120000, hash: "SHA-256" },
+    km, { name: "AES-GCM", length: 256 }, false, ["encrypt", "decrypt"]);
+}
+async function encryptText(plain, password) {
+  const salt = "NASHWAN_" + Math.random().toString(36).slice(2, 8).toUpperCase();
+  const key = await deriveKey(password, salt);
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const enc = new TextEncoder();
+  const cipher = await crypto.subtle.encrypt({ name: "AES-GCM", iv }, key, enc.encode(plain));
+  const saltBytes = new TextEncoder().encode(salt);
+  const combined = new Uint8Array(saltBytes.length + iv.length + cipher.byteLength);
+  combined.set(saltBytes, 0);
+  combined.set(iv, saltBytes.length);
+  combined.set(new Uint8Array(cipher), saltBytes.length + iv.length);
+  return "ENC:" + btoa(String.fromCharCode(...combined));
+}
+async function decryptText(encoded, password) {
+  try {
+    if (!encoded.startsWith("ENC:")) throw new Error("bad");
+    const raw = Uint8Array.from(atob(encoded.slice(4)), c => c.charCodeAt(0));
+    const saltBytes = raw.slice(0, 8);
+    const iv = raw.slice(8, 20);
+    const data = raw.slice(20);
+    const salt = new TextDecoder().decode(saltBytes);
+    const key = await deriveKey(password, salt);
+    const plain = await crypto.subtle.decrypt({ name: "AES-GCM", iv }, key, data);
+    return new TextDecoder().decode(plain);
+  } catch { return null; }
+}
+
+/* ---------- التشفير من الواجهة ---------- */
+encryptBtn.addEventListener("click", async () => {
+  const msg = messageInput.value.trim();
+  const key = keyInput.value;
+  if (!msg) return showToast("اكتب الرسالة", true);
+  if (!key || key.length < 4) return showToast("كلمة المفتاح 4 أحرف على الأقل", true);
+
+  encryptBtn.disabled = true; encryptBtn.textContent = "⏳...";
+  try {
+    const cipher = await encryptText(msg, key);
+    encryptOutput.classList.remove("empty");
+    encryptOutput.textContent = cipher;
+    copyBtn.disabled = false;
+    shareBtn.disabled = false;
+    smsBtn.disabled = false;
+    qrBtn.disabled = false;
+    qrCanvas.classList.add("hidden");
+    showToast("✅ تم التشفير — انسخ وأرسل");
+  } catch { showToast("خطأ في التشفير", true); }
+  finally { encryptBtn.disabled = false; encryptBtn.textContent = "🔒 تشفير"; }
+});
+
+copyBtn.addEventListener("click", async () => {
+  const txt = encryptOutput.textContent;
+  if (!txt || encryptOutput.classList.contains("empty")) return;
+  try {
+    await navigator.clipboard.writeText(txt);
+    showToast("📋 تم النسخ");
+  } catch {
+    const r = document.createRange(); r.selectNode(encryptOutput);
+    window.getSelection().removeAllRanges(); window.getSelection().addRange(r);
+    document.execCommand("copy"); showToast("📋 تم النسخ");
+  }
+});
+
+shareBtn.addEventListener("click", async () => {
+  const txt = encryptOutput.textContent;
+  if (!txt) return;
+  if (navigator.share) {
+    try { await navigator.share({ title: "رسالة مشفرة", text: txt }); }
+    catch {}
+  } else {
+    await navigator.clipboard.writeText(txt);
+    showToast("تم النسخ — الصقه في أي تطبيق");
+  }
+});
+
+smsBtn.addEventListener("click", () => {
+  const txt = encryptOutput.textContent;
+  const recipient = recipientSelect.value;
+  if (!txt) return;
+  const body = encodeURIComponent(txt);
+  const url = recipient
+    ? `sms:${recipient}?body=${body}`
+    : `sms:?body=${body}`;
+  window.location.href = url;
+});
+
+qrBtn.addEventListener("click", () => {
+  const txt = encryptOutput.textContent;
+  if (!txt) return;
+  qrCanvas.classList.remove("hidden");
+  drawQR(qrCanvas, txt);
+});
+
+/* ---------- QR بسيط (بدون مكتبات) ---------- */
+// ملاحظة: QR الكامل معقد جداً، لذلك نستخدم مكتبة مدمجة صغيرة.
+// إن أردت QR حقيقي يعمل أوفلاين، استخدم هذه النسخة المبسطة:
+function drawQR(canvas, text) {
+  // رسم بديل مؤقت (شعار + رسالة)
+  const ctx = canvas.getContext("2d");
+  canvas.width = 220; canvas.height = 220;
+  ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, 220, 220);
+  ctx.fillStyle = "#0f172a";
+  ctx.font = "bold 14px sans-serif";
+  ctx.textAlign = "center";
+  ctx.fillText("📷 الشيفرة جاهزة", 110, 90);
+  ctx.font = "11px sans-serif";
+  ctx.fillText("استخدم زر (نسخ) للمشاركة", 110, 120);
+  ctx.fillText("QR يحتاج مكتبة خارجية", 110, 140);
+  // يمكنك تحميل مكتبة qrcode.js وحفظها محلياً لتفعيل QR حقيقي
+}
+
+/* ---------- فك التشفير ---------- */
+decryptBtn.addEventListener("click", async () => {
+  const cipher = cipherInput.value.trim();
+  const key = decryptKeyInput.value;
+  if (!cipher) return showToast("الصق الشيفرة", true);
+  if (!key) return showToast("أدخل كلمة المفتاح", true);
+
+  decryptBtn.disabled = true; decryptBtn.textContent = "⏳...";
+  const result = await decryptText(cipher, key);
+  decryptOutput.classList.remove("empty");
+  if (result === null) {
+    decryptOutput.textContent = "❌ تعذر الفك — تحقق من المفتاح أو الشيفرة";
+    decryptOutput.style.color = "var(--danger)";
+    showToast("فشل الفك", true);
+  } else {
+    decryptOutput.textContent = result;
+    decryptOutput.style.color = "var(--success)";
+    showToast("✅ تم الفك بنجاح");
+  }
+  decryptBtn.disabled = false; decryptBtn.textContent = "🔓 فك التشفير";
+});
+
+clearBtn.addEventListener("click", () => {
+  cipherInput.value = ""; decryptKeyInput.value = "";
+  decryptOutput.textContent = "ستظهر الرسالة هنا...";
+  decryptOutput.classList.add("empty");
+  decryptOutput.style.color = "var(--accent)";
+});
+
+/* ---------- استيراد/تصدير ---------- */
+exportBtn.addEventListener("click", () => {
+  const data = JSON.stringify(loadContacts(), null, 2);
+  const blob = new Blob([data], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "contacts_" + Date.now() + ".json";
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast("📤 تم التصدير");
+});
+importBtn.addEventListener("click", () => importFile.click());
+importFile.addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    try {
+      const data = JSON.parse(ev.target.result);
+      if (!Array.isArray(data)) throw new Error();
+      const merged = [...loadContacts()];
+      data.forEach(c => {
+        if (c.number && !merged.some(m => m.number === c.number)) merged.push(c);
+      });
+      saveContacts(merged); renderContacts(); showToast("📥 تم الاستيراد");
+    } catch { showToast("ملف غير صالح", true); }
+  };
+  reader.readAsText(file);
+  importFile.value = "";
+});
+clearAllBtn.addEventListener("click", () => {
+  if (!confirm("سيتم حذف كل الأرقام. متأكد؟")) return;
+  localStorage.removeItem(STORAGE_CONTACTS);
+  renderContacts(); showToast("🗑️ تم الحذف");
+});
+
+/* ---------- أدوات ---------- */
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, m => (
+    { "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;" }[m]));
+}
+let toastTimer;
+function showToast(msg, isErr = false) {
+  toastEl.textContent = msg;
+  toastEl.classList.toggle("error", isErr);
+  toastEl.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toastEl.classList.remove("show"), 2400);
+}
+
+/* ---------- بدء ---------- */
+applyTheme(localStorage.getItem(STORAGE_THEME) || "dark");
+renderContacts();
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js')
+      .then(() => console.log('✅ SW جاهز'))
+      .catch(e => console.log('SW error:', e));
+  });
+}
+</script>
+</body>
+</html>
