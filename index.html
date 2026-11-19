@@ -1,105 +1,65 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>الرسائل المشفرة | نشوان البدري</title>
 <meta name="theme-color" content="#0f172a">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <style>
-  /* ============ المتغيرات والثيمات ============ */
   :root {
     --bg-1: #0f172a; --bg-2: #1e293b; --bg-3: #334155;
-    --text: #e2e8f0; --text-muted: #94a3b8;
-    --accent: #38bdf8; --accent-hover: #7dd3fc;
+    --text: #f8fafc; --text-muted: #94a3b8;
+    --accent: #38bdf8; --accent-glow: rgba(56, 189, 248, 0.4);
     --success: #22c55e; --warn: #f59e0b; --danger: #ef4444;
-    --card: rgba(30, 41, 59, 0.85); --border: #334155; --input-bg: rgba(15, 23, 42, 0.6);
-    --shadow: 0 20px 40px -20px rgba(0,0,0,0.6);
-    --glass-blur: blur(12px);
+    --card: rgba(30, 41, 59, 0.7); --border: rgba(255, 255, 255, 0.1); 
+    --input-bg: rgba(15, 23, 42, 0.8);
+    --shadow: 0 10px 30px -10px rgba(0,0,0,0.8);
+    --glass: blur(16px);
   }
-  
-  [data-theme="ocean"] { 
-    --bg-1: #0c1e2c; --bg-2: #123548; --bg-3: #1e4d68; 
-    --accent: #22d3ee; --accent-hover: #67e8f9; 
-    --card: rgba(18, 53, 72, 0.85); --border: #1e4d68; --input-bg: rgba(12, 30, 44, 0.6); 
-  }
-  [data-theme="purple"] { 
-    --bg-1: #1a0b2e; --bg-2: #2d1b4e; --bg-3: #3f2a63; 
-    --accent: #a78bfa; --accent-hover: #c4b5fd; 
-    --card: rgba(45, 27, 78, 0.85); --border: #3f2a63; --input-bg: rgba(26, 11, 46, 0.6); 
-  }
-  [data-theme="emerald"] { 
-    --bg-1: #052e16; --bg-2: #0d3d22; --bg-3: #166534; 
-    --accent: #34d399; --accent-hover: #6ee7b7; 
-    --card: rgba(13, 61, 34, 0.85); --border: #166534; --input-bg: rgba(5, 46, 22, 0.6); 
-  }
-  [data-theme="light"] { 
-    --bg-1: #f1f5f9; --bg-2: #ffffff; --bg-3: #e2e8f0; 
-    --text: #0f172a; --text-muted: #64748b; 
-    --accent: #0284c7; --accent-hover: #0369a1; 
-    --card: rgba(255, 255, 255, 0.85); --border: #cbd5e1; --input-bg: rgba(248, 250, 252, 0.8); 
-  }
+  [data-theme="ocean"] { --bg-1: #0c1e2c; --bg-2: #123548; --bg-3: #1e4d68; --accent: #22d3ee; --accent-glow: rgba(34, 211, 238, 0.4); --card: rgba(18, 53, 72, 0.7); --border: rgba(255, 255, 255, 0.1); --input-bg: rgba(12, 30, 44, 0.8); }
+  [data-theme="purple"] { --bg-1: #1a0b2e; --bg-2: #2d1b4e; --bg-3: #3f2a63; --accent: #a78bfa; --accent-glow: rgba(167, 139, 250, 0.4); --card: rgba(45, 27, 78, 0.7); --border: rgba(255, 255, 255, 0.1); --input-bg: rgba(26, 11, 46, 0.8); }
+  [data-theme="emerald"] { --bg-1: #052e16; --bg-2: #0d3d22; --bg-3: #166534; --accent: #34d399; --accent-glow: rgba(52, 211, 153, 0.4); --card: rgba(13, 61, 34, 0.7); --border: rgba(255, 255, 255, 0.1); --input-bg: rgba(5, 46, 22, 0.8); }
+  [data-theme="light"] { --bg-1: #f1f5f9; --bg-2: #ffffff; --bg-3: #e2e8f0; --text: #0f172a; --text-muted: #64748b; --accent: #0284c7; --accent-glow: rgba(2, 132, 199, 0.3); --card: rgba(255, 255, 255, 0.8); --border: rgba(0, 0, 0, 0.1); --input-bg: rgba(248, 250, 252, 0.9); }
 
-  /* ============ التنسيقات العامة ============ */
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
   
-  /* خلفية متحركة (Gradient Animation) */
+  html { scroll-behavior: smooth; }
+  
   body { 
     font-family: 'Segoe UI', Tahoma, sans-serif; 
-    background: linear-gradient(-45deg, var(--bg-1), var(--bg-2), var(--bg-3), var(--bg-1));
-    background-size: 400% 400%;
-    animation: gradientBG 15s ease infinite;
-    color: var(--text); 
-    min-height: 100vh; 
-    padding: 16px; 
+    background: linear-gradient(-45deg, var(--bg-1), var(--bg-2), var(--bg-3), var(--bg-1)); 
+    background-size: 400% 400%; animation: gradientBG 15s ease infinite; 
+    color: var(--text); min-height: 100dvh; 
     display: flex; justify-content: center; align-items: flex-start; 
-    transition: color 0.4s;
+    transition: color 0.4s; padding-bottom: 90px; /* مساحة للشريط السفلي */
   }
-  @keyframes gradientBG {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
+  @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
-  .app { width: 100%; max-width: 680px; animation: fadeIn 0.5s ease-out; }
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+  .app { width: 100%; max-width: 600px; padding: 20px 16px; animation: fadeIn 0.4s ease-out; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
   /* شاشة الدخول */
-  .login-screen { position: fixed; inset: 0; background: var(--bg-1); display: flex; justify-content: center; align-items: center; z-index: 1000; padding: 20px; transition: opacity 0.3s; }
-  .login-box { 
-    background: var(--card); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
-    padding: 35px 25px; border-radius: 24px; width: 100%; max-width: 400px; 
-    box-shadow: var(--shadow); border: 1px solid var(--border); text-align: center;
-    animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  }
-  @keyframes popIn {
-    from { opacity: 0; transform: scale(0.9); }
-    to { opacity: 1; transform: scale(1); }
-  }
-  .login-box h2 { color: var(--accent); margin-bottom: 25px; font-size: 24px; }
+  .login-screen { position: fixed; inset: 0; background: var(--bg-1); display: flex; justify-content: center; align-items: center; z-index: 1000; padding: 20px; overflow-y: auto; }
+  .login-box { background: var(--card); backdrop-filter: var(--glass); -webkit-backdrop-filter: var(--glass); padding: 35px 25px; border-radius: 28px; width: 100%; max-width: 400px; box-shadow: var(--shadow); border: 1px solid var(--border); text-align: center; animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+  @keyframes popIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+  .login-box h2 { color: var(--accent); margin-bottom: 20px; font-size: 26px; font-weight: 800; letter-spacing: -0.5px; }
+  .toggle-link { color: var(--accent); font-weight: bold; cursor: pointer; text-decoration: none; font-size: 14px; transition: 0.2s; }
+  .toggle-link:hover { text-shadow: 0 0 10px var(--accent-glow); }
 
-  /* الرأس */
-  header { text-align: center; margin-bottom: 20px; animation: slideDown 0.6s ease-out; }
-  @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-  header h1 { font-size: 26px; color: var(--accent); margin-bottom: 6px; text-shadow: 0 0 20px rgba(56,189,248,0.3); }
+  /* الترويسة */
+  header { text-align: center; margin-bottom: 25px; }
+  header h1 { font-size: 28px; color: var(--text); font-weight: 800; letter-spacing: -1px; margin-bottom: 8px; }
+  header h1 span { color: var(--accent); text-shadow: 0 0 20px var(--accent-glow); }
   header p { color: var(--text-muted); font-size: 14px; }
 
-  /* أزرار الثيمات */
-  .theme-bar { display: flex; justify-content: center; gap: 12px; margin-bottom: 20px; animation: fadeIn 0.8s ease-out; }
-  .theme-btn { 
-    width: 38px; height: 38px; border-radius: 50%; border: 2px solid var(--border); cursor: pointer; 
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  }
-  .theme-btn:hover { transform: scale(1.2) rotate(15deg); }
-  .theme-btn.active { border-color: var(--accent); transform: scale(1.15); box-shadow: 0 0 15px var(--accent); }
+  /* الثيمات */
+  .theme-bar { display: flex; justify-content: center; gap: 12px; margin-bottom: 25px; }
+  .theme-btn { width: 34px; height: 34px; border-radius: 50%; border: 2px solid var(--border); cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+  .theme-btn:active { transform: scale(0.9); }
+  .theme-btn.active { border-color: var(--text); transform: scale(1.15); box-shadow: 0 0 15px var(--accent-glow); }
   .theme-btn[data-th="dark"] { background: linear-gradient(135deg, #0f172a, #38bdf8); }
   .theme-btn[data-th="ocean"] { background: linear-gradient(135deg, #0c1e2c, #22d3ee); }
   .theme-btn[data-th="purple"] { background: linear-gradient(135deg, #1a0b2e, #a78bfa); }
@@ -107,94 +67,92 @@
   .theme-btn[data-th="light"] { background: linear-gradient(135deg, #f1f5f9, #0284c7); }
 
   /* البطاقات */
-  .card { 
-    background: var(--card); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
-    border-radius: 20px; padding: 24px; margin-bottom: 16px; 
-    box-shadow: var(--shadow); border: 1px solid var(--border); 
-    transition: transform 0.3s, box-shadow 0.3s;
-  }
-  .card:hover { transform: translateY(-2px); box-shadow: 0 25px 50px -20px rgba(0,0,0,0.7); }
-  .card h2 { font-size: 17px; color: var(--accent); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; font-weight: 700; }
-  .badge-count { background: var(--accent); color: var(--bg-1); font-size: 12px; padding: 2px 10px; border-radius: 10px; font-weight: bold; }
+  .card { background: var(--card); backdrop-filter: var(--glass); -webkit-backdrop-filter: var(--glass); border-radius: 24px; padding: 22px; margin-bottom: 20px; box-shadow: var(--shadow); border: 1px solid var(--border); }
+  .card h2 { font-size: 18px; color: var(--accent); margin-bottom: 18px; display: flex; align-items: center; gap: 8px; font-weight: 700; }
+  .badge-count { background: var(--accent); color: var(--bg-1); font-size: 13px; padding: 2px 10px; border-radius: 12px; font-weight: 800; }
 
-  /* حقول الإدخال */
-  label { display: block; font-size: 13px; color: var(--text-muted); margin-bottom: 6px; margin-top: 14px; font-weight: 600; }
+  label { display: block; font-size: 13px; color: var(--text-muted); margin-bottom: 8px; margin-top: 16px; font-weight: 600; }
+  
   input, textarea, select { 
-    width: 100%; padding: 13px 16px; border-radius: 14px; border: 1px solid var(--border); 
-    background: var(--input-bg); color: var(--text); font-size: 14px; font-family: inherit; 
-    transition: all 0.3s; 
+    width: 100%; padding: 15px 16px; border-radius: 16px; border: 1px solid var(--border); 
+    background: var(--input-bg); color: var(--text); font-size: 15px; font-family: inherit; 
+    transition: all 0.3s; box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
   }
   input:focus, textarea:focus, select:focus { 
-    outline: none; border-color: var(--accent); 
-    box-shadow: 0 0 0 4px rgba(56,189,248,0.15); 
-    transform: scale(1.01);
+    outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-glow); 
   }
-  textarea { min-height: 90px; resize: vertical; }
+  
+  textarea { min-height: 100px; resize: none; overflow: hidden; line-height: 1.6; }
 
   /* الأزرار */
   .btn { 
-    padding: 13px 20px; border-radius: 14px; border: none; cursor: pointer; 
-    font-size: 15px; font-weight: 700; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-    font-family: inherit; display: inline-flex; justify-content: center; align-items: center; gap: 8px; 
-    position: relative; overflow: hidden;
+    padding: 15px 20px; border-radius: 16px; border: none; cursor: pointer; 
+    font-size: 16px; font-weight: 700; transition: all 0.3s; 
+    display: inline-flex; justify-content: center; align-items: center; gap: 8px; 
   }
-  .btn::after { content: ''; position: absolute; inset: 0; background: rgba(255,255,255,0.1); opacity: 0; transition: 0.3s; }
-  .btn:hover::after { opacity: 1; }
-  .btn:active { transform: scale(0.96); }
-  .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+  .btn:active { transform: scale(0.97); }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
   
-  .btn-primary { background: var(--accent); color: var(--bg-1); box-shadow: 0 4px 15px rgba(56,189,248,0.3); }
-  .btn-primary:hover:not(:disabled) { box-shadow: 0 6px 20px rgba(56,189,248,0.5); }
+  .btn-primary { background: var(--accent); color: var(--bg-1); box-shadow: 0 4px 15px var(--accent-glow); }
   .btn-success { background: var(--success); color: #fff; box-shadow: 0 4px 15px rgba(34,197,94,0.3); }
-  .btn-warn { background: var(--warn); color: #0f172a; box-shadow: 0 4px 15px rgba(245,158,11,0.3); }
+  .btn-warn { background: var(--warn); color: #1a1a1a; box-shadow: 0 4px 15px rgba(245,158,11,0.3); }
   .btn-danger { background: var(--danger); color: #fff; box-shadow: 0 4px 15px rgba(239,68,68,0.3); }
-  .btn-ghost { background: transparent; color: var(--accent); border: 2px solid var(--accent); }
+  .btn-ghost { background: transparent; color: var(--text); border: 2px solid var(--border); }
   
-  .btn-row { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+  .btn-row { display: flex; gap: 12px; margin-top: 18px; flex-wrap: wrap; }
   .btn-row .btn { flex: 1; }
 
-  /* صندوق الناتج */
+  /* صندوق الناتج (يتمدد تلقائياً) */
+  .output-wrapper { position: relative; margin-top: 18px; }
   .output-box { 
-    margin-top: 16px; padding: 16px; border-radius: 14px; 
-    background: var(--input-bg); border: 1px dashed var(--border); 
-    font-family: monospace; font-size: 13px; word-break: break-all; 
-    min-height: 60px; color: var(--accent); white-space: pre-wrap; 
-    max-height: 200px; overflow-y: auto; transition: all 0.3s; 
+    padding: 18px; padding-left: 45px; border-radius: 16px; 
+    background: var(--input-bg); border: 1px solid var(--accent); 
+    font-family: 'Courier New', monospace; font-size: 14px; 
+    word-break: break-all; min-height: 70px; color: var(--accent); 
+    white-space: pre-wrap; line-height: 1.6; box-shadow: inset 0 0 15px rgba(0,0,0,0.2);
+    resize: none; overflow: hidden; transition: height 0.2s ease;
   }
-  .output-box.empty { color: var(--text-muted); font-style: italic; font-family: inherit; }
+  .output-box.empty { border-color: var(--border); color: var(--text-muted); font-style: italic; font-family: inherit; box-shadow: none; }
+  
+  .copy-icon-btn {
+    position: absolute; top: 12px; left: 12px; 
+    background: var(--card); border: 1px solid var(--border); border-radius: 10px; 
+    width: 32px; height: 32px; display: flex; justify-content: center; align-items: center; 
+    cursor: pointer; transition: 0.2s; font-size: 16px;
+  }
+  .copy-icon-btn:hover { background: var(--accent); color: var(--bg-1); }
 
   /* قائمة الأرقام */
-  .contact-list { margin-top: 14px; display: flex; flex-direction: column; gap: 10px; }
-  .contact-item { 
-    display: flex; justify-content: space-between; align-items: center; 
-    padding: 12px 16px; background: var(--input-bg); border-radius: 12px; 
-    font-size: 14px; border: 1px solid var(--border); transition: all 0.3s; 
-  }
-  .contact-item:hover { border-color: var(--accent); transform: translateX(-5px); }
-  .contact-item .remove { background: var(--danger); color: #fff; border: none; border-radius: 8px; padding: 6px 12px; cursor: pointer; font-size: 12px; transition: 0.2s; }
-  .contact-item .remove:hover { background: #b91c1c; }
+  .contact-list { margin-top: 16px; display: flex; flex-direction: column; gap: 10px; }
+  .contact-item { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: var(--input-bg); border-radius: 16px; border: 1px solid var(--border); }
+  .contact-item .remove { background: rgba(239, 68, 68, 0.2); color: var(--danger); border: none; border-radius: 10px; padding: 8px 12px; cursor: pointer; font-size: 13px; font-weight: bold; transition: 0.2s; }
+  .contact-item .remove:hover { background: var(--danger); color: #fff; }
 
-  /* التبويبات */
-  .tabs { 
-    display: flex; gap: 6px; margin-bottom: 20px; 
-    background: var(--input-bg); padding: 6px; border-radius: 16px; 
-    overflow-x: auto; scrollbar-width: none;
-    backdrop-filter: var(--glass-blur); border: 1px solid var(--border);
+  /* شريط التنقل السفلي (بدل التبويبات العلوية) */
+  .bottom-nav {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: var(--card); backdrop-filter: var(--glass); -webkit-backdrop-filter: var(--glass);
+    border-top: 1px solid var(--border); display: flex; justify-content: space-around;
+    padding: 10px 5px; padding-bottom: env(safe-area-inset-bottom, 10px);
+    z-index: 1000; box-shadow: 0 -10px 30px rgba(0,0,0,0.3);
   }
-  .tabs::-webkit-scrollbar { display: none; }
-  .tab { 
-    flex: 1; padding: 10px 15px; border-radius: 12px; border: none; 
-    background: transparent; color: var(--text-muted); cursor: pointer; 
-    font-size: 13px; font-weight: 700; transition: all 0.3s; white-space: nowrap; 
+  .nav-btn {
+    background: transparent; border: none; display: flex; flex-direction: column;
+    align-items: center; gap: 4px; color: var(--text-muted); font-size: 11px;
+    font-weight: 600; transition: 0.3s; cursor: pointer; padding: 8px 12px; border-radius: 12px;
   }
-  .tab.active { background: var(--accent); color: var(--bg-1); box-shadow: 0 4px 10px rgba(0,0,0,0.2); transform: scale(1.02); }
-  .tab-content { display: none; animation: fadeIn 0.4s ease-out; }
+  .nav-btn .icon { font-size: 20px; transition: 0.3s; }
+  .nav-btn.active { color: var(--accent); }
+  .nav-btn.active .icon { transform: translateY(-4px) scale(1.1); filter: drop-shadow(0 4px 8px var(--accent-glow)); }
+  
+  .tab-content { display: none; animation: slideUp 0.3s ease-out; }
   .tab-content.active { display: block; }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-  /* الإشعارات (Toast) */
+  /* الإشعارات */
   .toast { 
-    position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); 
-    background: var(--success); color: #fff; padding: 14px 24px; border-radius: 14px; 
+    position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px); 
+    background: var(--success); color: #fff; padding: 14px 24px; border-radius: 16px; 
     font-size: 14px; font-weight: bold; opacity: 0; pointer-events: none; 
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
     z-index: 9999; box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
@@ -205,27 +163,18 @@
 
   /* بطاقة المصمم */
   .designer-badge { 
-    text-align: center; padding: 25px; margin-top: 10px; 
-    background: var(--card); backdrop-filter: var(--glass-blur); 
-    border-radius: 20px; border: 1px solid var(--border); 
-    font-size: 14px; color: var(--text-muted); position: relative; overflow: hidden; 
+    text-align: center; padding: 25px; margin-top: 10px; background: var(--card); 
+    border-radius: 24px; border: 1px solid var(--border); font-size: 14px; color: var(--text-muted); 
+    position: relative; overflow: hidden; 
   }
   .designer-badge::before {
     content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-    background: radial-gradient(circle, var(--accent) 0%, transparent 50%);
-    opacity: 0.08; animation: rotateGlow 10s linear infinite; pointer-events: none;
+    background: radial-gradient(circle, var(--accent) 0%, transparent 60%); opacity: 0.1; 
+    animation: rotateGlow 10s linear infinite; pointer-events: none;
   }
   @keyframes rotateGlow { 100% { transform: rotate(360deg); } }
-  
-  .designer-badge strong { color: var(--accent); font-size: 20px; display: block; margin: 8px 0; letter-spacing: 0.5px; }
-  .designer-phone { 
-    display: inline-block; margin-top: 10px; padding: 8px 16px; 
-    background: var(--accent); color: var(--bg-1); border-radius: 20px; 
-    font-weight: bold; font-size: 15px; text-decoration: none; 
-    box-shadow: 0 4px 15px rgba(56,189,248,0.4); transition: 0.3s;
-  }
-  .designer-phone:hover { transform: scale(1.05); box-shadow: 0 6px 20px rgba(56,189,248,0.6); }
-  
+  .designer-badge strong { color: var(--accent); font-size: 20px; display: block; margin: 8px 0; }
+  .designer-phone { display: inline-block; margin-top: 10px; padding: 8px 20px; background: var(--accent); color: var(--bg-1); border-radius: 20px; font-weight: bold; font-size: 15px; text-decoration: none; box-shadow: 0 4px 15px var(--accent-glow); }
   .hint { font-size: 12px; color: var(--text-muted); margin-top: 10px; line-height: 1.6; }
   #adminSection { display: none; }
 </style>
@@ -235,36 +184,51 @@
 <!-- شاشة تسجيل الدخول -->
 <div class="login-screen" id="loginScreen">
   <div class="login-box">
-    <h2>🔐 تسجيل الدخول</h2>
-    <label>اسم المستخدم</label>
-    <input type="text" id="loginUser" placeholder="أدخل اسم المستخدم" autocomplete="username">
-    <label>كلمة المرور</label>
-    <input type="password" id="loginPass" placeholder="أدخل كلمة المرور" autocomplete="current-password">
-    <button class="btn btn-primary" style="width:100%; margin-top:25px; font-size:16px;" id="loginBtn">دخول</button>
+    <h2 id="loginTitle">🔐 الدخول</h2>
+    
+    <div id="loginForm">
+      <label>اسم المستخدم</label>
+      <input type="text" id="loginUser" placeholder="أدخل اسم المستخدم" autocomplete="username">
+      <label>كلمة المرور</label>
+      <input type="password" id="loginPass" placeholder="أدخل كلمة المرور" autocomplete="current-password">
+      <button class="btn btn-primary" style="width:100%; margin-top:25px;" id="loginBtn">تسجيل الدخول</button>
+      <p style="margin-top: 20px; font-size: 14px; color: var(--text-muted);">ليس لديك حساب؟ <a href="#" class="toggle-link" id="showRegister">أنشئ حساباً جديداً</a></p>
+      <p style="margin-top: 12px; font-size: 14px; color: var(--text-muted);">لديك كود؟ <a href="#" class="toggle-link" id="showInvite" style="color: var(--warn);">تفعيل كود</a></p>
+    </div>
+
+    <div id="registerForm" style="display:none;">
+      <label>اسم المستخدم الجديد</label>
+      <input type="text" id="regUser" placeholder="أدخل اسم المستخدم" autocomplete="off">
+      <label>كلمة المرور</label>
+      <input type="password" id="regPass" placeholder="أدخل كلمة المرور" autocomplete="new-password">
+      <button class="btn btn-success" style="width:100%; margin-top:25px;" id="registerBtn">إنشاء حساب</button>
+      <p style="margin-top: 20px; font-size: 14px; color: var(--text-muted);">لديك حساب؟ <a href="#" class="toggle-link" id="showLoginFromReg">تسجيل الدخول</a></p>
+    </div>
+
+    <div id="inviteForm" style="display:none;">
+      <label>الصق الكود هنا</label>
+      <textarea id="inviteCodeInput" placeholder="INV:... أو REV:..." style="min-height: 80px;"></textarea>
+      <button class="btn btn-warn" style="width:100%; margin-top:15px;" id="activateInviteBtn">تنفيذ الكود</button>
+      <p style="margin-top: 15px; font-size: 14px; color: var(--text-muted);"><a href="#" class="toggle-link" id="showLoginFromInvite">العودة للدخول</a></p>
+    </div>
+
     <p class="hint" style="color:var(--danger); margin-top:15px; font-weight:bold;" id="loginError"></p>
   </div>
 </div>
 
+<!-- التطبيق الرئيسي -->
 <div class="app" id="mainApp" style="display:none;">
   <header>
-    <h1>🔐 الرسائل المشفرة</h1>
+    <h1>الرسائل <span>المشفرة</span></h1>
     <p>مرحباً، <span id="welcomeUser" style="color:var(--accent); font-weight:bold;"></span></p>
   </header>
 
   <div class="theme-bar">
-    <div class="theme-btn active" data-th="dark" title="داكن"></div>
-    <div class="theme-btn" data-th="ocean" title="محيطي"></div>
-    <div class="theme-btn" data-th="purple" title="بنفسجي"></div>
-    <div class="theme-btn" data-th="emerald" title="زمردي"></div>
-    <div class="theme-btn" data-th="light" title="فاتح"></div>
-  </div>
-
-  <div class="tabs">
-    <button class="tab active" data-tab="encrypt">🔒 تشفير</button>
-    <button class="tab" data-tab="decrypt">🔓 فك</button>
-    <button class="tab" data-tab="contacts">📇 الأرقام</button>
-    <button class="tab" data-tab="settings">⚙️ إعدادات</button>
-    <button class="tab" data-tab="admin" id="adminTab" style="display:none;">👑 الإدارة</button>
+    <div class="theme-btn active" data-th="dark"></div>
+    <div class="theme-btn" data-th="ocean"></div>
+    <div class="theme-btn" data-th="purple"></div>
+    <div class="theme-btn" data-th="emerald"></div>
+    <div class="theme-btn" data-th="light"></div>
   </div>
 
   <!-- تبويب التشفير -->
@@ -274,18 +238,19 @@
       <label>الرقم المرسل إليه (اختياري)</label>
       <select id="recipientSelect"><option value="">— بدون رقم محدد —</option></select>
       <label>الرسالة</label>
-      <textarea id="messageInput" placeholder="اكتب رسالتك هنا..."></textarea>
+      <textarea id="messageInput" placeholder="اكتب رسالتك هنا... سيتم توسيع المربع تلقائياً" rows="1"></textarea>
       <label>كلمة مفتاح التشفير</label>
       <input type="password" id="keyInput" placeholder="كلمة السر (اتفق عليها مسبقاً)">
+      
       <div class="btn-row">
         <button class="btn btn-success" id="encryptBtn">🔒 تشفير</button>
-        <button class="btn btn-ghost" id="copyBtn" disabled>📋 نسخ</button>
-      </div>
-      <div class="btn-row">
-        <button class="btn btn-ghost" id="shareBtn" disabled>📤 مشاركة</button>
         <button class="btn btn-ghost" id="smsBtn" disabled>📱 SMS</button>
       </div>
-      <div class="output-box empty" id="encryptOutput">ستظهر الشيفرة هنا...</div>
+      
+      <div class="output-wrapper">
+        <div class="output-box empty" id="encryptOutput">ستظهر الشيفرة هنا...</div>
+        <button class="copy-icon-btn" id="copyEncryptBtn" disabled title="نسخ">📋</button>
+      </div>
     </div>
   </div>
 
@@ -294,14 +259,18 @@
     <div class="card">
       <h2>🔓 ترجمة رسالة مشفرة</h2>
       <label>الصق الشيفرة المستلمة</label>
-      <textarea id="cipherInput" placeholder="ENC:..."></textarea>
+      <textarea id="cipherInput" placeholder="ENC:..." rows="1"></textarea>
       <label>كلمة مفتاح التشفير</label>
       <input type="password" id="decryptKeyInput" placeholder="نفس الكلمة المتفق عليها">
+      
       <div class="btn-row">
         <button class="btn btn-warn" id="decryptBtn">🔓 فك التشفير</button>
-        <button class="btn btn-ghost" id="clearBtn">🗑️ مسح</button>
       </div>
-      <div class="output-box empty" id="decryptOutput">ستظهر الرسالة الأصلية هنا...</div>
+      
+      <div class="output-wrapper">
+        <div class="output-box empty" id="decryptOutput">ستظهر الرسالة الأصلية هنا...</div>
+        <button class="copy-icon-btn" id="copyDecryptBtn" disabled title="نسخ">📋</button>
+      </div>
     </div>
   </div>
 
@@ -313,7 +282,7 @@
       <input type="text" id="contactName" placeholder="مثال: أحمد">
       <label>رقم الهاتف</label>
       <input type="tel" id="phoneInput" placeholder="+967771234567">
-      <button class="btn btn-primary" style="margin-top:16px; width:100%;" id="addPhoneBtn">+ إضافة رقم</button>
+      <button class="btn btn-primary" style="margin-top:18px; width:100%;" id="addPhoneBtn">+ إضافة الرقم للقائمة</button>
       <div class="contact-list" id="contactList"></div>
     </div>
   </div>
@@ -328,59 +297,99 @@
       </div>
       <input type="file" id="importFile" accept=".json" style="display:none;">
       <div class="btn-row">
-        <button class="btn btn-danger" id="clearAllBtn">🗑️ حذف كل بياناتي</button>
+        <button class="btn btn-danger" id="clearAllBtn">🗑️ حذف بياناتي</button>
       </div>
-      <div class="btn-row" style="margin-top:25px;">
+      <div class="btn-row" style="margin-top:30px;">
         <button class="btn btn-warn" id="logoutBtn">🚪 تسجيل الخروج</button>
       </div>
     </div>
   </div>
 
-  <!-- تبويب لوحة التحكم (للمدير فقط) -->
+  <!-- تبويب لوحة التحكم (للمدير) -->
   <div class="tab-content" id="tab-admin">
     <div class="card" id="adminSection">
-      <h2>👑 لوحة تحكم المدير</h2>
-      <p class="hint" style="margin-bottom:15px;">أضف مستخدمين جدد للدخول إلى التطبيق.</p>
+      <h2>👑 لوحة الإدارة</h2>
       
-      <label>اسم المستخدم الجديد</label>
-      <input type="text" id="newUserName" placeholder="مثال: Ahmed">
-      
-      <label>كلمة المرور</label>
-      <input type="password" id="newUserPass" placeholder="كلمة مرور قوية">
-      
-      <button class="btn btn-primary" style="margin-top:16px; width:100%;" id="addUserBtn">+ إضافة مستخدم</button>
-      
-      <h2 style="margin-top:25px;">قائمة المستخدمين</h2>
+      <!-- تغيير كلمة المرور -->
+      <div style="background: rgba(245,158,11,0.1); border: 1px solid var(--warn); border-radius: 16px; padding: 16px; margin-bottom: 20px;">
+        <h3 style="color: var(--warn); font-size: 15px; margin-bottom: 12px;">🔑 تغيير كلمة مرور المدير (NASH)</h3>
+        <input type="password" id="adminOldPass" placeholder="الكلمة الحالية" style="margin-bottom: 10px;">
+        <input type="password" id="adminNewPass" placeholder="الكلمة الجديدة" style="margin-bottom: 10px;">
+        <input type="password" id="adminConfirmPass" placeholder="تأكيد الكلمة" style="margin-bottom: 10px;">
+        <button class="btn btn-warn" style="width:100%;" id="changeAdminPassBtn">تحديث كلمة المرور</button>
+      </div>
+
+      <!-- إعادة تعيين مستخدم -->
+      <div style="background: rgba(34,197,94,0.1); border: 1px solid var(--success); border-radius: 16px; padding: 16px; margin-bottom: 20px;">
+        <h3 style="color: var(--success); font-size: 15px; margin-bottom: 12px;">🔄 إعادة تعيين كلمة مرور مستخدم</h3>
+        <input type="text" id="resetUserName" placeholder="اسم المستخدم" style="margin-bottom: 10px;">
+        <input type="password" id="resetUserPass" placeholder="الكلمة الجديدة" style="margin-bottom: 10px;">
+        <button class="btn btn-success" style="width:100%;" id="resetUserPassBtn">تحديث كلمة المرور</button>
+      </div>
+
+      <!-- توليد دعوة -->
+      <div style="background: rgba(56,189,248,0.1); border: 1px solid var(--accent); border-radius: 16px; padding: 16px; margin-bottom: 20px;">
+        <h3 style="color: var(--accent); font-size: 15px; margin-bottom: 12px;">💌 توليد رابط دعوة</h3>
+        <input type="text" id="inviteName" placeholder="اسم المستخدم للدعوة" style="margin-bottom: 10px;">
+        <input type="password" id="invitePass" placeholder="كلمة المرور" style="margin-bottom: 10px;">
+        <button class="btn btn-primary" style="width:100%;" id="generateInviteBtn">توليد الرابط</button>
+        <div class="output-box empty" id="inviteOutput" style="font-size: 12px; margin-top:12px; padding: 12px;">سيظهر الرابط هنا...</div>
+        <button class="btn btn-ghost" style="width:100%; margin-top:10px; display:none;" id="copyInviteBtn">📋 نسخ الرابط</button>
+      </div>
+
+      <!-- حظر وإلغاء -->
+      <div style="background: rgba(239,68,68,0.1); border: 1px solid var(--danger); border-radius: 16px; padding: 16px; margin-bottom: 20px;">
+        <h3 style="color: var(--danger); font-size: 15px; margin-bottom: 12px;">🚫 حظر / إعادة تفعيل</h3>
+        <input type="text" id="revokeName" placeholder="اسم المستخدم" style="margin-bottom: 10px;">
+        <div class="btn-row">
+          <button class="btn btn-danger" id="generateRevokeBtn">توليد رابط حظر</button>
+          <button class="btn btn-success" id="generateActivateBtn">توليد رابط تفعيل</button>
+        </div>
+        <div class="output-box empty" id="revokeOutput" style="font-size: 12px; margin-top:12px; padding: 12px;">سيظهر الرابط هنا...</div>
+        <button class="btn btn-ghost" style="width:100%; margin-top:10px; display:none;" id="copyRevokeBtn">📋 نسخ الرابط</button>
+      </div>
+
+      <h2 style="margin-top:25px;">الحسابات المسجلة (هذا الجهاز)</h2>
       <div class="contact-list" id="userList"></div>
     </div>
   </div>
 
-  <!-- بطاقة المصمم المحدثة -->
+  <!-- بطاقة المصمم -->
   <div class="designer-badge">
     صُمم وبُرمج بعناية بواسطة
     <strong>نشوان البدري</strong>
     <a href="tel:771713275" class="designer-phone">📞 771713275</a>
-    <div style="margin-top:15px; font-size:11px; opacity:0.6;">الإصدار 3.0 - يعمل بدون إنترنت</div>
+    <div style="margin-top:15px; font-size:12px; opacity:0.6;">الإصدار 5.0 - يعمل بدون إنترنت</div>
   </div>
+</div>
+
+<!-- شريط التنقل السفلي -->
+<div class="bottom-nav" id="bottomNav" style="display:none;">
+  <button class="nav-btn active" data-tab="encrypt"><span class="icon">🔒</span>تشفير</button>
+  <button class="nav-btn" data-tab="decrypt"><span class="icon">🔓</span>فك</button>
+  <button class="nav-btn" data-tab="contacts"><span class="icon">📇</span>الأرقام</button>
+  <button class="nav-btn" data-tab="settings"><span class="icon">⚙️</span>إعدادات</button>
+  <button class="nav-btn" data-tab="admin" id="adminTab" style="display:none;"><span class="icon">👑</span>الإدارة</button>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
 // ============================================================
-// تطبيق الرسائل المشفرة — نشوان البدري
-// الإصدار 3.0 (النهائي)
+// تطبيق الرسائل المشفرة — نشوان البدري (الإصدار 5.0)
 // ============================================================
 
-const STORAGE_USERS = "nashwan_users_v3";
-const STORAGE_SESSION = "nashwan_session_v3";
-const STORAGE_CONTACTS = "nashwan_contacts_v3_"; 
-const STORAGE_THEME = "nashwan_theme_v3";
+const STORAGE_USERS = "nashwan_users_v4";
+const STORAGE_SESSION = "nashwan_session_v4";
+const STORAGE_CONTACTS = "nashwan_contacts_v4_"; 
+const STORAGE_THEME = "nashwan_theme_v4";
+const STORAGE_BLOCKED = "nashwan_blocked_v4";
+const APP_URL = window.location.origin + window.location.pathname;
 
 let currentUser = null;
 let isAdmin = false;
 
-/* ---------- دوال المساعدة ---------- */
+/* ---------- دوال مساعدة ---------- */
 function showToast(msg, isErr = false) {
   const t = document.getElementById("toast");
   t.innerHTML = (isErr ? "❌ " : "✅ ") + msg;
@@ -390,6 +399,32 @@ function showToast(msg, isErr = false) {
 
 function escapeHtml(s) {
   return String(s).replace(/[&<>"']/g, m => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;" }[m]));
+}
+
+function base64Encode(str) { return btoa(unescape(encodeURIComponent(str))); }
+function base64Decode(str) { return decodeURIComponent(escape(atob(str))); }
+
+async function copyText(txt) {
+  try { await navigator.clipboard.writeText(txt); showToast("📋 تم النسخ بنجاح"); } 
+  catch { showToast("فشل النسخ", true); }
+}
+
+// دالة التوسيع التلقائي
+function autoResizeElement(el) {
+  el.style.height = 'auto';
+  el.style.height = el.scrollHeight + 'px';
+}
+
+// دالة تمرير الشاشة عند الكتابة (لحل مشكلة الكيبورد)
+function initKeyboardScroll() {
+  const inputs = document.querySelectorAll('input, textarea');
+  inputs.forEach(input => {
+    input.addEventListener('focus', (e) => {
+      setTimeout(() => {
+        e.target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 300);
+    });
+  });
 }
 
 /* ---------- التشفير ---------- */
@@ -421,20 +456,46 @@ async function decryptText(encoded, password) {
   } catch { return null; }
 }
 
-/* ---------- تسجيل الدخول والإدارة ---------- */
+/* ---------- نظام الحسابات ---------- */
 function initUsers() {
   let users = JSON.parse(localStorage.getItem(STORAGE_USERS) || "{}");
   if (!users["NASH"]) {
     users["NASH"] = "7717132";
     localStorage.setItem(STORAGE_USERS, JSON.stringify(users));
   }
+  if (!localStorage.getItem(STORAGE_BLOCKED)) {
+    localStorage.setItem(STORAGE_BLOCKED, "[]");
+  }
 }
+
+const forms = {
+  login: document.getElementById("loginForm"),
+  register: document.getElementById("registerForm"),
+  invite: document.getElementById("inviteForm")
+};
+
+function showForm(formName) {
+  Object.values(forms).forEach(f => f.style.display = "none");
+  forms[formName].style.display = "block";
+  document.getElementById("loginError").textContent = "";
+  document.getElementById("loginTitle").textContent = 
+    formName === "login" ? "🔐 الدخول" :
+    formName === "register" ? "📝 حساب جديد" : "💌 كود";
+}
+
+document.getElementById("showRegister").onclick = (e) => { e.preventDefault(); showForm("register"); };
+document.getElementById("showLoginFromReg").onclick = (e) => { e.preventDefault(); showForm("login"); };
+document.getElementById("showInvite").onclick = (e) => { e.preventDefault(); showForm("invite"); };
+document.getElementById("showLoginFromInvite").onclick = (e) => { e.preventDefault(); showForm("login"); };
 
 document.getElementById("loginBtn").addEventListener("click", () => {
   const user = document.getElementById("loginUser").value.trim();
   const pass = document.getElementById("loginPass").value.trim();
-  const users = JSON.parse(localStorage.getItem(STORAGE_USERS) || "{}");
+  const blocked = JSON.parse(localStorage.getItem(STORAGE_BLOCKED) || "[]");
   
+  if (blocked.includes(user)) return document.getElementById("loginError").textContent = "🚫 هذا الحساب محظور.";
+
+  const users = JSON.parse(localStorage.getItem(STORAGE_USERS) || "{}");
   if (users[user] && users[user] === pass) {
     currentUser = user;
     isAdmin = (user === "NASH");
@@ -445,98 +506,201 @@ document.getElementById("loginBtn").addEventListener("click", () => {
   }
 });
 
+document.getElementById("registerBtn").addEventListener("click", () => {
+  const user = document.getElementById("regUser").value.trim();
+  const pass = document.getElementById("regPass").value.trim();
+  const blocked = JSON.parse(localStorage.getItem(STORAGE_BLOCKED) || "[]");
+  
+  if (blocked.includes(user)) return document.getElementById("loginError").textContent = "🚫 هذا الاسم محظور.";
+  if (!user || !pass) return document.getElementById("loginError").textContent = "يرجى تعبئة جميع الحقول";
+  
+  let users = JSON.parse(localStorage.getItem(STORAGE_USERS) || "{}");
+  if (users[user]) return document.getElementById("loginError").textContent = "اسم المستخدم مسجل مسبقاً";
+  
+  users[user] = pass;
+  localStorage.setItem(STORAGE_USERS, JSON.stringify(users));
+  currentUser = user;
+  isAdmin = false;
+  localStorage.setItem(STORAGE_SESSION, user);
+  startApp();
+  showToast("تم إنشاء الحساب بنجاح");
+});
+
+document.getElementById("activateInviteBtn").addEventListener("click", () => {
+  const code = document.getElementById("inviteCodeInput").value.trim();
+  if (!code) return document.getElementById("loginError").textContent = "يرجى لصق الكود";
+  processCode(code);
+});
+
+function processCode(code) {
+  if (code.startsWith("INV:")) {
+    try {
+      const data = JSON.parse(base64Decode(code.slice(4)));
+      const blocked = JSON.parse(localStorage.getItem(STORAGE_BLOCKED) || "[]");
+      if (blocked.includes(data.u)) return document.getElementById("loginError").textContent = "🚫 هذا الحساب محظور";
+
+      let users = JSON.parse(localStorage.getItem(STORAGE_USERS) || "{}");
+      users[data.u] = data.p;
+      localStorage.setItem(STORAGE_USERS, JSON.stringify(users));
+      currentUser = data.u; isAdmin = false;
+      localStorage.setItem(STORAGE_SESSION, data.u);
+      startApp(); showToast("تم تفعيل الدعوة");
+    } catch(e) { document.getElementById("loginError").textContent = "كود غير صالح"; }
+  } 
+  else if (code.startsWith("REV:")) {
+    try {
+      const u = base64Decode(code.slice(4));
+      let blocked = JSON.parse(localStorage.getItem(STORAGE_BLOCKED) || "[]");
+      if (!blocked.includes(u)) { blocked.push(u); localStorage.setItem(STORAGE_BLOCKED, JSON.stringify(blocked)); }
+      
+      let users = JSON.parse(localStorage.getItem(STORAGE_USERS) || "{}");
+      if (users[u]) { delete users[u]; localStorage.setItem(STORAGE_USERS, JSON.stringify(users)); }
+      
+      showToast("🚫 تم حظر الحساب", true);
+      if (currentUser === u) { localStorage.removeItem(STORAGE_SESSION); setTimeout(() => location.reload(), 2000); }
+      else { setTimeout(() => showForm("login"), 2000); }
+    } catch(e) { document.getElementById("loginError").textContent = "كود غير صالح"; }
+  } 
+  else if (code.startsWith("ACT:")) {
+    try {
+      const u = base64Decode(code.slice(4));
+      let blocked = JSON.parse(localStorage.getItem(STORAGE_BLOCKED) || "[]");
+      blocked = blocked.filter(name => name !== u);
+      localStorage.setItem(STORAGE_BLOCKED, JSON.stringify(blocked));
+      showToast("✅ تم إعادة التفعيل");
+      setTimeout(() => showForm("login"), 2000);
+    } catch(e) { document.getElementById("loginError").textContent = "كود غير صالح"; }
+  }
+}
+
 document.getElementById("logoutBtn").addEventListener("click", () => {
-  localStorage.removeItem(STORAGE_SESSION);
-  location.reload();
+  localStorage.removeItem(STORAGE_SESSION); location.reload();
 });
 
 function startApp() {
   document.getElementById("loginScreen").style.display = "none";
   document.getElementById("mainApp").style.display = "block";
+  document.getElementById("bottomNav").style.display = "flex";
   document.getElementById("welcomeUser").textContent = currentUser;
   
   if (isAdmin) {
-    document.getElementById("adminTab").style.display = "block";
+    document.getElementById("adminTab").style.display = "flex";
     document.getElementById("adminSection").style.display = "block";
     renderUsers();
   }
   
   applyTheme(localStorage.getItem(STORAGE_THEME) || "dark");
   renderContacts();
+  initKeyboardScroll();
 }
 
-/* ---------- إدارة المستخدمين (للمدير) ---------- */
+/* ---------- إدارة الحسابات ---------- */
 function renderUsers() {
   const users = JSON.parse(localStorage.getItem(STORAGE_USERS) || "{}");
+  const blocked = JSON.parse(localStorage.getItem(STORAGE_BLOCKED) || "[]");
   const list = document.getElementById("userList");
   list.innerHTML = "";
   
   for (let u in users) {
+    if (u === "NASH") continue;
     const div = document.createElement("div");
     div.className = "contact-item";
-    div.innerHTML = `<span>👤 ${escapeHtml(u)}</span>`;
-    if (u !== "NASH") {
-      const btn = document.createElement("button");
-      btn.className = "remove"; btn.textContent = "حذف";
-      btn.onclick = () => {
-        delete users[u];
-        localStorage.setItem(STORAGE_USERS, JSON.stringify(users));
-        renderUsers(); showToast("تم حذف المستخدم");
-      };
-      div.appendChild(btn);
-    } else {
-      div.innerHTML += `<span style="font-size:11px; color:var(--accent); font-weight:bold;">(مدير)</span>`;
-    }
-    list.appendChild(div);
+    const isBlocked = blocked.includes(u);
+    div.innerHTML = `<span style="${isBlocked ? 'text-decoration: line-through; color: var(--danger);' : ''}">👤 ${escapeHtml(u)} ${isBlocked ? '🚫' : ''}</span>`;
+    
+    const btn = document.createElement("button");
+    btn.className = "remove"; btn.textContent = "حذف";
+    btn.onclick = () => {
+      if (confirm(`حذف المستخدم (${u}) وكل أرقامه؟`)) {
+          delete users[u]; localStorage.setItem(STORAGE_USERS, JSON.stringify(users));
+          localStorage.removeItem(STORAGE_CONTACTS + u); renderUsers(); showToast("تم الحذف");
+      }
+    };
+    div.appendChild(btn); list.appendChild(div);
   }
 }
 
-document.getElementById("addUserBtn").addEventListener("click", () => {
-  const u = document.getElementById("newUserName").value.trim();
-  const p = document.getElementById("newUserPass").value.trim();
-  if (!u || !p) return showToast("أدخل الاسم وكلمة المرور", true);
+document.getElementById("changeAdminPassBtn").addEventListener("click", () => {
+  const oldP = document.getElementById("adminOldPass").value;
+  const newP = document.getElementById("adminNewPass").value;
+  const confP = document.getElementById("adminConfirmPass").value;
+  
+  if (!oldP || !newP || !confP) return showToast("يرجى تعبئة الحقول", true);
+  if (newP !== confP) return showToast("تأكيد الكلمة غير متطابق", true);
   
   let users = JSON.parse(localStorage.getItem(STORAGE_USERS) || "{}");
-  if (users[u]) return showToast("المستخدم موجود مسبقاً", true);
+  if (users["NASH"] !== oldP) return showToast("الكلمة الحالية خاطئة", true);
   
-  users[u] = p;
-  localStorage.setItem(STORAGE_USERS, JSON.stringify(users));
-  document.getElementById("newUserName").value = "";
-  document.getElementById("newUserPass").value = "";
-  renderUsers(); showToast("تم إضافة المستخدم");
+  users["NASH"] = newP; localStorage.setItem(STORAGE_USERS, JSON.stringify(users));
+  document.getElementById("adminOldPass").value = ""; document.getElementById("adminNewPass").value = ""; document.getElementById("adminConfirmPass").value = "";
+  showToast("✅ تم التحديث");
 });
 
-/* ---------- الأرقام (خاصة بكل مستخدم) ---------- */
-function getUserContactsKey() { return STORAGE_CONTACTS + currentUser; }
+document.getElementById("resetUserPassBtn").addEventListener("click", () => {
+  const u = document.getElementById("resetUserName").value.trim();
+  const p = document.getElementById("resetUserPass").value.trim();
+  if (!u || !p) return showToast("أدخل البيانات", true);
+  
+  let users = JSON.parse(localStorage.getItem(STORAGE_USERS) || "{}");
+  if (!users[u] || u === "NASH") return showToast("مستخدم غير صالح", true);
+  
+  users[u] = p; localStorage.setItem(STORAGE_USERS, JSON.stringify(users));
+  document.getElementById("resetUserName").value = ""; document.getElementById("resetUserPass").value = "";
+  showToast("✅ تم تحديث كلمة المرور");
+});
 
-function loadContacts() {
-  try { return JSON.parse(localStorage.getItem(getUserContactsKey()) || "[]"); } catch { return []; }
-}
+document.getElementById("generateInviteBtn").addEventListener("click", () => {
+  const u = document.getElementById("inviteName").value.trim();
+  const p = document.getElementById("invitePass").value.trim();
+  if (!u || !p) return showToast("أدخل البيانات", true);
+  
+  const link = APP_URL + "?code=INV:" + encodeURIComponent(base64Encode(JSON.stringify({ u, p })));
+  const out = document.getElementById("inviteOutput");
+  out.classList.remove("empty"); out.textContent = link;
+  document.getElementById("copyInviteBtn").style.display = "inline-flex";
+  document.getElementById("copyInviteBtn").onclick = () => copyText(link);
+});
+
+document.getElementById("generateRevokeBtn").addEventListener("click", () => {
+  const u = document.getElementById("revokeName").value.trim();
+  if (!u) return showToast("أدخل الاسم", true);
+  const link = APP_URL + "?code=REV:" + encodeURIComponent(base64Encode(u));
+  const out = document.getElementById("revokeOutput");
+  out.classList.remove("empty"); out.textContent = link;
+  document.getElementById("copyRevokeBtn").style.display = "inline-flex";
+  document.getElementById("copyRevokeBtn").onclick = () => copyText(link);
+});
+
+document.getElementById("generateActivateBtn").addEventListener("click", () => {
+  const u = document.getElementById("revokeName").value.trim();
+  if (!u) return showToast("أدخل الاسم", true);
+  const link = APP_URL + "?code=ACT:" + encodeURIComponent(base64Encode(u));
+  const out = document.getElementById("revokeOutput");
+  out.classList.remove("empty"); out.textContent = link;
+  document.getElementById("copyRevokeBtn").style.display = "inline-flex";
+  document.getElementById("copyRevokeBtn").onclick = () => copyText(link);
+});
+
+/* ---------- الأرقام ---------- */
+function getUserContactsKey() { return STORAGE_CONTACTS + currentUser; }
+function loadContacts() { try { return JSON.parse(localStorage.getItem(getUserContactsKey()) || "[]"); } catch { return []; } }
 function saveContacts(list) { localStorage.setItem(getUserContactsKey(), JSON.stringify(list)); }
 
 function renderContacts() {
   const contacts = loadContacts();
   const list = document.getElementById("contactList");
   const select = document.getElementById("recipientSelect");
-  list.innerHTML = "";
-  select.innerHTML = '<option value="">— بدون رقم محدد —</option>';
+  list.innerHTML = ""; select.innerHTML = '<option value="">— بدون رقم محدد —</option>';
   document.getElementById("contactCount").textContent = contacts.length;
 
   contacts.forEach((c, idx) => {
     const div = document.createElement("div");
     div.className = "contact-item";
-    div.innerHTML = `<div><div style="font-weight:700; font-size:14px;">${escapeHtml(c.name || "بدون اسم")}</div><div style="font-size:12px; color:var(--text-muted); font-family:monospace;">${escapeHtml(c.number)}</div></div>`;
-    
-    const rm = document.createElement("button");
-    rm.className = "remove"; rm.textContent = "حذف";
+    div.innerHTML = `<div><div style="font-weight:700;">${escapeHtml(c.name || "بدون اسم")}</div><div style="font-size:12px; color:var(--text-muted); font-family:monospace;">${escapeHtml(c.number)}</div></div>`;
+    const rm = document.createElement("button"); rm.className = "remove"; rm.textContent = "حذف";
     rm.onclick = () => { const u = loadContacts(); u.splice(idx, 1); saveContacts(u); renderContacts(); };
-    div.appendChild(rm);
-    list.appendChild(div);
-
-    const opt = document.createElement("option");
-    opt.value = c.number;
-    opt.textContent = (c.name ? c.name + " — " : "") + c.number;
-    select.appendChild(opt);
+    div.appendChild(rm); list.appendChild(div);
+    const opt = document.createElement("option"); opt.value = c.number; opt.textContent = (c.name ? c.name + " — " : "") + c.number; select.appendChild(opt);
   });
 }
 
@@ -544,18 +708,16 @@ document.getElementById("addPhoneBtn").addEventListener("click", () => {
   const num = document.getElementById("phoneInput").value.trim();
   const name = document.getElementById("contactName").value.trim();
   if (!num) return showToast("أدخل رقماً", true);
-  if (!/^\+?[\d\s\-]{6,20}$/.test(num)) return showToast("صيغة الرقم غير صحيحة", true);
   
   const contacts = loadContacts();
   if (contacts.some(c => c.number === num)) return showToast("الرقم مضاف مسبقاً", true);
   
   contacts.push({ name, number: num });
   saveContacts(contacts);
-  document.getElementById("phoneInput").value = ""; 
-  document.getElementById("contactName").value = "";
-  renderContacts(); 
-  showToast("تمت الإضافة");
+  document.getElementById("phoneInput").value = ""; document.getElementById("contactName").value = "";
+  renderContacts(); showToast("تمت الإضافة");
 });
+
 /* ---------- التشفير من الواجهة ---------- */
 document.getElementById("encryptBtn").addEventListener("click", async () => {
   const msg = document.getElementById("messageInput").value.trim();
@@ -564,27 +726,23 @@ document.getElementById("encryptBtn").addEventListener("click", async () => {
   if (!key || key.length < 4) return showToast("كلمة المفتاح 4 أحرف على الأقل", true);
 
   const btn = document.getElementById("encryptBtn");
-  btn.disabled = true; btn.textContent = "⏳...";
+  btn.disabled = true; btn.textContent = "⏳ جاري...";
+  
   try {
     const cipher = await encryptText(msg, key);
     const out = document.getElementById("encryptOutput");
     out.classList.remove("empty"); out.textContent = cipher;
-    ["copyBtn", "shareBtn", "smsBtn"].forEach(id => document.getElementById(id).disabled = false);
-    showToast("✅ تم التشفير");
+    autoResizeElement(out);
+    
+    document.getElementById("copyEncryptBtn").disabled = false;
+    document.getElementById("smsBtn").disabled = false;
+    showToast("تم التشفير بنجاح");
   } catch { showToast("خطأ في التشفير", true); }
   finally { btn.disabled = false; btn.textContent = "🔒 تشفير"; }
 });
 
-document.getElementById("copyBtn").addEventListener("click", async () => {
-  const txt = document.getElementById("encryptOutput").textContent;
-  if (!txt || document.getElementById("encryptOutput").classList.contains("empty")) return;
-  try { await navigator.clipboard.writeText(txt); showToast("📋 تم النسخ"); } catch { showToast("فشل النسخ", true); }
-});
-
-document.getElementById("shareBtn").addEventListener("click", async () => {
-  const txt = document.getElementById("encryptOutput").textContent;
-  if (navigator.share) { try { await navigator.share({ title: "رسالة مشفرة", text: txt }); } catch {} }
-  else { await navigator.clipboard.writeText(txt); showToast("تم النسخ — الصقه في أي تطبيق"); }
+document.getElementById("copyEncryptBtn").addEventListener("click", () => {
+  copyText(document.getElementById("encryptOutput").textContent);
 });
 
 document.getElementById("smsBtn").addEventListener("click", () => {
@@ -601,21 +759,28 @@ document.getElementById("decryptBtn").addEventListener("click", async () => {
   if (!cipher || !key) return showToast("أدخل الشيفرة والمفتاح", true);
 
   const btn = document.getElementById("decryptBtn");
-  btn.disabled = true; btn.textContent = "⏳...";
+  btn.disabled = true; btn.textContent = "⏳ جاري...";
+  
   const res = await decryptText(cipher, key);
   const out = document.getElementById("decryptOutput");
   out.classList.remove("empty");
   
-  if (res === null) { out.textContent = "❌ تعذر الفك — تحقق من المفتاح أو الشيفرة"; out.style.color = "var(--danger)"; showToast("فشل الفك", true); }
-  else { out.textContent = res; out.style.color = "var(--success)"; showToast("✅ تم الفك"); }
-  
+  if (res === null) { 
+    out.textContent = "❌ تعذر الفك — تحقق من المفتاح أو الشيفرة"; 
+    out.style.color = "var(--danger)"; 
+    document.getElementById("copyDecryptBtn").disabled = true;
+    showToast("فشل الفك", true); 
+  } else { 
+    out.textContent = res; out.style.color = "var(--success)"; 
+    autoResizeElement(out);
+    document.getElementById("copyDecryptBtn").disabled = false;
+    showToast("✅ تم الفك"); 
+  }
   btn.disabled = false; btn.textContent = "🔓 فك التشفير";
 });
 
-document.getElementById("clearBtn").addEventListener("click", () => {
-  document.getElementById("cipherInput").value = ""; document.getElementById("decryptKeyInput").value = "";
-  const out = document.getElementById("decryptOutput");
-  out.textContent = "ستظهر الرسالة الأصلية هنا..."; out.classList.add("empty"); out.style.color = "var(--accent)";
+document.getElementById("copyDecryptBtn").addEventListener("click", () => {
+  copyText(document.getElementById("decryptOutput").textContent);
 });
 
 /* ---------- الثيمات والتبويبات ---------- */
@@ -627,23 +792,30 @@ function applyTheme(name) {
 }
 document.querySelectorAll(".theme-btn").forEach(b => b.addEventListener("click", () => applyTheme(b.dataset.th)));
 
-document.querySelectorAll(".tab").forEach(tab => {
+document.querySelectorAll(".nav-btn").forEach(tab => {
   tab.addEventListener("click", () => {
-    document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+    document.querySelectorAll(".nav-btn").forEach(t => t.classList.remove("active"));
     document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
     tab.classList.add("active");
     document.getElementById("tab-" + tab.dataset.tab).classList.add("active");
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 });
 
-/* ---------- تصدير/استيراد ---------- */
+// إضافة أحداث التوسيع التلقائي لحقول الإدخال
+document.querySelectorAll('textarea').forEach(ta => {
+  ta.addEventListener('input', () => autoResizeElement(ta));
+});
+
+/* ---------- تصدير/استيراد وحذف ---------- */
 document.getElementById("exportBtn").addEventListener("click", () => {
   const data = JSON.stringify(loadContacts(), null, 2);
   const blob = new Blob([data], { type: "application/json" });
   const url = URL.createObjectURL(blob);
-  const a = document.createElement("a"); a.href = url; a.download = "contacts.json"; a.click();
-  URL.revokeObjectURL(url);
+  const a = document.createElement("a"); a.href = url; a.download = `contacts_${currentUser}.json`; a.click();
+  URL.revokeObjectURL(url); showToast("تم التصدير");
 });
+
 document.getElementById("importBtn").addEventListener("click", () => document.getElementById("importFile").click());
 document.getElementById("importFile").addEventListener("change", (e) => {
   const file = e.target.files[0]; if (!file) return;
@@ -654,23 +826,42 @@ document.getElementById("importFile").addEventListener("change", (e) => {
       if (!Array.isArray(data)) throw new Error();
       const merged = [...loadContacts()];
       data.forEach(c => { if (c.number && !merged.some(m => m.number === c.number)) merged.push(c); });
-      saveContacts(merged); renderContacts(); showToast("📥 تم الاستيراد");
+      saveContacts(merged); renderContacts(); showToast("تم الاستيراد");
     } catch { showToast("ملف غير صالح", true); }
   };
   reader.readAsText(file); document.getElementById("importFile").value = "";
 });
+
 document.getElementById("clearAllBtn").addEventListener("click", () => {
-  if (!confirm("سيتم حذف أرقامك. متأكد؟")) return;
-  localStorage.removeItem(getUserContactsKey()); renderContacts(); showToast("🗑️ تم الحذف");
+  if (!confirm("سيتم حذف جميع أرقامك. متأكد؟")) return;
+  localStorage.removeItem(getUserContactsKey()); renderContacts(); showToast("تم الحذف");
 });
 
 /* ---------- بدء التشغيل ---------- */
 initUsers();
-const savedSession = localStorage.getItem(STORAGE_SESSION);
-if (savedSession) {
-  currentUser = savedSession;
-  isAdmin = (currentUser === "NASH");
-  startApp();
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(e => console.log(e)));
+}
+
+const urlParams = new URLSearchParams(window.location.search);
+const codeParam = urlParams.get('code');
+if (codeParam) {
+  document.getElementById("inviteCodeInput").value = decodeURIComponent(codeParam);
+  showForm("invite");
+  setTimeout(() => {
+    if(confirm("هل تريد تنفيذ الكود؟")) {
+      processCode(decodeURIComponent(codeParam));
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  }, 600);
+} else {
+  const savedSession = localStorage.getItem(STORAGE_SESSION);
+  if (savedSession) {
+    currentUser = savedSession;
+    isAdmin = (currentUser === "NASH");
+    startApp();
+  }
 }
 </script>
 </body>
