@@ -1,4 +1,4 @@
-const CACHE = 'nashwan-secure-v3';
+const CACHE = 'nashwan-secure-v3'; 
 const ASSETS = [
   './',
   './index.html',
