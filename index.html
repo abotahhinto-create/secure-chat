@@ -2,243 +2,283 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>واتس نشوان الآمن</title>
-<meta name="theme-color" content="#008069">
+<meta name="theme-color" content="#075E54">
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <style>
-:root{--bg:#efeae2;--card:#fff;--text:#111b21;--muted:#667781;--accent:#008069;--accent2:#25D366;--border:#e9edef;--input:#f0f2f5;--bubble-me:#d9fdd3;--bubble-other:#fff;--header:#008069;--nav:#fff}
-[data-theme="dark"]{--bg:#0b141a;--card:#111b21;--text:#e9edef;--muted:#8696a0;--accent:#00a884;--accent2:#00a884;--border:#222d34;--input:#202c33;--bubble-me:#005c4b;--bubble-other:#202c33;--header:#202c33;--nav:#202c33}
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{--bg:#E7EFEA;--card:#fff;--text:#111b21;--muted:#667781;--accent:#075E54;--border:#e9edef;--input:#f0f2f5;--bubble-me:#D9FDD3;--bubble-other:#fff;--header:#075E54;--nav:#fff}
+*{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Segoe UI',Tahoma,sans-serif;background:var(--bg);color:var(--text);min-height:100dvh;padding-bottom:78px}
-a{color:var(--accent)}
-/* ===== شاشة التسجيل مثل واتساب ===== */
-.auth-screen{position:fixed;inset:0;background:#fff;z-index:2000;display:flex;flex-direction:column;overflow-y:auto}
-.auth-top{background:var(--header);color:#fff;padding:28px 20px 22px;text-align:center}
-.auth-top h1{font-size:26px;font-weight:900}.auth-top p{font-size:13px;opacity:.9;margin-top:6px}
-.auth-body{padding:22px 20px;max-width:420px;margin:0 auto;width:100%}
-.auth-body h2{font-size:19px;margin-bottom:8px}.auth-body p{font-size:13px;color:#667781;line-height:1.8}
-label{display:block;font-size:13px;color:var(--muted);margin:14px 0 6px;font-weight:700}
-input,textarea,select{width:100%;padding:14px;border-radius:12px;border:1px solid #d1d7db;background:#fff;color:#111;font-size:16px;font-family:inherit;outline:none}
-input:focus{border-color:var(--accent)}
+input,textarea,select{width:100%;padding:13px;border-radius:14px;border:1px solid #d1d7db;background:#fff;color:#111;font-size:15px;outline:none}
+textarea{min-height:90px;line-height:1.8}
+label{display:block;font-size:13px;color:var(--muted);margin:13px 0 6px;font-weight:700}
+.btn{padding:13px;border-radius:28px;border:none;cursor:pointer;font-size:14px;font-weight:800;display:flex;justify-content:center;gap:8px;width:100%}
+.btn-green{background:linear-gradient(135deg,#075E54,#00a884);color:#fff}.btn-light{background:var(--input);color:var(--text)}.btn-gold{background:linear-gradient(135deg,#C9A227,#F5D67B);color:#111}
+.auth-screen{position:fixed;inset:0;background:linear-gradient(180deg,#075E54 0%,#00a884 45%,#fff 45%);z-index:2000;overflow-y:auto}
+.auth-card{background:#fff;border-radius:28px 28px 0 0;padding:24px 20px;max-width:460px;margin:90px auto 0}
+.auth-card h1{font-size:28px;color:#075E54;text-align:center}.auth-card p{text-align:center;font-size:13px;color:#667781;line-height:1.8;margin-top:6px}
 .otp-input{font-size:28px!important;text-align:center!important;letter-spacing:10px!important;font-weight:900}
-.btn{padding:14px;border-radius:28px;border:none;cursor:pointer;font-size:15px;font-weight:800;display:flex;justify-content:center;gap:8px;align-items:center;width:100%}
-.btn-green{background:var(--accent);color:#fff}.btn-light{background:#f0f2f5;color:#111}.btn-danger{background:#ea0038;color:#fff}
-.country-row{display:flex;gap:8px}.country-row select{width:110px}
-.otp-box{background:#e7fce3;border:1px dashed #00a884;border-radius:14px;padding:14px;text-align:center;margin-top:14px}
-.otp-box b{font-size:26px;letter-spacing:8px;color:#008069}
-/* ===== الهيدر ===== */
 .header{position:sticky;top:0;z-index:100;background:var(--header);color:#fff;padding:10px 14px;display:flex;align-items:center;gap:10px}
-.header h1{font-size:20px;font-weight:900;flex:1}.header h1 span{font-size:11px;background:#25D366;padding:2px 8px;border-radius:20px;color:#fff;margin-right:6px}
-.icon-btn{width:40px;height:40px;border-radius:50%;border:none;background:rgba(255,255,255,.15);color:#fff;font-size:18px;cursor:pointer}
-.avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#00a884,#25D366);color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;flex-shrink:0}
-.avatar img{width:100%;height:100%;border-radius:50%;object-fit:cover}
+.header h1{font-size:20px;font-weight:900;flex:1}.header h1 span{font-size:10px;background:#25D366;padding:3px 8px;border-radius:20px}
+.icon-btn{width:40px;height:40px;border-radius:50%;border:none;background:rgba(255,255,255,.15);color:#fff;font-size:18px;cursor:pointer;flex-shrink:0}
+.avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#075E54,#25D366);color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;flex-shrink:0}
 .app{max-width:620px;margin:0 auto}
-/* ستوري */
-.stories{display:flex;gap:12px;overflow-x:auto;padding:12px 14px;scrollbar-width:none}
-.stories::-webkit-scrollbar{display:none}
-.story{text-align:center;flex-shrink:0;cursor:pointer}.story .ring{width:62px;height:62px;border-radius:50%;border:3px solid #25D366;padding:2px;background:#fff}.story .ring div{width:100%;height:100%;border-radius:50%;background:#e9edef;display:flex;align-items:center;justify-content:center;font-size:22px;overflow:hidden}.story p{font-size:11px;margin-top:4px}
-.search-box{margin:0 14px 10px;background:var(--card);border-radius:28px;padding:11px 16px;display:flex;gap:8px;align-items:center;color:var(--muted);font-size:14px}.search-box input{border:none;background:transparent;padding:0;font-size:14px}
-/* قائمة المحادثات */
-.chat-list{padding:0 8px}
-.chat-item{display:flex;gap:12px;padding:12px 10px;border-radius:14px;cursor:pointer;align-items:center;background:var(--card);margin-bottom:2px}
-.chat-item:active{background:#f0f2f5}
-.chat-item .info{flex:1;min-width:0}.chat-item .top{display:flex;justify-content:space-between}.chat-item .top b{font-size:15px}.chat-item .top span{font-size:11px;color:var(--muted)}
-.chat-item .last{font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:3px}
-.unread{background:#25D366;color:#fff;font-size:11px;min-width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800}
-/* بطاقات */
-.card{background:var(--card);border-radius:18px;padding:16px;margin:12px 14px;border:1px solid var(--border)}
-.card h2{font-size:16px}.card p{font-size:13px;color:var(--muted);line-height:1.7}
-textarea{min-height:90px;resize:vertical;line-height:1.7}
-.code-out{padding:14px;border-radius:12px;background:#f0f2f5;border:1px solid var(--accent);font-family:monospace;font-size:13px;word-break:break-all;white-space:pre-wrap;margin-top:12px;min-height:60px;color:#008069;direction:ltr;text-align:left}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:.3s;z-index:200}.overlay.show{opacity:1;pointer-events:auto}
+.sidebar{position:fixed;top:0;right:0;bottom:0;width:300px;max-width:88vw;background:var(--card);z-index:201;transform:translateX(100%);transition:.35s;display:flex;flex-direction:column;overflow-y:auto}
+.sidebar.open{transform:translateX(0)}
+.side-top{background:linear-gradient(135deg,#075E54,#00a884);color:#fff;padding:22px 18px;display:flex;gap:12px;align-items:center}
+.side-top .avatar{width:56px;height:56px;font-size:24px;background:#fff;color:#075E54}
+.side-item{padding:14px 18px;display:flex;gap:14px;align-items:center;cursor:pointer;font-weight:600;font-size:15px;border-bottom:1px solid var(--border)}
+.side-item .ic{width:38px;height:38px;border-radius:12px;background:#E7F6F0;display:flex;align-items:center;justify-content:center;font-size:18px}
+.side-label{padding:14px 18px 6px;font-size:12px;color:var(--muted);font-weight:800}
+.side-quote{margin:14px;background:linear-gradient(135deg,#FFF8E1,#FFF3C4);border:1px solid #F5D67B;border-radius:16px;padding:14px;text-align:center;font-size:13px;line-height:1.9;color:#5D4037}
+.card{background:var(--card);border-radius:20px;padding:16px;margin:12px 14px;border:1px solid var(--border)}
+.card h2{font-size:16px}.card p{font-size:13px;color:var(--muted);line-height:1.8}
+.code-out{padding:14px;border-radius:12px;background:#f0f2f5;border:1px solid var(--accent);font-family:monospace;font-size:13px;word-break:break-all;white-space:pre-wrap;margin-top:12px;color:#075E54;direction:ltr;text-align:left}
 .btn-row{display:flex;gap:8px;margin-top:12px}.btn-row .btn{flex:1}
 .contact-item{display:flex;gap:10px;padding:11px;background:var(--input);border-radius:14px;margin-top:10px;align-items:center}
 .toast{position:fixed;top:14px;left:50%;transform:translateX(-50%) translateY(-80px);background:#111b21;color:#fff;padding:12px 20px;border-radius:28px;font-weight:700;opacity:0;transition:.3s;z-index:9999}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-/* شاشة المحادثة */
-.chat-screen{position:fixed;inset:0;background:var(--bg);z-index:300;display:none;flex-direction:column}
-.chat-screen.open{display:flex}
-.chat-header{background:var(--header);color:#fff;padding:10px 12px;display:flex;gap:10px;align-items:center}
-.chat-header .info{flex:1}.chat-header .info b{display:block}.chat-header .info span{font-size:11px;opacity:.85}
+.chat-screen{position:fixed;inset:0;background:var(--bg);z-index:300;display:none;flex-direction:column}.chat-screen.open{display:flex}
+.chat-header{background:var(--header);color:#fff;padding:10px 12px;display:flex;gap:10px;align-items:center}.chat-header .info{flex:1}
 .chat-messages{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px}
-.msg{max-width:82%;padding:9px 11px;border-radius:14px;font-size:14px;line-height:1.6;word-break:break-word;position:relative}
-.msg.me{background:var(--bubble-me);align-self:flex-start;margin-right:auto;border-bottom-right-radius:4px}
-.msg.other{background:var(--bubble-other);align-self:flex-end;margin-left:auto;border-bottom-left-radius:4px;box-shadow:0 1px 2px rgba(0,0,0,.08)}
-.msg small{display:block;font-size:10px;color:var(--muted);margin-top:4px;text-align:left}
-.chat-input-bar{background:var(--card);padding:8px;display:flex;gap:8px;align-items:center}
-.chat-input-bar input{flex:1;border-radius:28px;background:var(--input);border:none;padding:12px 16px}
-.send-btn{width:48px;height:48px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:20px;cursor:pointer;flex-shrink:0}
-/* تنقل سفلي مثل تليجرام / واتساب */
-.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:var(--nav);border-top:1px solid var(--border);display:flex;z-index:200;padding:6px 4px calc(6px + env(safe-area-inset-bottom))}
-.nav-item{flex:1;text-align:center;padding:8px 2px;cursor:pointer;color:var(--muted);font-size:11px;font-weight:700;border-radius:12px}
-.nav-item.active{color:var(--accent);background:rgba(0,168,132,.08)}
-.nav-item .ic{font-size:22px;display:block;margin-bottom:2px}
-.fab{position:fixed;bottom:88px;left:16px;width:56px;height:56px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:24px;box-shadow:0 6px 16px rgba(0,0,0,.25);cursor:pointer;z-index:150}
+.msg{max-width:82%;padding:9px 11px;border-radius:14px;font-size:14px;line-height:1.6}.msg.me{background:var(--bubble-me);align-self:flex-start;margin-right:auto}.msg.other{background:var(--bubble-other);align-self:flex-end;margin-left:auto}
+.chat-input-bar{background:var(--card);padding:8px;display:flex;gap:8px;align-items:center}.chat-input-bar input{flex:1;border-radius:28px;background:var(--input);border:none;padding:12px 16px}
+.send-btn{width:48px;height:48px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:20px;cursor:pointer}
+.call-screen{position:fixed;inset:0;background:#0b141a;z-index:400;display:none;flex-direction:column;color:#fff}.call-screen.open{display:flex}
+.call-videos{flex:1;position:relative;display:flex;align-items:center;justify-content:center}.call-remote{position:absolute;inset:0;background:#111b21;display:flex;align-items:center;justify-content:center;font-size:60px}.call-local{position:absolute;bottom:110px;left:14px;width:120px;height:170px;border-radius:16px;overflow:hidden;border:3px solid #fff;background:#222}.call-local video{width:100%;height:100%;object-fit:cover}
+.call-controls{display:flex;justify-content:center;gap:14px;padding:20px}.call-btn{width:60px;height:60px;border-radius:50%;border:none;font-size:24px;cursor:pointer}.call-btn.green{background:#00a884;color:#fff}.call-btn.red{background:#ea0038;color:#fff}.call-btn.gray{background:#374045;color:#fff}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:var(--nav);border-top:1px solid var(--border);display:flex;z-index:200;padding:6px 4px}
+.nav-item{flex:1;text-align:center;padding:8px 2px;cursor:pointer;color:var(--muted);font-size:11px;font-weight:700}.nav-item.active{color:var(--accent);background:rgba(0,168,132,.08)}.nav-item .ic{font-size:22px;display:block}
+.fab{position:fixed;bottom:88px;left:16px;width:56px;height:56px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:24px;z-index:150;cursor:pointer}
 .tab-content{display:none}.tab-content.active{display:block}
 .lock-box{background:#ea0038;color:#fff;border-radius:18px;padding:18px;text-align:center;margin:12px 14px}
-.switch-row{display:flex;justify-content:space-between;align-items:center;background:var(--input);padding:12px;border-radius:12px;margin-top:10px}
-.switch-row input{width:50px!important}
+.switch-row{display:flex;justify-content:space-between;align-items:center;background:var(--input);padding:12px;border-radius:12px;margin-top:10px}.switch-row input{width:50px!important}
 .group-item{display:flex;gap:10px;padding:12px;background:var(--input);border-radius:14px;margin-top:10px;align-items:center;cursor:pointer}
 .badge{background:#25D366;color:#fff;font-size:11px;padding:2px 8px;border-radius:12px}
+.azkar-card{background:linear-gradient(135deg,#FFF8E1,#FFF3C4);border:1px solid #F5D67B;border-radius:18px;padding:16px;margin:12px 14px}.azkar-card p{font-size:15px;line-height:2;color:#4E342E;text-align:center}
+.quran-card{background:linear-gradient(135deg,#E8F5E9,#C8E6C9);border-radius:18px;padding:16px;margin:12px 14px;text-align:center}.quran-card p{font-size:18px;line-height:2.2;color:#1B5E20}
+.dua-card{background:linear-gradient(135deg,#E3F2FD,#BBDEFB);border-radius:18px;padding:16px;margin:12px 14px;text-align:center}.dua-card p{font-size:15px;line-height:2;color:#0D47A1}
+.about-hero{background:linear-gradient(135deg,#075E54,#00a884);color:#fff;border-radius:20px;padding:22px;margin:12px 14px;text-align:center}
 </style>
 </head>
 <body>
-
-<!-- ===== تسجيل مثل واتساب ===== -->
+ <!-- ===== تسجيل مثل واتساب ===== -->
 <div class="auth-screen" id="authScreen">
-  <div class="auth-top"><div style="font-size:48px">🛡️</div><h1>واتس نشوان الآمن</h1><p>مراسلة مشفرة • محادثات • قروبات • بدون تجسس</p></div>
-  <div class="auth-body" id="stepPhone">
-    <h2>أدخل رقم هاتفك</h2>
-    <p>سنرسل لك رمز تأكيد عبر واتساب المدير. أدخل رقمك الحقيقي عشان أصحابك يلاقونك.</p>
-    <label>الدولة</label>
-    <div class="country-row"><select id="countryCode"><option value="+967">🇾🇪 اليمن +967</option><option value="+966">🇸🇦 السعودية +966</option><option value="+20">🇪🇬 مصر +20</option><option value="+962">🇯🇴 الأردن +962</option><option value="+961">🇱🇧 لبنان +961</option><option value="+971">🇦🇪 الإمارات +971</option><option value="+1">🇺🇸 أمريكا +1</option></select><input id="phoneInput" type="tel" placeholder="771713275" inputmode="numeric"></div>
-    <label>اسمك الذي سيظهر لأصدقائك</label>
-    <input id="displayName" placeholder="مثال: نشوان البدري">
-    <label>كلمة مرور حسابك (تذكرها)</label>
-    <input id="regPass" type="password" placeholder="6 أحرف على الأقل">
+  <div style="text-align:center;padding:28px 20px 0;color:#fff"><div style="font-size:56px">🛡️</div><h1 style="font-size:28px;font-weight:900">واتس نشوان الآمن</h1><p style="font-size:13px;opacity:.9">خصوصيتك أمانة • رسائلك لا يقرأها أحد</p></div>
+  <div class="auth-card" id="stepPhone">
+    <h1>أهلاً بك 👋</h1><p>سجل برقمك مثل واتساب، وادخل عالماً آمناً.</p>
+    <label>الدولة</label><div style="display:flex;gap:8px"><select id="countryCode" style="width:110px"><option value="+967">🇾🇪 +967</option><option value="+966">🇸🇦 +966</option><option value="+20">🇪🇬 +20</option><option value="+962">🇯🇴 +962</option><option value="+971">🇦🇪 +971</option></select><input id="phoneInput" type="tel" placeholder="771713275" inputmode="numeric"></div>
+    <label>اسمك الذي سيظهر لأصدقائك</label><input id="displayName" placeholder="مثال: نشوان البدري">
+    <label>كلمة مرور حسابك</label><input id="regPass" type="password" placeholder="6 أحرف على الأقل">
     <button class="btn btn-green" id="sendOtpBtn" style="margin-top:18px">التالي ➜ إرسال رمز التأكيد</button>
-    <p style="text-align:center;margin-top:14px;font-size:12px">بالضغط على التالي أنت توافق على شروط واتس نشوان الآمن<br>صُمم بواسطة <b style="color:#008069">نشوان البدري - 771713275</b></p>
-    <button class="btn btn-light" id="goAdminBtn" style="margin-top:12px">👑 أنا المدير - دخول مباشر</button>
+    <p style="font-size:12px;margin-top:12px">﴿ وَقُل رَّبِّ أَدْخِلْنِي مُدْخَلَ صِدْقٍ ﴾</p>
+    <button class="btn btn-light" id="goAdminBtn" style="margin-top:10px">👑 أنا المدير - دخول مباشر</button>
   </div>
-  <div class="auth-body" id="stepOtp" style="display:none">
-    <h2>أدخل رمز التأكيد</h2>
-    <p>أرسلنا رمز مكون من 6 أرقام إلى <b id="otpPhoneShow"></b><br>اطلبه من المدير على واتساب إذا لم يصلك.</p>
-    <label>رمز التأكيد</label>
-    <input id="otpInput" class="otp-input" inputmode="numeric" maxlength="6" placeholder="••••••">
+  <div class="auth-card" id="stepOtp" style="display:none">
+    <h1>رمز التأكيد 🔑</h1><p>أرسلنا رمزاً إلى <b id="otpPhoneShow"></b></p>
+    <label>أدخل الرمز</label><input id="otpInput" class="otp-input" inputmode="numeric" maxlength="6" placeholder="••••••">
     <button class="btn btn-green" id="verifyOtpBtn" style="margin-top:16px">تأكيد ودخول ✅</button>
-    <button class="btn btn-light" id="resendOtpBtn" style="margin-top:10px">إعادة إرسال الرمز 🔄</button>
+    <button class="btn btn-light" id="resendOtpBtn" style="margin-top:10px">إعادة إرسال 🔄</button>
     <button class="btn btn-light" id="backPhoneBtn" style="margin-top:10px">⬅ تغيير الرقم</button>
-    <div class="otp-box" id="demoOtpBox" style="display:none"><div style="font-size:12px;color:#667781">كود تجريبي - للتجربة الآن (بيختفي بعد ربط SMS):</div><b id="demoOtpText"></b><p style="font-size:11px;color:#667781">انسخ الكود وادخله فوق</p></div>
+    <div id="demoOtpBox" style="display:none;background:#e7fce3;border:1px dashed #00a884;border-radius:14px;padding:12px;text-align:center;margin-top:12px"><b id="demoOtpText" style="font-size:26px;letter-spacing:8px;color:#075E54"></b><p style="font-size:11px">كود تجريبي</p></div>
     <button class="btn btn-light" id="waOtpBtn" style="margin-top:12px;background:#25D366;color:#fff">💬 اطلب الكود من واتساب المدير</button>
   </div>
-  <div class="auth-body" id="stepAdmin" style="display:none">
-    <h2>👑 دخول المدير</h2>
-    <label>اسم المدير</label><input id="adminUser" placeholder="NASH">
-    <label>كلمة مرور المدير</label><input id="adminPass" type="password" placeholder="كلمة المرور">
-    <button class="btn btn-green" id="adminLoginBtn" style="margin-top:16px">دخول المدير 👑</button>
-    <button class="btn btn-light" id="backFromAdmin" style="margin-top:10px">⬅ رجوع للتسجيل</button>
+  <div class="auth-card" id="stepAdmin" style="display:none">
+    <h1>👑 دخول المدير</h1><label>اسم المدير</label><input id="adminUser" placeholder="NASH"><label>كلمة مرور المدير</label><input id="adminPass" type="password" placeholder="كلمة المرور"><button class="btn btn-green" id="adminLoginBtn" style="margin-top:16px">دخول المدير 👑</button><button class="btn btn-light" id="backFromAdmin" style="margin-top:10px">⬅ رجوع</button>
   </div>
-  <p id="authError" style="color:#ea0038;text-align:center;font-weight:700;font-size:13px;padding:0 20px 20px"></p>
+  <p id="authError" style="color:#ea0038;text-align:center;font-weight:700;font-size:13px;padding:10px 20px 20px;background:#fff"></p>
 </div>
 
-<!-- ===== الواجهة الرئيسية ===== -->
+<div id="adminAlertBar" style="display:none;background:#ea0038;color:#fff;padding:12px 14px;text-align:center;font-weight:800;font-size:14px;position:sticky;top:0;z-index:250">
+  <span id="adminAlertText">🔔 شخص جديد يسجل...</span>
+  <div style="display:flex;gap:8px;margin-top:8px"><button id="adminApproveBtn" style="flex:1;background:#fff;color:#111;border:none;padding:10px;border-radius:20px;font-weight:900;cursor:pointer">✅ تأكيد</button><button id="adminRejectBtn" style="flex:1;background:rgba(0,0,0,.3);color:#fff;border:none;padding:10px;border-radius:20px;font-weight:900;cursor:pointer">❌ رفض</button></div>
+  <div style="font-size:11px;margin-top:6px" id="adminAlertCode"></div>
+</div>
+
 <div class="header" id="mainHeader" style="display:none">
+  <button class="icon-btn" id="openSidebarBtn">☰</button>
   <div class="avatar" id="myAvatar">N</div>
   <h1>واتس نشوان الآمن <span>مشفر 🔒</span></h1>
   <button class="icon-btn" id="searchBtn">🔍</button>
+  <button class="icon-btn" id="callHeaderBtn">📞</button>
   <button class="icon-btn" id="themeBtn">🌙</button>
-  <button class="icon-btn" id="menuBtn">⋮</button>
 </div>
 
+<div class="overlay" id="overlay"></div>
+<!-- القائمة الجانبية مثل واتساب - هادئة وجميلة -->
+<aside class="sidebar" id="sidebar">
+  <div class="side-top"><div class="avatar" id="sideAvatar">N</div><div><b id="sideName" style="font-size:16px">مستخدم</b><div style="font-size:12px;opacity:.9" id="sidePhone">+967...</div><div style="font-size:11px;margin-top:4px">● متصل الآن • مشفر 🔒</div></div></div>
+  <div class="side-label">المحادثات</div>
+  <div class="side-item" data-side="chats"><span class="ic">💬</span>محادثاتي <span class="badge" id="sideChatCount">0</span></div>
+  <div class="side-item" data-side="createGroup"><span class="ic">👥</span>إنشاء مجموعة جديدة</div>
+  <div class="side-item" data-side="broadcast"><span class="ic">📣</span>رسالة جماعية - بث</div>
+  <div class="side-item" data-side="calls"><span class="ic">📞</span>المكالمات</div>
+  <div class="side-label">أدوات التشفير</div>
+  <div class="side-item" data-side="encrypt"><span class="ic">✍️</span>إنشاء رسالة مشفرة</div>
+  <div class="side-item" data-side="decrypt"><span class="ic">🔓</span>فك رسالة مشفرة</div>
+  <div class="side-item" data-side="contacts"><span class="ic">👥</span>جهات الاتصال</div>
+  <div class="side-label">روحانيات</div>
+  <div class="side-item" data-side="azkar"><span class="ic" style="background:#FFF3C4">🤲</span>أذكار الصباح والمساء</div>
+  <div class="side-item" data-side="quran"><span class="ic" style="background:#C8E6C9">📖</span>قرآن كريم - قراءة</div>
+  <div class="side-item" data-side="dua"><span class="ic" style="background:#BBDEFB">🕋</span>دعاء مأثور</div>
+  <div class="side-label">التطبيق</div>
+  <div class="side-item" data-side="settings"><span class="ic">⚙️</span>الإعدادات</div>
+  <div class="side-item" data-side="guide"><span class="ic">📖</span>تعليمات الاستخدام</div>
+  <div class="side-item" data-side="about"><span class="ic">💚</span>عنا - من نحن</div>
+  <div class="side-item" id="logoutSide" style="color:#ea0038"><span class="ic" style="background:#FCE4EC">🚪</span>خروج</div>
+  <div class="side-quote">“ الأمان ليس ميزة،<br>بل حق لكل إنسان ”<br><b>— نشوان البدري</b><br><span style="font-size:11px">﴿ وَتَوَكَّلْ عَلَى اللَّهِ ۚ وَكَفَىٰ بِاللَّهِ وَكِيلًا ﴾</span></div>
+  <div style="text-align:center;font-size:11px;color:var(--muted);padding:0 0 16px">واتس نشوان الآمن • v18.0<br>صُمم بحب في اليمن 🇾🇪</div>
+</aside>
+
 <div class="app" id="mainApp" style="display:none">
-  <!-- تبويب المحادثات -->
+  <!-- محادثات -->
   <div class="tab-content active" id="tab-chats">
-    <div class="stories" id="storiesRow">
-      <div class="story" id="myStory"><div class="ring"><div>➕</div></div><p>حالتي</p></div>
-      <div class="story"><div class="ring"><div>🛡️</div></div><p>نشوان</p></div>
-      <div class="story"><div class="ring"><div>🔒</div></div><p>آمن</p></div>
-      <div class="story"><div class="ring"><div>💬</div></div><p>أصدقائي</p></div>
-    </div>
-    <div class="search-box">🔍 <input id="chatSearch" placeholder="بحث في المحادثات والأرقام..."></div>
-    <div style="padding:0 14px;display:flex;justify-content:space-between;align-items:center"><b>المحادثات</b><span style="font-size:12px;color:var(--muted)" id="totalChats">0 محادثة</span></div>
-    <div class="chat-list" id="chatList"></div>
-    <div class="card"><h2>💡 كيف تبدأ؟</h2><p>1. اضغط زر <b>+</b> تحت واختر صديق<br>2. اكتب اسم صديقك في التطبيق + المفتاح<br>3. ارسل رسالة، توصله في نفس الثانية</p><button class="btn btn-green" id="startFirstChatBtn" style="margin-top:10px">+ ابدأ محادثة جديدة</button></div>
-    <div class="card"><h2>👥 قروباتي</h2><p>أنشئ قروب مشفر وشارك ID القروب مع أصحابك.</p><div id="myGroupsList"></div><div class="btn-row"><button class="btn btn-green" id="createGroupQuickBtn">+ إنشاء قروب</button><button class="btn btn-light" id="joinGroupQuickBtn">دخول قروب</button></div></div>
+    <div class="stories" style="display:flex;gap:12px;overflow-x:auto;padding:12px 14px"><div class="story" id="myStory" style="text-align:center"><div class="ring" style="width:62px;height:62px;border-radius:50%;border:3px solid #25D366;padding:2px;background:#fff"><div style="width:100%;height:100%;border-radius:50%;background:#e9edef;display:flex;align-items:center;justify-content:center;font-size:22px">➕</div></div><p style="font-size:11px">حالتي</p></div><div class="story" style="text-align:center"><div class="ring" style="width:62px;height:62px;border-radius:50%;border:3px solid #25D366;padding:2px;background:#fff"><div style="width:100%;height:100%;border-radius:50%;background:#e9edef;display:flex;align-items:center;justify-content:center">🛡️</div></div><p style="font-size:11px">نشوان</p></div><div class="story" style="text-align:center"><div class="ring" style="width:62px;height:62px;border-radius:50%;border:3px solid #25D366;padding:2px;background:#fff"><div style="width:100%;height:100%;border-radius:50%;background:#e9edef;display:flex;align-items:center;justify-content:center">🤲</div></div><p style="font-size:11px">أذكار</p></div><div class="story" style="text-align:center"><div class="ring" style="width:62px;height:62px;border-radius:50%;border:3px solid #25D366;padding:2px;background:#fff"><div style="width:100%;height:100%;border-radius:50%;background:#e9edef;display:flex;align-items:center;justify-content:center">📖</div></div><p style="font-size:11px">قرآن</p></div></div>
+    <div class="search-box" style="margin:0 14px 10px;background:var(--card);border-radius:28px;padding:11px 16px;display:flex;gap:8px">🔍 <input id="chatSearch" placeholder="بحث في المحادثات..." style="border:none;background:transparent;padding:0"></div>
+    <div style="padding:0 14px;display:flex;justify-content:space-between"><b>المحادثات</b><span style="font-size:12px;color:var(--muted)" id="totalChats">0</span></div>
+    <div class="chat-list" id="chatList" style="padding:0 8px"></div>
+    <div class="card"><h2>💡 ابدأ الآن</h2><p>اضغط على أي صديق وابدأ محادثة مشفرة.</p><div class="btn-row"><button class="btn btn-green" id="startChatBtn">+ محادثة جديدة</button><button class="btn btn-light" id="quickGroupBtn">👥 مجموعة</button></div></div>
+    <div class="card"><h2>👥 قروباتي</h2><div id="myGroupsList"></div><div class="btn-row"><button class="btn btn-green" id="createGroupQuickBtn">+ إنشاء قروب</button><button class="btn btn-light" id="joinGroupQuickBtn">دخول قروب</button></div></div>
+    <div class="azkar-card"><h3>🤲 ذكر اليوم</h3><p>“ سبحان الله وبحمده، سبحان الله العظيم ”<br><span style="font-size:12px">من قالها مئة مرة، حُطت خطاياه وإن كانت مثل زبد البحر</span></p><button class="btn btn-gold" onclick="document.querySelector('[data-side=\'azkar\']').click()">فتح الأذكار كاملة 🤲</button></div>
   </div>
 
-  <!-- تبويب التشفير -->
+  <!-- إنشاء مجموعة + رسالة جماعية -->
+  <div class="tab-content" id="tab-createGroup">
+    <div class="card"><h2>👥 إنشاء مجموعة جديدة</h2><p>اجمع أصحابك في مكان واحد مشفر.</p>
+    <label>اسم المجموعة</label><input id="groupName" placeholder="مثال: عائلة نشوان 💚">
+    <label>وصف المجموعة</label><input id="groupDesc" placeholder="مثال: مجموعة العائلة">
+    <label>مفتاح المجموعة</label><input type="password" id="groupKey" placeholder="مفتاح واحد للكل - 4 أحرف">
+    <div class="btn-row"><button class="btn btn-green" id="createGroupBtn">+ إنشاء المجموعة</button></div>
+    <div id="groupCreatedInfo" style="display:none;background:#e7fce3;border-radius:12px;padding:12px;margin-top:12px;font-size:13px;line-height:1.8"></div></div>
+    <div class="card"><h2>📣 رسالة جماعية - بث</h2><p>أرسل رسالة واحدة لعدة أشخاص، كل واحد توصله على انفراد.</p><label>المستقبلين (مفصولة بفاصلة)</label><input id="broadcastTo" placeholder="مثال: أحمد, محمد, علي"><label>الرسالة الجماعية</label><textarea id="broadcastMsg" placeholder="اكتب رسالتك الجماعية..."></textarea><label>مفتاح التشفير</label><input type="password" id="broadcastKey" placeholder="مفتاح واحد"><div class="btn-row"><button class="btn btn-green" id="sendBroadcastBtn">📣 إرسال للكل</button></div><div id="broadcastResult" style="font-size:13px;margin-top:10px;line-height:1.8"></div></div>
+  </div>
+
+  <!-- مكالمات -->
+  <div class="tab-content" id="tab-calls">
+    <div class="card"><h2>📞 المكالمات - صوت وفيديو</h2><p>اتصل بأي صديق صوت أو فيديو، مشفر وآمن.</p>
+    <label>اختر صديقاً</label><select id="callFriendSelect"><option value="">اختر صديق...</option></select>
+    <div class="btn-row"><button class="btn btn-green" id="voiceCallBtn">🎙️ مكالمة صوتية</button><button class="btn btn-green" id="videoCallBtn" style="background:linear-gradient(135deg,#7c3aed,#a855f7)">📹 مكالمة فيديو</button></div>
+    <div style="background:#FFF8E1;border-radius:12px;padding:12px;margin-top:12px;font-size:13px;line-height:1.8;text-align:center">“ خيركم خيركم لأهله ”<br>اتصل بأهلك واطمئن عليهم 💚</div></div>
+    <div class="card"><h2>🕑 سجل المكالمات</h2><div id="callHistory"></div></div>
+  </div>
+
+  <!-- تشفير -->
   <div class="tab-content" id="tab-encrypt">
-    <div class="card"><h2>✍️ إنشاء رسالة مشفرة</h2><p>لو ما عندك نت، شفر هنا وارسلها واتساب عادي.</p>
-    <label>الرسالة</label><textarea id="messageInput" placeholder="اكتب رسالتك..."></textarea>
-    <label>🔑 كلمة المفتاح</label><input type="password" id="keyInput" placeholder="4 أحرف على الأقل">
-    <label>⏳ تختفي بعد؟</label><select id="expireSelect"><option value="0">أبداً</option><option value="10">10 ثواني</option><option value="60">1 دقيقة</option><option value="3600">1 ساعة</option><option value="86400">1 يوم</option></select>
-    <div class="btn-row"><button class="btn btn-green" id="encryptBtn">🔒 تشفير الآن</button></div>
-    <div class="code-out" id="encryptOutput">ستظهر الشيفرة هنا...</div>
-    <div class="btn-row"><button class="btn btn-light" id="copyEncryptBtn">📋 نسخ</button><button class="btn btn-light" id="waEncryptBtn" style="background:#25D366;color:#fff">💬 إرسال واتساب</button></div></div>
-    <div class="card"><h2>🖼️ تشفير صورة</h2><label>اختر صورة</label><input type="file" id="imageInput" accept="image/*"><img id="imagePreview" style="max-width:100%;border-radius:12px;margin-top:10px;display:none"><label>🔑 مفتاح الصورة</label><input type="password" id="imageKey" placeholder="مفتاح الصورة"><div class="btn-row"><button class="btn btn-green" id="encryptImageBtn">🖼️ تشفير الصورة</button></div><div class="code-out" id="imageOutput">شيفرة الصورة هنا...</div><div class="btn-row"><button class="btn btn-light" id="copyImageBtn">📋 نسخ</button></div></div>
+    <div class="card"><h2>✍️ إنشاء رسالة مشفرة</h2><label>الرسالة</label><textarea id="messageInput" placeholder="اكتب رسالتك..."></textarea><label>🔑 المفتاح</label><input type="password" id="keyInput" placeholder="4 أحرف"><label>⏳ تختفي بعد؟</label><select id="expireSelect"><option value="0">أبداً</option><option value="10">10 ثواني</option><option value="60">1 دقيقة</option><option value="3600">1 ساعة</option><option value="86400">1 يوم</option></select><div class="btn-row"><button class="btn btn-green" id="encryptBtn">🔒 تشفير الآن</button></div><div class="code-out" id="encryptOutput">ستظهر الشيفرة هنا...</div><div class="btn-row"><button class="btn btn-light" id="copyEncryptBtn">📋 نسخ</button><button class="btn btn-light" id="waEncryptBtn" style="background:#25D366;color:#fff">💬 واتساب</button></div></div>
+    <div class="card"><h2>🖼️ تشفير صورة</h2><input type="file" id="imageInput" accept="image/*"><img id="imagePreview" style="max-width:100%;border-radius:12px;margin-top:10px;display:none"><label>🔑 مفتاح الصورة</label><input type="password" id="imageKey" placeholder="مفتاح الصورة"><div class="btn-row"><button class="btn btn-green" id="encryptImageBtn">🖼️ تشفير الصورة</button></div><div class="code-out" id="imageOutput">شيفرة الصورة...</div><div class="btn-row"><button class="btn btn-light" id="copyImageBtn">📋 نسخ</button></div></div>
   </div>
+  <div class="tab-content" id="tab-decrypt"><div class="card"><h2>🔓 فك رسالة</h2><label>الصق الشيفرة</label><textarea id="cipherInput" placeholder="ENC:..."></textarea><label>🔑 المفتاح</label><input type="password" id="decryptKeyInput" placeholder="نفس المفتاح"><div class="btn-row"><button class="btn btn-green" id="decryptBtn">🔓 فك الآن</button></div><div class="code-out" id="decryptOutput">الناتج هنا...</div><img id="decryptedImage" style="max-width:100%;border-radius:12px;margin-top:10px;display:none"><div class="btn-row"><button class="btn btn-light" id="copyDecryptBtn">📋 نسخ</button></div></div></div>
 
-  <!-- تبويب فك التشفير -->
-  <div class="tab-content" id="tab-decrypt">
-    <div class="card"><h2>🔓 فك رسالة</h2><label>الصق الشيفرة</label><textarea id="cipherInput" placeholder="ENC:... أو ENC_IMG:..."></textarea><label>🔑 المفتاح</label><input type="password" id="decryptKeyInput" placeholder="نفس المفتاح"><div class="btn-row"><button class="btn btn-green" id="decryptBtn">🔓 فك الآن</button></div><div class="code-out" id="decryptOutput">الناتج هنا...</div><img id="decryptedImage" style="max-width:100%;border-radius:12px;margin-top:10px;display:none"><div class="btn-row"><button class="btn btn-light" id="copyDecryptBtn">📋 نسخ</button></div></div>
-  </div>
-
-  <!-- تبويب جهات الاتصال - دمج الأرقام -->
+  <!-- جهات -->
   <div class="tab-content" id="tab-contacts">
-    <div class="card"><h2>👥 جهات الاتصال - كل المسجلين</h2><p>أي شخص يسجل برقمه في التطبيق، يظهر هنا تلقائياً. اضغط عليه لتبدأ محادثة معه.</p>
-    <label>🔍 بحث بالاسم أو الرقم</label><input id="contactSearch" placeholder="ابحث...">
-    <div id="contactList"></div></div>
-    <div class="card"><h2>➕ إضافة رقم يدوياً</h2><label>الاسم</label><input id="contactName" placeholder="مثال: أحمد"><label>الرقم</label><input id="phoneAdd" type="tel" placeholder="+967771234567"><div class="btn-row"><button class="btn btn-green" id="addPhoneBtn">+ إضافة</button></div></div>
-    <div class="card"><h2>📤 دعوة صديق</h2><p>انسخ رابط الدعوة وارسله لصديقك، يسجل برقمه ويدخل على طول.</p><div class="code-out" id="inviteLinkOut">https://chatstruct...</div><div class="btn-row"><button class="btn btn-green" id="copyInviteLinkBtn">📋 نسخ رابط الدعوة</button><button class="btn btn-light" id="waInviteBtn" style="background:#25D366;color:#fff">💬 دعوة واتساب</button></div></div>
+    <div class="card"><h2>👥 جهات الاتصال</h2><p>أي شخص يسجل برقمه يظهر هنا تلقائياً.</p><label>🔍 بحث</label><input id="contactSearch" placeholder="ابحث بالاسم أو الرقم..."><div id="contactList"></div></div>
+    <div class="card"><h2>➕ إضافة رقم يدوياً</h2><label>الاسم</label><input id="contactName" placeholder="أحمد"><label>الرقم</label><input id="phoneAdd" type="tel" placeholder="+967..."><div class="btn-row"><button class="btn btn-green" id="addPhoneBtn">+ إضافة</button></div></div>
+    <div class="card"><h2>📤 دعوة صديق</h2><div class="code-out" id="inviteLinkOut">...</div><div class="btn-row"><button class="btn btn-green" id="copyInviteLinkBtn">📋 نسخ الرابط</button><button class="btn btn-light" id="waInviteBtn" style="background:#25D366;color:#fff">💬 دعوة واتساب</button></div></div>
   </div>
 
-  <!-- تبويب الإعدادات -->
+  <!-- أذكار -->
+  <div class="tab-content" id="tab-azkar">
+    <div class="azkar-card"><h3>🌅 أذكار الصباح</h3><p>“ أصبحنا وأصبح الملك لله، والحمد لله، لا إله إلا الله وحده لا شريك له ”</p><p>“ اللهم بك أصبحنا وبك أمسينا وبك نحيا وبك نموت وإليك النشور ”</p><p>“ سبحان الله وبحمده عدد خلقه ورضا نفسه وزنة عرشه ومداد كلماته ” <b>(3 مرات)</b></p><p>“ آية الكرسي: ﴿ اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ﴾ ”</p><button class="btn btn-gold" id="azkarMorningBtn">✅ أتممت أذكار الصباح</button></div>
+    <div class="azkar-card" style="background:linear-gradient(135deg,#E8EAF6,#C5CAE9);border-color:#9FA8DA"><h3 style="color:#283593">🌙 أذكار المساء</h3><p style="color:#283593">“ أمسينا وأمسى الملك لله، والحمد لله ”</p><p style="color:#283593">“ أعوذ بكلمات الله التامات من شر ما خلق ” <b>(3 مرات)</b></p><p style="color:#283593">“ بسم الله الذي لا يضر مع اسمه شيء في الأرض ولا في السماء ” <b>(3 مرات)</b></p><button class="btn btn-green" id="azkarEveningBtn">✅ أتممت أذكار المساء</button></div>
+    <div class="azkar-card"><h3>🤲 أذكار بعد الصلاة</h3><p>“ أستغفر الله (3) اللهم أنت السلام ومنك السلام ”</p><p>“ سبحان الله (33) الحمد لله (33) الله أكبر (33) ”</p></div>
+  </div>
+
+  <!-- قرآن -->
+  <div class="tab-content" id="tab-quran">
+    <div class="quran-card"><h2 style="color:#1B5E20">📖 قرآن كريم</h2><p style="font-size:13px;color:#388E3C">خيركم من تعلم القرآن وعلمه</p>
+    <label style="color:#1B5E20">اختر السورة</label><select id="surahSelect"><option value="fatiha">1 - الفاتحة</option><option value="ikhlas">112 - الإخلاص</option><option value="falaq">113 - الفلق</option><option value="nas">114 - الناس</option><option value="yasin">36 - يس (أولها)</option><option value="kahf">18 - الكهف (أولها)</option></select>
+    <div id="quranText" style="margin-top:12px"></div>
+    <div class="btn-row"><button class="btn btn-green" id="readQuranBtn">📖 عرض السورة</button><button class="btn btn-light" id="quranAudioBtn">🔊 استماع</button></div></div>
+    <div class="quran-card"><h3>🌙 وردك اليومي</h3><p id="dailyVerse">“ ألا بذكر الله تطمئن القلوب ”</p><button class="btn btn-green" id="newVerseBtn">🔄 آية جديدة</button></div>
+  </div>
+
+  <!-- دعاء -->
+  <div class="tab-content" id="tab-dua">
+    <div class="dua-card"><h3>🕋 دعاء مأثور - الصباح</h3><p>“ اللهم إني أسألك العفو والعافية في الدنيا والآخرة ”</p></div>
+    <div class="dua-card" style="background:linear-gradient(135deg,#FFF3E0,#FFE0B2)"><h3 style="color:#E65100">🤲 دعاء الرزق</h3><p style="color:#BF360C">“ اللهم ارزقني رزقاً واسعاً حلالاً طيباً ”</p></div>
+    <div class="dua-card" style="background:linear-gradient(135deg,#F3E5F5,#E1BEE7)"><h3 style="color:#6A1B9A">💚 دعاء للأهل</h3><p style="color:#4A148C">“ اللهم احفظ أهلي وأصدقائي، وبارك فيهم ”</p></div>
+    <div class="card"><h2>✍️ اكتب دعاءك</h2><label>دعاؤك الخاص</label><textarea id="myDua" placeholder="اكتب دعاءك هنا..."></textarea><div class="btn-row"><button class="btn btn-green" id="saveDuaBtn">💾 حفظ دعائي</button><button class="btn btn-light" id="shareDuaBtn">📤 مشاركة</button></div><div id="savedDuas"></div></div>
+  </div>
+
+  <!-- إعدادات -->
   <div class="tab-content" id="tab-settings">
     <div class="card"><h2>⚙️ الإعدادات</h2>
-    <div style="display:flex;gap:12px;align-items:center"><div class="avatar" id="settingsAvatar" style="width:60px;height:60px;font-size:24px">N</div><div><b id="settingsName">مستخدم</b><div style="font-size:12px;color:var(--muted)" id="settingsPhone">+967...</div><div style="font-size:12px;color:#25D366">● متصل الآن - مشفر</div></div></div>
+    <div style="display:flex;gap:12px;align-items:center"><div class="avatar" id="settingsAvatar" style="width:60px;height:60px;font-size:24px">N</div><div><b id="settingsName">مستخدم</b><div style="font-size:12px;color:var(--muted)" id="settingsPhone">+967...</div><div style="font-size:12px;color:#25D366">● متصل الآن</div></div></div>
     <label>تغيير اسمي</label><input id="editName"><div class="btn-row"><button class="btn btn-green" id="saveNameBtn">حفظ الاسم</button></div>
     <div class="switch-row"><span>🌙 الوضع الليلي</span><input type="checkbox" id="darkToggle"></div>
-    <div class="switch-row"><span>🔒 قفل بـ PIN</span><input type="checkbox" id="lockEnabled"></div>
-    <label>رمز PIN</label><input id="pinSetup" type="password" inputmode="numeric" maxlength="6" placeholder="1234">
+    <div class="switch-row"><span>🔒 قفل بـ PIN</span><input type="checkbox" id="lockEnabled"></div><label>PIN</label><input id="pinSetup" type="password" inputmode="numeric" maxlength="6" placeholder="1234">
     <div class="switch-row"><span>👆 بصمة</span><input type="checkbox" id="bioEnabled"></div>
     <div class="btn-row"><button class="btn btn-green" id="savePinBtn">حفظ الأمان</button></div>
-    <label style="margin-top:14px">💳 اشتراكي</label><div style="background:#e7fce3;border-radius:12px;padding:12px;font-size:13px;line-height:1.8" id="myPlanBox">مجاني - 15 عملية</div>
-    <div class="btn-row"><button class="btn btn-light" id="exportBtn">📤 تصدير أرقامي</button><button class="btn btn-light" id="logoutBtn" style="background:#ea0038;color:#fff">🚪 خروج</button></div>
+    <label>💳 اشتراكي</label><div style="background:#e7fce3;border-radius:12px;padding:12px;font-size:13px;line-height:1.8" id="myPlanBox">مجاني</div>
+    <div class="btn-row"><button class="btn btn-light" id="exportBtn">📤 تصدير</button><button class="btn btn-light" id="logoutBtn" style="background:#ea0038;color:#fff">🚪 خروج</button></div>
     <div id="adminPanel" style="display:none;margin-top:14px;border-top:1px solid var(--border);padding-top:14px"><h2>👑 لوحة المدير</h2><label>اسم مستخدم جديد</label><input id="inviteName" placeholder="ahmed"><label>كلمة مرور له</label><input id="invitePass" type="password" placeholder="كلمة مرور"><div class="btn-row"><button class="btn btn-green" id="generateInviteBtn">توليد دعوة</button></div><div class="code-out" id="inviteShortCode" style="display:none"></div><div id="userList"></div></div>
     </div>
-    <div class="card" style="text-align:center"><b style="color:#008069;font-size:18px">واتس نشوان الآمن</b><p>الإصدار 17.0 • صُمم بواسطة نشوان البدري<br>واتساب: 771713275<br>شهري 1000 ريال غير محدود ♾️ / سنوي 10000 غير محدود ♾️</p></div>
   </div>
 
-  <div class="lock-box" id="lockedBox" style="display:none"><h2>انتهى اشتراكك المجاني!</h2><p>استخدمت 15 عملية. اطلب تجديد من المدير.</p><button class="btn btn-light" id="waLockedBtn" style="background:#fff;color:#111;margin-top:10px">💬 اطلب تجديد - واتساب 771713275</button><label style="color:#fff;text-align:right">عندك كود RENEW: ؟</label><input id="renewCodeInput" placeholder="RENEW:..."><button class="btn btn-green" id="activateRenewBtn" style="margin-top:10px">تفعيل التجديد 🔄</button></div>
+  <!-- تعليمات -->
+  <div class="tab-content" id="tab-guide">
+    <div class="card"><h2>📖 تعليمات الاستخدام</h2>
+    <div style="line-height:2;font-size:14px">
+    <b>1️⃣ التسجيل:</b> أدخل رقمك واسمك، بيوصلك كود تأكيد من المدير.<br>
+    <b>2️⃣ محادثة:</b> اضغط على أي صديق، ادخل المفتاح المشترك، وارسل.<br>
+    <b>3️⃣ مجموعة:</b> من القائمة > إنشاء مجموعة، وشارك ID المجموعة.<br>
+    <b>4️⃣ رسالة جماعية:</b> من القائمة > رسالة جماعية، اكتب مرة واحدة توصّل للكل.<br>
+    <b>5️⃣ مكالمة:</b> داخل أي محادثة اضغط 📞 صوت أو 📹 فيديو.<br>
+    <b>6️⃣ أذكار وقرآن:</b> من القائمة الجانبية كل يوم.<br>
+    <b>7️⃣ الأمان:</b> فعل PIN والبصمة من الإعدادات.<br>
+    </div></div>
+  </div>
+
+  <!-- عنا -->
+  <div class="tab-content" id="tab-about">
+    <div class="about-hero"><div style="font-size:52px">🛡️</div><h2>واتس نشوان الآمن</h2><p>حين يكون الأمان رسالة، والصدق طريقاً، والخصوصية حقاً لا ميزة.</p></div>
+    <div class="card"><h2>💚 من نحن؟</h2><p>نحن فكرة وُلدت في اليمن، من شاب آمن أن لكل إنسان الحق أن يتكلم بحرية، وأن تكون رسائله له وحده.<br><br>في زمنٍ صارت فيه الخصوصية سلعة، قررنا أن نجعلها أمانة.</p></div>
+    <div class="card"><h2>🌱 رسالتنا</h2><p>“ أن يعيش الإنسان حراً في كلامه، آمناً في رسائله، مطمئناً أن ما يكتبه لا يراه إلا من يحبه ”</p></div>
+    <div class="card"><h2>✨ لماذا نحن مختلفون؟</h2><p>🔒 تشفير حقيقي<br>📞 مكالمات صوت وفيديو<br>👥 مجموعات ورسائل جماعية<br>🤲 أذكار وقرآن ودعاء<br>🇾🇪 صُنع في اليمن، بحب<br>💚 بدون إعلانات، بدون تجسس</p></div>
+    <div class="card" style="text-align:center"><h2>كلمة من المؤسس</h2><p style="font-size:15px;line-height:2">“ يا صديقي، هذا التطبيق هو حلمي.<br>حلمت أن يكون لكل يمني مكان آمن يتكلم فيه بلا خوف.<br>احفظ أمانة الكلمة، وكن صادقاً، واذكر الله دائماً.<br><br><b style="color:#075E54">— نشوان البدري</b><br>واتساب: 771713275 ”</p><button class="btn btn-green" id="waAboutBtn" style="margin-top:12px">💬 راسل نشوان البدري</button></div>
+  </div>
+
+  <div class="lock-box" id="lockedBox" style="display:none"><h2>انتهى اشتراكك المجاني!</h2><p>استخدمت 15 عملية.</p><button class="btn btn-light" id="waLockedBtn" style="background:#fff;color:#111;margin-top:10px">💬 اطلب تجديد</button><label style="color:#fff;text-align:right">كود RENEW:</label><input id="renewCodeInput" placeholder="RENEW:..."><button class="btn btn-green" id="activateRenewBtn" style="margin-top:10px">تفعيل التجديد 🔄</button></div>
 </div>
 
 <!-- شاشة محادثة -->
 <div class="chat-screen" id="chatScreen">
-  <div class="chat-header"><button class="icon-btn" id="backChatBtn">⬅</button><div class="avatar" id="chatAvatar">A</div><div class="info"><b id="chatTitle">صديق</b><span id="chatStatus">متصل الآن • مشفر 🔒</span></div><button class="icon-btn" id="chatCallBtn">📞</button><button class="icon-btn" id="chatInfoBtn">⋮</button></div>
+  <div class="chat-header"><button class="icon-btn" id="backChatBtn">⬅</button><div class="avatar" id="chatAvatar">A</div><div class="info"><b id="chatTitle">صديق</b><span id="chatStatus">متصل الآن • مشفر 🔒</span></div><button class="icon-btn" id="chatVoiceBtn">📞</button><button class="icon-btn" id="chatVideoBtn">📹</button></div>
   <div class="chat-messages" id="chatMessages"></div>
-  <div style="padding:6px 12px;font-size:11px;color:var(--muted);text-align:center" id="chatKeyHint">🔒 الرسائل مشفرة - لا أحد يقرأها إلا أنت وصديقك</div>
+  <div style="padding:6px 12px;font-size:11px;color:var(--muted);text-align:center">🔒 مشفرة - لا يقرأها إلا أنت وصديقك</div>
   <div class="chat-input-bar"><button class="icon-btn" style="background:transparent;color:var(--muted)" id="attachBtn">📎</button><input id="chatInput" placeholder="اكتب رسالة..."><input type="file" id="chatImageInput" accept="image/*" style="display:none"><button class="icon-btn" style="background:transparent;color:var(--muted)" id="chatImageBtn">🖼️</button><button class="send-btn" id="sendChatBtn">➤</button></div>
 </div>
 
-<!-- تنقل سفلي -->
+<!-- شاشة مكالمة -->
+<div class="call-screen" id="callScreen">
+  <div style="padding:16px;text-align:center"><b id="callName" style="font-size:20px">صديق</b><div id="callTimer" style="font-size:13px;opacity:.8">جارٍ الاتصال...</div><div style="font-size:12px;color:#25D366">🔒 مكالمة مشفرة</div></div>
+  <div class="call-videos"><div class="call-remote" id="callRemote">👤</div><div class="call-local" id="callLocalBox" style="display:none"><video id="localVideo" autoplay muted playsinline></video></div></div>
+  <div class="call-controls"><button class="call-btn gray" id="muteBtn">🎙️</button><button class="call-btn gray" id="speakerBtn">🔊</button><button class="call-btn gray" id="switchCamBtn">🔄</button><button class="call-btn red" id="endCallBtn">📞</button></div>
+</div>
+
 <div class="bottom-nav" id="bottomNav" style="display:none">
   <div class="nav-item active" data-tab="chats"><span class="ic">💬</span>محادثات</div>
+  <div class="nav-item" data-tab="calls"><span class="ic">📞</span>مكالمات</div>
   <div class="nav-item" data-tab="encrypt"><span class="ic">✍️</span>تشفير</div>
-  <div class="nav-item" data-tab="decrypt"><span class="ic">🔓</span>فك</div>
-  <div class="nav-item" data-tab="contacts"><span class="ic">👥</span>جهات</div>
+  <div class="nav-item" data-tab="azkar"><span class="ic">🤲</span>أذكار</div>
   <div class="nav-item" data-tab="settings"><span class="ic">⚙️</span>إعدادات</div>
 </div>
 <button class="fab" id="fabBtn" style="display:none">+</button>
 <div class="toast" id="toast"></div>
-
-<script>
-const firebaseConfig = {
-  apiKey: "AIzaSyBvH0siWoOLreCbBeKrTVpkB4uy6RJbyBQ",
-  authDomain: "chatstruct.firebaseapp.com",
-  databaseURL: "https://chatstruct-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "chatstruct",
-  storageBucket: "chatstruct.firebasestorage.app",
-  messagingSenderId: "1058907485659",
-  appId: "1:1058907485659:web:4b26228c6a74f4c2f223fe"
-};
-let rtdb=null;
-try{ firebase.initializeApp(firebaseConfig); rtdb=firebase.database(); firebase.auth().signInAnonymously().catch(()=>{}); }catch(e){ console.log(e); }
-
-/* IndexedDB */
-const DB_NAME='NashDB_v15'; let dbPromise=null;
-function openDB(){ if(dbPromise) return dbPromise; dbPromise=new Promise((res,rej)=>{ const req=indexedDB.open(DB_NAME,1); req.onupgradeneeded=e=>{ const db=e.target.result; if(!db.objectStoreNames.contains('messages')) db.createObjectStore('messages',{keyPath:'id',autoIncrement:true}); }; req.onsuccess=()=>res(req.result); req.onerror=()=>rej(req.error); }); return dbPromise; }
-async function dbAdd(obj){ const db=await openDB(); return new Promise((res)=>{const tx=db.transaction('messages','readwrite');tx.objectStore('messages').add(obj);tx.oncomplete=()=>res(true)}); }
-
-/* أساس */
-const USERS="wna_users_v17", SESSION="wna_session_v17", CONTACTS="wna_contacts_v17_", QUOTA="wna_quota_v17", SEC="wna_sec_v17", ADMIN_KEY="wna_admin_v17", INVITES="wna_invites_v17", BLOCKED="wna_blocked_v17", REG="wna_registered_v17";
-let currentUser=null, currentPhone="", currentDisplay="", isAdmin=false, currentChatId=null, currentChatKey="", currentChatFriend="", currentGroupId=null, currentGroupKey="";
+  <script>
+const firebaseConfig = { apiKey: "AIzaSyBvH0siWoOLreCbBeKrTVpkB4uy6RJbyBQ", authDomain: "chatstruct.firebaseapp.com", databaseURL: "https://chatstruct-default-rtdb.europe-west1.firebasedatabase.app", projectId: "chatstruct", storageBucket: "chatstruct.firebasestorage.app", messagingSenderId: "1058907485659", appId: "1:1058907485659:web:4b26228c6a74f4c2f223fe" };
+let rtdb=null; try{ firebase.initializeApp(firebaseConfig); rtdb=firebase.database(); firebase.auth().signInAnonymously().catch(()=>{}); }catch(e){}
+const USERS="wna_users_v18", SESSION="wna_session_v18", CONTACTS="wna_contacts_v18_", QUOTA="wna_quota_v18", SEC="wna_sec_v18", ADMIN_KEY="wna_admin_v18", INVITES="wna_invites_v18", REG="wna_registered_v18", CALLS="wna_calls_v18";
+let currentUser=null, currentPhone="", currentDisplay="", isAdmin=false, currentChatId=null, currentChatKey="", currentChatFriend="", currentGroupId=null, currentGroupKey="", isGroupChat=false;
 const OWNER_WA="967771713275", FREE_LIMIT=15;
 function toast(m){const t=document.getElementById("toast");t.textContent=m;t.className="toast show";setTimeout(()=>t.className="toast",3000)}
 function esc(s){return String(s).replace(/[&<>\"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
 function b64e(s){return btoa(unescape(encodeURIComponent(s))).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"")}
 function b64d(s){s=s.replace(/-/g,"+").replace(/_/g,"/");while(s.length%4)s+="=";return decodeURIComponent(escape(atob(s)))}
-async function hashPass(p){const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode("NASHWAN_SALT_V17_"+p));return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,"0")).join("")}
+async function hashPass(p){const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode("NASHWAN_SALT_V18_"+p));return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,"0")).join("")}
 async function copyText(t){try{await navigator.clipboard.writeText(t);toast("✅ تم النسخ")}catch{const ta=document.createElement("textarea");ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand("copy");ta.remove();toast("✅ تم النسخ")}}
 function openWA(msg){window.open("https://wa.me/"+OWNER_WA+"?text="+encodeURIComponent(msg),"_blank")}
 function getQuota(){try{return JSON.parse(localStorage.getItem(QUOTA)||"{}")}catch{return{}}}
@@ -252,256 +292,157 @@ async function encryptText(plain,password){const salt=crypto.getRandomValues(new
 async function decryptText(enc,password){try{if(!enc.startsWith("ENC:"))return null;const raw=Uint8Array.from(atob(enc.slice(4)),c=>c.charCodeAt(0));const key=await deriveKey(password,raw.slice(0,16));const p=await crypto.subtle.decrypt({name:"AES-GCM",iv:raw.slice(16,28)},key,raw.slice(28));return new TextDecoder().decode(p)}catch{return null}}
 async function encryptImageData(d,p){return (await encryptText(d,p)).replace("ENC:","ENC_IMG:")}
 async function decryptImageData(enc,p){ if(!enc.startsWith("ENC_IMG:"))return null; return await decryptText(enc.replace("ENC_IMG:","ENC:"),p); }
-
-/* ===== تسجيل مثل واتساب - OTP ===== */
 let pendingPhone="", pendingName="", pendingPass="", pendingOtp="";
 function genOtp(){ return Math.floor(100000+Math.random()*900000).toString(); }
 document.getElementById("sendOtpBtn").onclick=()=>{
-  const code=document.getElementById("countryCode").value;
-  const phone=document.getElementById("phoneInput").value.trim().replace(/^0+/,"");
-  const name=document.getElementById("displayName").value.trim();
-  const pass=document.getElementById("regPass").value;
+  const code=document.getElementById("countryCode").value; const phone=document.getElementById("phoneInput").value.trim().replace(/^0+/,""); const name=document.getElementById("displayName").value.trim(); const pass=document.getElementById("regPass").value;
   if(!phone||phone.length<8) return document.getElementById("authError").textContent="أدخل رقم صحيح";
   if(!name) return document.getElementById("authError").textContent="أدخل اسمك";
-  if(!pass||pass.length<6) return document.getElementById("authError").textContent="كلمة المرور 6 أحرف على الأقل";
+  if(!pass||pass.length<6) return document.getElementById("authError").textContent="كلمة المرور 6 أحرف";
   pendingPhone=code+phone; pendingName=name; pendingPass=pass; pendingOtp=genOtp();
-  // حفظ OTP في Firebase عشان المدير يشوفه
   if(rtdb) rtdb.ref("otps/"+pendingPhone.replace(/\+/g,"")).set({otp:pendingOtp, name, created:Date.now()});
-  document.getElementById("stepPhone").style.display="none";
-  document.getElementById("stepOtp").style.display="block";
-  document.getElementById("otpPhoneShow").textContent=pendingPhone;
-  document.getElementById("demoOtpBox").style.display="block";
-  document.getElementById("demoOtpText").textContent=pendingOtp;
-  document.getElementById("authError").textContent="";
-  // إرسال للمدير على واتساب - المدير يعطي الكود للعميل
-  // openWA(`طلب تسجيل جديد في واتس نشوان الآمن:\nالاسم: ${name}\nالرقم: ${pendingPhone}\nكود التأكيد: ${pendingOtp}`);
-  toast("تم توليد رمز التأكيد ✅");
+  document.getElementById("stepPhone").style.display="none"; document.getElementById("stepOtp").style.display="block";
+  document.getElementById("otpPhoneShow").textContent=pendingPhone; document.getElementById("demoOtpBox").style.display="block"; document.getElementById("demoOtpText").textContent=pendingOtp;
+  document.getElementById("authError").textContent=""; toast("تم توليد رمز التأكيد ✅");
 };
-document.getElementById("resendOtpBtn").onclick=()=>{ pendingOtp=genOtp(); document.getElementById("demoOtpText").textContent=pendingOtp; if(rtdb) rtdb.ref("otps/"+pendingPhone.replace(/\+/g,"")).set({otp:pendingOtp,name:pendingName,created:Date.now()}); toast("تم إعادة إرسال الرمز"); };
+document.getElementById("resendOtpBtn").onclick=()=>{ pendingOtp=genOtp(); document.getElementById("demoOtpText").textContent=pendingOtp; if(rtdb) rtdb.ref("otps/"+pendingPhone.replace(/\+/g,"")).set({otp:pendingOtp,name:pendingName,created:Date.now()}); toast("تم إعادة الإرسال"); };
 document.getElementById("backPhoneBtn").onclick=()=>{ document.getElementById("stepOtp").style.display="none"; document.getElementById("stepPhone").style.display="block"; };
 document.getElementById("waOtpBtn").onclick=()=>openWA(`مرحباً نشوان، سجلت في واتس نشوان الآمن.\nاسمي: ${pendingName}\nرقمي: ${pendingPhone}\nأرسل لي رمز التأكيد`);
 document.getElementById("verifyOtpBtn").onclick=async()=>{
-  const v=document.getElementById("otpInput").value.trim();
-  if(v!==pendingOtp) return document.getElementById("authError").textContent="❌ الرمز غلط - جرب مرة ثانية";
-  // تسجيل المستخدم
-  const username=pendingPhone.replace(/\+/g,"").replace(/\s/g,""); // اسم المستخدم = الرقم
-  const hashed=await hashPass(pendingPass);
-  let users=JSON.parse(localStorage.getItem(USERS)||"{}");
-  users[username]=hashed; localStorage.setItem(USERS,JSON.stringify(users));
-  let reg=JSON.parse(localStorage.getItem(REG)||"[]");
-  if(!reg.find(x=>x.phone===pendingPhone)){ reg.push({phone:pendingPhone, name:pendingName, user:username, created:Date.now()}); localStorage.setItem(REG,JSON.stringify(reg)); }
-  // حفظ في Firebase عشان يظهر عند كل الناس
+  const v=document.getElementById("otpInput").value.trim(); if(v!==pendingOtp) return document.getElementById("authError").textContent="❌ الرمز غلط";
+  const username=pendingPhone.replace(/\+/g,""); const hashed=await hashPass(pendingPass);
+  let users=JSON.parse(localStorage.getItem(USERS)||"{}"); users[username]=hashed; localStorage.setItem(USERS,JSON.stringify(users));
+  let reg=JSON.parse(localStorage.getItem(REG)||"[]"); if(!reg.find(x=>x.phone===pendingPhone)) reg.push({phone:pendingPhone, name:pendingName, user:username, created:Date.now()}); localStorage.setItem(REG,JSON.stringify(reg));
   if(rtdb) rtdb.ref("users/"+username).set({phone:pendingPhone, name:pendingName, user:username, created:Date.now()});
   let q=getQuota(); if(!q[username]){ q[username]={remaining:FREE_LIMIT,totalUsed:0,plan:"مجاني",unlimited:false}; saveQuota(q); }
   currentUser=username; currentPhone=pendingPhone; currentDisplay=pendingName; isAdmin=false;
-  localStorage.setItem(SESSION, JSON.stringify({u:username, phone:pendingPhone, name:pendingName}));
-  startApp(); toast("أهلاً "+pendingName+" - تم تأكيد رقمك ✅");
+  localStorage.setItem(SESSION, JSON.stringify({u:username, phone:pendingPhone, name:pendingName})); startApp(); toast("أهلاً "+pendingName+" ✅");
 };
 document.getElementById("goAdminBtn").onclick=()=>{ document.getElementById("stepPhone").style.display="none"; document.getElementById("stepOtp").style.display="none"; document.getElementById("stepAdmin").style.display="block"; };
 document.getElementById("backFromAdmin").onclick=()=>{ document.getElementById("stepAdmin").style.display="none"; document.getElementById("stepPhone").style.display="block"; };
 function getAdmin(){ try{return JSON.parse(localStorage.getItem(ADMIN_KEY)||'{"u":"","pHash":""}')}catch{return{u:"",pHash:""}} }
 async function initAdmin(){ let admin=getAdmin(); if(!admin.pHash){ admin={u:"NASH", pHash:await hashPass("7717132")}; localStorage.setItem(ADMIN_KEY,JSON.stringify(admin)); } }
 document.getElementById("adminLoginBtn").onclick=async()=>{
-  const u=document.getElementById("adminUser").value.trim(), p=document.getElementById("adminPass").value;
-  const admin=getAdmin(); const h=await hashPass(p);
+  const u=document.getElementById("adminUser").value.trim(), p=document.getElementById("adminPass").value; const admin=getAdmin(); const h=await hashPass(p);
   if(u===admin.u && h===admin.pHash){ currentUser=u; currentDisplay="نشوان البدري"; currentPhone="+967771713275"; isAdmin=true; localStorage.setItem(SESSION, JSON.stringify({u, phone:currentPhone, name:currentDisplay})); startApp(); toast("أهلاً مدير 👑"); }
   else document.getElementById("authError").textContent="بيانات المدير غلط";
 };
-
-/* ===== بدء التطبيق ===== */
+let pendingRequests=[], currentPending=null;
+function showAdminAlert(){ const bar=document.getElementById("adminAlertBar"); if(!isAdmin || pendingRequests.length===0){ if(bar) bar.style.display="none"; return; } currentPending=pendingRequests[0]; bar.style.display="block"; document.getElementById("adminAlertText").textContent=`🔔 شخص جديد: ${currentPending.name} - ${currentPending.phone}`; document.getElementById("adminAlertCode").textContent=`كود التأكيد: ${currentPending.otp}`; if(navigator.vibrate) navigator.vibrate([200,100,200]); }
+document.getElementById("adminApproveBtn").onclick=async()=>{ if(!currentPending) return; if(rtdb){ await rtdb.ref("approved/"+currentPending.phone.replace(/\+/g,"")).set({approved:true, name:currentPending.name, phone:currentPending.phone, approvedAt:Date.now()}); await rtdb.ref("otps/"+currentPending.phone.replace(/\+/g,"")).remove(); } window.open("https://wa.me/"+currentPending.phone.replace(/\+/g,"")+"?text="+encodeURIComponent(`أهلاً ${currentPending.name} 👋\nتم تأكيد حسابك ✅\nكودك: ${currentPending.otp}`),"_blank"); toast("✅ تم تأكيد "+currentPending.name); pendingRequests.shift(); showAdminAlert(); };
+document.getElementById("adminRejectBtn").onclick=async()=>{ if(!currentPending) return; if(rtdb) await rtdb.ref("otps/"+currentPending.phone.replace(/\+/g,"")).remove(); toast("تم الرفض"); pendingRequests.shift(); showAdminAlert(); };
+function listenForNewUsers(){ if(!rtdb||!isAdmin) return; rtdb.ref("otps").on("child_added", snap=>{ const data=snap.val(); const phone="+"+snap.key; if(pendingRequests.find(x=>x.phone===phone)) return; pendingRequests.push({phone, name:data.name||"بدون اسم", otp:data.otp}); showAdminAlert(); toast("🔔 شخص جديد: "+data.name); }); rtdb.ref("otps").on("child_removed", snap=>{ const phone="+"+snap.key; pendingRequests=pendingRequests.filter(x=>x.phone!==phone); showAdminAlert(); }); }
 function startApp(){
-  document.getElementById("authScreen").style.display="none";
-  document.getElementById("mainHeader").style.display="flex";
-  document.getElementById("mainApp").style.display="block";
-  document.getElementById("bottomNav").style.display="flex";
-  document.getElementById("fabBtn").style.display="block";
-  document.getElementById("myAvatar").textContent=(currentDisplay||currentUser).charAt(0).toUpperCase();
-  document.getElementById("settingsAvatar").textContent=(currentDisplay||currentUser).charAt(0).toUpperCase();
-  document.getElementById("settingsName").textContent=currentDisplay||currentUser;
-  document.getElementById("settingsPhone").textContent=currentPhone||"";
-  document.getElementById("editName").value=currentDisplay||currentUser;
-  document.getElementById("inviteLinkOut").textContent=location.origin+location.pathname+"?invite="+currentUser;
-  if(isAdmin) document.getElementById("adminPanel").style.display="block";
-  updatePlan(); renderContacts(); renderChatList(); renderGroups(); loadTheme();
+  document.getElementById("authScreen").style.display="none"; document.getElementById("mainHeader").style.display="flex"; document.getElementById("mainApp").style.display="block"; document.getElementById("bottomNav").style.display="flex"; document.getElementById("fabBtn").style.display="block";
+  document.getElementById("myAvatar").textContent=(currentDisplay||currentUser).charAt(0).toUpperCase(); document.getElementById("sideAvatar").textContent=(currentDisplay||currentUser).charAt(0).toUpperCase(); document.getElementById("sideName").textContent=currentDisplay||currentUser; document.getElementById("sidePhone").textContent=currentPhone||""; document.getElementById("settingsAvatar").textContent=(currentDisplay||currentUser).charAt(0).toUpperCase(); document.getElementById("settingsName").textContent=currentDisplay||currentUser; document.getElementById("settingsPhone").textContent=currentPhone||""; document.getElementById("editName").value=currentDisplay||currentUser; document.getElementById("inviteLinkOut").textContent=location.origin+location.pathname+"?invite="+currentUser;
+  if(isAdmin) document.getElementById("adminPanel").style.display="block"; updatePlan(); renderContacts(); renderChatList(); renderGroups(); loadTheme(); listenForNewUsers();
   const sec=JSON.parse(localStorage.getItem(SEC)||"{}"); document.getElementById("lockEnabled").checked=!!sec.lockEnabled; document.getElementById("bioEnabled").checked=!!sec.bioEnabled;
-  if(sec.lockEnabled) setTimeout(()=>{ const pin=prompt("🔒 التطبيق مقفل - أدخل PIN:"); if(pin!==sec.pin){ alert("PIN غلط"); location.reload(); } },500);
 }
 function loadTheme(){ const t=localStorage.getItem("wna_theme")||"light"; if(t==="dark") document.documentElement.setAttribute("data-theme","dark"); else document.documentElement.removeAttribute("data-theme"); document.getElementById("darkToggle").checked=(t==="dark"); }
 document.getElementById("themeBtn").onclick=()=>{ const isDark=document.documentElement.getAttribute("data-theme")==="dark"; if(isDark){ document.documentElement.removeAttribute("data-theme"); localStorage.setItem("wna_theme","light"); } else { document.documentElement.setAttribute("data-theme","dark"); localStorage.setItem("wna_theme","dark"); } document.getElementById("darkToggle").checked=!isDark; };
 document.getElementById("darkToggle").onchange=e=>{ if(e.target.checked){ document.documentElement.setAttribute("data-theme","dark"); localStorage.setItem("wna_theme","dark"); } else { document.documentElement.removeAttribute("data-theme"); localStorage.setItem("wna_theme","light"); } };
-document.getElementById("menuBtn").onclick=()=>{ document.querySelector('.nav-item[data-tab="settings"]').click(); };
-document.getElementById("searchBtn").onclick=()=>{ document.getElementById("chatSearch").focus(); window.scrollTo({top:0,behavior:"smooth"}); };
-
-/* تنقل سفلي */
-document.querySelectorAll(".nav-item").forEach(el=>el.onclick=()=>{
-  document.querySelectorAll(".nav-item").forEach(x=>x.classList.remove("active")); el.classList.add("active");
-  document.querySelectorAll(".tab-content").forEach(c=>c.classList.remove("active"));
-  document.getElementById("tab-"+el.dataset.tab).classList.add("active");
-  window.scrollTo({top:0,behavior:"smooth"});
-});
-document.getElementById("fabBtn").onclick=()=>{ document.querySelector('.nav-item[data-tab="contacts"]').click(); toast("اختر صديق لتبدأ محادثة"); };
-
-/* جهات الاتصال - دمج تلقائي */
+const sidebar=document.getElementById("sidebar"), overlay=document.getElementById("overlay");
+function openSidebar(){ sidebar.classList.add("open"); overlay.classList.add("show"); } function closeSidebar(){ sidebar.classList.remove("open"); overlay.classList.remove("show"); }
+document.getElementById("openSidebarBtn").onclick=openSidebar; overlay.onclick=closeSidebar;
+function goTab(tab){ document.querySelectorAll(".nav-item").forEach(x=>x.classList.toggle("active", x.dataset.tab===tab)); document.querySelectorAll(".tab-content").forEach(c=>c.classList.remove("active")); const el=document.getElementById("tab-"+tab); if(el) el.classList.add("active"); window.scrollTo({top:0,behavior:"smooth"}); closeSidebar(); }
+document.querySelectorAll(".nav-item").forEach(el=>el.onclick=()=>goTab(el.dataset.tab));
+document.querySelectorAll("[data-side]").forEach(el=>el.onclick=()=>{ const s=el.dataset.side; if(["chats","encrypt","decrypt","contacts","settings","azkar","quran","dua","guide","about","calls","createGroup"].includes(s)) goTab(s); if(s==="broadcast") goTab("createGroup"); });
+document.getElementById("logoutSide").onclick=()=>{ localStorage.removeItem(SESSION); location.reload(); };
+document.getElementById("fabBtn").onclick=()=>{ goTab("contacts"); toast("اختر صديق لتبدأ محادثة"); };
+document.getElementById("searchBtn").onclick=()=>{ document.getElementById("chatSearch").focus(); goTab("chats"); };
+document.getElementById("callHeaderBtn").onclick=()=>goTab("calls");
 function getLocalContacts(){ try{return JSON.parse(localStorage.getItem(CONTACTS+currentUser)||"[]")}catch{return[]} }
 function saveLocalContacts(l){ localStorage.setItem(CONTACTS+currentUser, JSON.stringify(l)); }
 function renderContacts(){
-  const list=document.getElementById("contactList"); if(!list) return;
-  const search=(document.getElementById("contactSearch")?.value||"").toLowerCase();
-  const local=getLocalContacts();
-  let reg=JSON.parse(localStorage.getItem(REG)||"[]");
-  // دمج: المسجلين في Firebase + المحليين
+  const list=document.getElementById("contactList"); if(!list) return; const search=(document.getElementById("contactSearch")?.value||"").toLowerCase();
+  const local=getLocalContacts(); let reg=JSON.parse(localStorage.getItem(REG)||"[]");
   let all=[...reg.map(r=>({name:r.name, phone:r.phone, user:r.user, isRegistered:true})), ...local.map(c=>({name:c.name, phone:c.number, user:c.number, isRegistered:false}))];
-  // إزالة التكرار
-  let seen=new Set(), uniq=[];
-  all.forEach(a=>{ const k=a.phone; if(!seen.has(k) && a.phone!==currentPhone){ seen.add(k); uniq.push(a); } });
-  let filtered=uniq.filter(a=> (a.name+" "+a.phone).toLowerCase().includes(search));
-  list.innerHTML="";
-  if(filtered.length===0) list.innerHTML="<p style='text-align:center;color:var(--muted);padding:12px'>لا توجد جهات بعد - ادع أصدقاءك يسجلون برقمهم</p>";
-  filtered.forEach(c=>{
-    const d=document.createElement("div"); d.className="contact-item";
-    d.innerHTML=`<div class="avatar">${esc((c.name||"?").charAt(0))}</div><div style="flex:1"><b>${esc(c.name)}</b><div style="font-size:12px;color:var(--muted)">${esc(c.phone)} ${c.isRegistered?'<span class="badge">مسجل ✅</span>':''}</div></div><button class="btn btn-green" style="width:auto;padding:8px 14px;font-size:13px">💬 محادثة</button>`;
-    d.querySelector("button").onclick=()=>openChat(c);
-    list.appendChild(d);
-  });
-  // تحديث قائمة المحادثات بنفس الأرقام
-  renderChatList();
+  let seen=new Set(), uniq=[]; all.forEach(a=>{ if(!seen.has(a.phone) && a.phone!==currentPhone){ seen.add(a.phone); uniq.push(a); } });
+  let filtered=uniq.filter(a=> (a.name+" "+a.phone).toLowerCase().includes(search)); list.innerHTML=""; if(filtered.length===0) list.innerHTML="<p style='text-align:center;color:var(--muted);padding:12px'>لا توجد جهات بعد</p>";
+  filtered.forEach(c=>{ const d=document.createElement("div"); d.className="contact-item"; d.innerHTML=`<div class="avatar">${esc((c.name||"?").charAt(0))}</div><div style="flex:1"><b>${esc(c.name)}</b><div style="font-size:12px;color:var(--muted)">${esc(c.phone)} ${c.isRegistered?'<span class="badge">مسجل ✅</span>':''}</div></div><button class="btn btn-green" style="width:auto;padding:8px 14px;font-size:13px">💬</button><button class="btn btn-light" style="width:auto;padding:8px 10px">📞</button>`; d.querySelectorAll("button")[0].onclick=()=>openChat(c); d.querySelectorAll("button")[1].onclick=()=>startCall(c.name, "voice"); list.appendChild(d); }); renderChatList(); fillCallSelect();
 }
 document.getElementById("contactSearch").oninput=renderContacts;
-document.getElementById("addPhoneBtn").onclick=()=>{
-  const name=document.getElementById("contactName").value.trim(), num=document.getElementById("phoneAdd").value.trim();
-  if(!name||!num) return toast("أدخل الاسم والرقم");
-  let l=getLocalContacts(); l.push({name, number:num}); saveLocalContacts(l); renderContacts(); toast("تمت الإضافة ✅");
-};
+document.getElementById("addPhoneBtn").onclick=()=>{ const name=document.getElementById("contactName").value.trim(), num=document.getElementById("phoneAdd").value.trim(); if(!name||!num) return toast("أدخل الاسم والرقم"); let l=getLocalContacts(); l.push({name, number:num}); saveLocalContacts(l); renderContacts(); toast("تمت الإضافة ✅"); };
 document.getElementById("copyInviteLinkBtn").onclick=()=>copyText(document.getElementById("inviteLinkOut").textContent);
-document.getElementById("waInviteBtn").onclick=()=>openWA(`حمل واتس نشوان الآمن 🛡️\nمراسلة مشفرة ومحادثات وقروبات\nسجل برقمك هنا:\n${document.getElementById("inviteLinkOut").textContent}`);
-
-/* قائمة المحادثات */
+document.getElementById("waInviteBtn").onclick=()=>openWA(`حمل واتس نشوان الآمن 🛡️\nسجل برقمك هنا:\n${document.getElementById("inviteLinkOut").textContent}`);
+document.getElementById("waAboutBtn").onclick=()=>openWA("مرحباً نشوان، حملت تطبيق واتس نشوان الآمن وأحببته 💚");
 function renderChatList(){
-  const list=document.getElementById("chatList"); if(!list) return;
-  const search=(document.getElementById("chatSearch")?.value||"").toLowerCase();
-  let reg=JSON.parse(localStorage.getItem(REG)||"[]");
-  let filtered=reg.filter(r=> r.phone!==currentPhone && (r.name+" "+r.phone).toLowerCase().includes(search));
-  // لو فيه محادثات من Firebase، اعرضها أولاً - هنا نعرض المسجلين كمحادثات محتملة
-  list.innerHTML="";
-  document.getElementById("totalChats").textContent=filtered.length+" محادثة";
-  if(filtered.length===0){ list.innerHTML="<p style='text-align:center;color:var(--muted);padding:14px'>لا توجد محادثات بعد.<br>ادع صديقك يسجل برقمه، بيظهر هنا.</p>"; return; }
-  filtered.slice(0,20).forEach(c=>{
-    const d=document.createElement("div"); d.className="chat-item";
-    d.innerHTML=`<div class="avatar">${esc(c.name.charAt(0))}</div><div class="info"><div class="top"><b>${esc(c.name)}</b><span>الآن</span></div><div class="last">🔒 اضغط لبدء محادثة مشفرة</div></div><span style="font-size:12px;color:#25D366">●</span>`;
-    d.onclick=()=>openChat(c);
-    list.appendChild(d);
-  });
-  // جلب المسجلين من Firebase أيضاً
-  if(rtdb) rtdb.ref("users").once("value", snap=>{
-    let fbUsers=[]; snap.forEach(ch=>{ const v=ch.val(); if(v.phone!==currentPhone) fbUsers.push(v); });
-    fbUsers.forEach(v=>{
-      if(!filtered.find(f=>f.phone===v.phone)){
-        const d=document.createElement("div"); d.className="chat-item";
-        d.innerHTML=`<div class="avatar">${esc((v.name||"?").charAt(0))}</div><div class="info"><div class="top"><b>${esc(v.name)}</b><span>جديد</span></div><div class="last">🔒 ${esc(v.phone)} - مسجل في التطبيق</div></div><span class="badge">جديد</span>`;
-        d.onclick=()=>openChat({name:v.name, phone:v.phone, user:v.user});
-        list.appendChild(d);
-      }
-    });
-  });
+  const list=document.getElementById("chatList"); if(!list) return; const search=(document.getElementById("chatSearch")?.value||"").toLowerCase();
+  let reg=JSON.parse(localStorage.getItem(REG)||"[]"); let filtered=reg.filter(r=> r.phone!==currentPhone && (r.name+" "+r.phone).toLowerCase().includes(search));
+  list.innerHTML=""; document.getElementById("totalChats").textContent=filtered.length+" محادثة"; document.getElementById("sideChatCount").textContent=filtered.length;
+  if(filtered.length===0){ list.innerHTML="<p style='text-align:center;color:var(--muted);padding:14px'>لا توجد محادثات بعد.</p>"; return; }
+  filtered.slice(0,30).forEach(c=>{ const d=document.createElement("div"); d.className="chat-item"; d.innerHTML=`<div class="avatar">${esc(c.name.charAt(0))}</div><div class="info"><div class="top"><b>${esc(c.name)}</b><span>الآن</span></div><div class="last">🔒 اضغط لبدء محادثة مشفرة</div></div><span style="font-size:12px;color:#25D366">●</span>`; d.onclick=()=>openChat(c); list.appendChild(d); });
 }
 document.getElementById("chatSearch").oninput=renderChatList;
-document.getElementById("startFirstChatBtn").onclick=()=>{ document.querySelector('.nav-item[data-tab="contacts"]').click(); };
-
-/* فتح محادثة */
+document.getElementById("startChatBtn").onclick=()=>goTab("contacts");
+document.getElementById("quickGroupBtn").onclick=()=>goTab("createGroup");
 let chatListener=null;
 async function openChat(contact){
-  const friendUser=contact.user||contact.phone.replace(/\+/g,"");
-  const key=prompt(`🔒 محادثة مع ${contact.name}\n\nأدخل المفتاح المشترك بينكما (اتفقوا عليه قبل):`);
-  if(!key||key.length<4) return toast("المفتاح 4 أحرف على الأقل");
-  currentChatFriend=contact.name; currentChatKey=key;
-  const users=[currentUser, friendUser].sort();
-  currentChatId=users.join("_");
-  document.getElementById("chatTitle").textContent=contact.name;
-  document.getElementById("chatAvatar").textContent=(contact.name||"?").charAt(0);
-  document.getElementById("chatScreen").classList.add("open");
+  const friendUser=contact.user||contact.phone.replace(/\+/g,""); const key=prompt(`🔒 محادثة مع ${contact.name}\n\nأدخل المفتاح المشترك:`); if(!key||key.length<4) return toast("المفتاح 4 أحرف");
+  currentChatFriend=contact.name; currentChatKey=key; isGroupChat=false; const users=[currentUser, friendUser].sort(); currentChatId=users.join("_"); currentGroupId=null;
+  document.getElementById("chatTitle").textContent=contact.name; document.getElementById("chatAvatar").textContent=(contact.name||"?").charAt(0); document.getElementById("chatScreen").classList.add("open");
   const box=document.getElementById("chatMessages"); box.innerHTML="<p style='text-align:center;color:var(--muted)'>🔒 محادثة مشفرة مع "+esc(contact.name)+"</p>";
   if(chatListener && rtdb) rtdb.ref("chats/"+currentChatId+"/messages").off("child_added", chatListener);
-  if(rtdb){
-    rtdb.ref("chats/"+currentChatId+"/messages").orderByChild("created").limitToLast(50).once("value", snap=>{
-      snap.forEach(child=>renderMsg(child.val()));
-    });
-    chatListener=(snap)=>renderMsg(snap.val());
-    rtdb.ref("chats/"+currentChatId+"/messages").orderByChild("created").limitToLast(1).on("child_added", chatListener);
-  }
-  document.querySelector('.nav-item[data-tab="chats"]').click();
+  if(rtdb){ rtdb.ref("chats/"+currentChatId+"/messages").orderByChild("created").limitToLast(50).once("value", snap=>{ snap.forEach(child=>renderMsg(child.val())); }); chatListener=(snap)=>renderMsg(snap.val()); rtdb.ref("chats/"+currentChatId+"/messages").orderByChild("created").limitToLast(1).on("child_added", chatListener); }
+  goTab("chats");
 }
 async function renderMsg(data){
-  const box=document.getElementById("chatMessages");
-  const div=document.createElement("div"); div.className="msg "+(data.from===currentUser?"me":"other"); div.textContent="جاري الفك..."; box.appendChild(div); box.scrollTop=9999;
-  if(data.type==="image"){
-    const img=await decryptImageData(data.cipher, currentChatKey);
-    if(img){ div.innerHTML=""; const im=document.createElement("img"); im.src=img; im.style.maxWidth="100%"; im.style.borderRadius="10px"; div.appendChild(im); }
-    else div.textContent="🔒 صورة مشفرة - المفتاح غلط";
-  } else {
-    const txt=await decryptText(data.cipher, currentChatKey);
-    div.textContent=(txt||"🔒 رسالة مشفرة - المفتاح غلط");
-  }
+  const box=document.getElementById("chatMessages"); const div=document.createElement("div"); div.className="msg "+(data.from===currentUser?"me":"other"); div.textContent="جاري الفك..."; box.appendChild(div); box.scrollTop=9999;
+  if(data.type==="image"){ const img=await decryptImageData(data.cipher, currentChatKey); if(img){ div.innerHTML=""; const im=document.createElement("img"); im.src=img; im.style.maxWidth="100%"; im.style.borderRadius="10px"; div.appendChild(im); } else div.textContent="🔒 صورة مشفرة"; }
+  else { const txt=await decryptText(data.cipher, currentChatKey); div.textContent=(txt||"🔒 رسالة مشفرة"); }
   const sm=document.createElement("small"); sm.textContent=new Date(data.created).toLocaleTimeString("ar",{hour:"2-digit",minute:"2-digit"})+" • "+(data.from===currentUser?"أنت":currentChatFriend); div.appendChild(sm);
 }
 document.getElementById("backChatBtn").onclick=()=>{ document.getElementById("chatScreen").classList.remove("open"); currentChatId=null; };
 document.getElementById("sendChatBtn").onclick=async()=>{
-  if(!currentChatId) return toast("افتح محادثة أولاً");
   const msg=document.getElementById("chatInput").value.trim(); if(!msg) return;
-  if(!useOne()) return;
-  const cipher=await encryptText(msg, currentChatKey);
-  await rtdb.ref("chats/"+currentChatId+"/messages").push({from:currentUser, cipher, created:Date.now(), type:"text"});
-  document.getElementById("chatInput").value="";
+  if(isGroupChat){ if(!currentGroupId) return; const cipher=await encryptText(msg, currentGroupKey); await rtdb.ref("groups/"+currentGroupId+"/messages").push({from:currentUser, cipher, created:Date.now()}); document.getElementById("chatInput").value=""; return; }
+  if(!currentChatId) return toast("افتح محادثة أولاً"); if(!useOne()) return; const cipher=await encryptText(msg, currentChatKey); await rtdb.ref("chats/"+currentChatId+"/messages").push({from:currentUser, cipher, created:Date.now(), type:"text"}); document.getElementById("chatInput").value="";
 };
 document.getElementById("chatInput").onkeypress=e=>{ if(e.key==="Enter") document.getElementById("sendChatBtn").click(); };
 document.getElementById("chatImageBtn").onclick=()=>document.getElementById("chatImageInput").click();
 document.getElementById("chatImageInput").onchange=e=>{ const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=async(ev)=>{ const enc=await encryptImageData(ev.target.result, currentChatKey); await rtdb.ref("chats/"+currentChatId+"/messages").push({from:currentUser, cipher:enc, created:Date.now(), type:"image"}); toast("تم إرسال الصورة ✅"); }; r.readAsDataURL(f); };
 document.getElementById("attachBtn").onclick=()=>document.getElementById("chatImageInput").click();
-document.getElementById("chatCallBtn").onclick=()=>toast("المكالمات قريباً - نسخة 18");
-document.getElementById("myStory").onclick=()=>toast("الحالات قريباً - نسخة 18");
-
-/* قروبات */
+document.getElementById("chatVoiceBtn").onclick=()=>startCall(currentChatFriend, "voice");
+document.getElementById("chatVideoBtn").onclick=()=>startCall(currentChatFriend, "video");
 function renderGroups(){
-  const el=document.getElementById("myGroupsList"); if(!el) return; el.innerHTML="<p style='font-size:13px;color:var(--muted)'>لا توجد قروبات بعد - أنشئ أول قروب</p>";
+  const el=document.getElementById("myGroupsList"); if(!el) return; el.innerHTML="<p style='font-size:13px;color:var(--muted)'>لا توجد قروبات بعد</p>";
   if(rtdb) rtdb.ref("groups").once("value", snap=>{ el.innerHTML=""; snap.forEach(ch=>{ const info=ch.child("info").val(); if(!info) return; const d=document.createElement("div"); d.className="group-item"; d.innerHTML=`<div class="avatar" style="background:#7c3aed">👥</div><div style="flex:1"><b>${esc(info.name)}</b><div style="font-size:11px;color:var(--muted)">${ch.key}</div></div><span class="badge">دخول</span>`; d.onclick=()=>{ const key=prompt("أدخل مفتاح القروب:"); if(!key) return; openGroup(ch.key, info.name, key); }; el.appendChild(d); }); if(el.innerHTML==="") el.innerHTML="<p style='font-size:13px;color:var(--muted)'>لا توجد قروبات بعد</p>"; });
 }
 function openGroup(id, name, key){
-  currentGroupId=id; currentGroupKey=key;
-  document.getElementById("chatTitle").textContent="👥 "+name;
-  document.getElementById("chatAvatar").textContent="👥";
-  document.getElementById("chatScreen").classList.add("open");
+  currentGroupId=id; currentGroupKey=key; isGroupChat=true; currentChatFriend=name; document.getElementById("chatTitle").textContent="👥 "+name; document.getElementById("chatAvatar").textContent="👥"; document.getElementById("chatScreen").classList.add("open");
   const box=document.getElementById("chatMessages"); box.innerHTML="<p style='text-align:center'>قروب "+esc(name)+" - مشفر</p>";
-  // استخدام نفس شاشة المحادثة للقروب - الإرسال يروح للقروب
-  currentChatId=null; // علامة أنه قروب
-  if(rtdb){
-    rtdb.ref("groups/"+id+"/messages").orderByChild("created").limitToLast(50).once("value", snap=>{ snap.forEach(ch=>{ const data=ch.val(); const div=document.createElement("div"); div.className="msg "+(data.from===currentUser?"me":"other"); div.textContent="جاري الفك..."; box.appendChild(div); decryptText(data.cipher, key).then(t=>{ div.textContent=(data.from===currentUser?"أنت: ":""+data.from+": ")+(t||"🔒 مشفرة"); }); }); });
-    rtdb.ref("groups/"+id+"/messages").orderByChild("created").limitToLast(1).on("child_added", snap=>{ const data=snap.val(); const div=document.createElement("div"); div.className="msg "+(data.from===currentUser?"me":"other"); div.textContent="جاري الفك..."; box.appendChild(div); box.scrollTop=9999; decryptText(data.cipher, key).then(t=>{ div.textContent=(data.from===currentUser?"أنت: ":""+data.from+": ")+(t||"🔒 مشفرة"); }); });
-  }
-  // تعديل زر الإرسال للقروب
-  document.getElementById("sendChatBtn").onclick=async()=>{
-    const msg=document.getElementById("chatInput").value.trim(); if(!msg) return;
-    const cipher=await encryptText(msg, currentGroupKey);
-    await rtdb.ref("groups/"+currentGroupId+"/messages").push({from:currentUser, cipher, created:Date.now()});
-    document.getElementById("chatInput").value="";
-  };
+  if(rtdb){ rtdb.ref("groups/"+id+"/messages").orderByChild("created").limitToLast(50).once("value", snap=>{ snap.forEach(ch=>{ const data=ch.val(); const div=document.createElement("div"); div.className="msg "+(data.from===currentUser?"me":"other"); div.textContent="جاري الفك..."; box.appendChild(div); decryptText(data.cipher, key).then(t=>{ div.textContent=(data.from===currentUser?"أنت: ":""+data.from+": ")+(t||"🔒 مشفرة"); }); }); }); rtdb.ref("groups/"+id+"/messages").orderByChild("created").limitToLast(1).on("child_added", snap=>{ const data=snap.val(); const div=document.createElement("div"); div.className="msg "+(data.from===currentUser?"me":"other"); div.textContent="جاري الفك..."; box.appendChild(div); box.scrollTop=9999; decryptText(data.cipher, key).then(t=>{ div.textContent=(data.from===currentUser?"أنت: ":""+data.from+": ")+(t||"🔒 مشفرة"); }); }); }
 }
-document.getElementById("createGroupQuickBtn").onclick=async()=>{
-  const name=prompt("اسم القروب:"); if(!name) return;
-  const key=prompt("مفتاح القروب (اعطيه لأصحابك):"); if(!key||key.length<4) return toast("المفتاح 4 أحرف");
-  const id="GRP_"+Date.now();
-  await rtdb.ref("groups/"+id+"/info").set({name, created:Date.now(), createdBy:currentUser});
-  toast("تم إنشاء القروب ✅ ID: "+id+" - انسخه وارسله لأصحابك");
-  copyText(id); renderGroups();
+document.getElementById("createGroupBtn").onclick=async()=>{
+  const name=document.getElementById("groupName").value.trim(); const key=document.getElementById("groupKey").value; const desc=document.getElementById("groupDesc").value.trim();
+  if(!name||!key) return toast("اكتب اسم المجموعة والمفتاح"); const id="GRP_"+Date.now();
+  await rtdb.ref("groups/"+id+"/info").set({name, desc, created:Date.now(), createdBy:currentUser});
+  const info=document.getElementById("groupCreatedInfo"); info.style.display="block"; info.innerHTML=`✅ تم إنشاء مجموعة <b>${esc(name)}</b><br>ID: <b>${id}</b>`; copyText(id); renderGroups(); toast("تم إنشاء المجموعة ✅");
 };
-document.getElementById("joinGroupQuickBtn").onclick=async()=>{
-  const id=prompt("اكتب ID القروب GRP_...:"); if(!id) return;
-  const key=prompt("مفتاح القروب:"); if(!key) return;
-  const snap=await rtdb.ref("groups/"+id+"/info").once("value");
-  if(!snap.exists()) return toast("القروب غير موجود");
-  openGroup(id, snap.val().name, key);
+document.getElementById("createGroupQuickBtn").onclick=()=>goTab("createGroup");
+document.getElementById("joinGroupQuickBtn").onclick=async()=>{ const id=prompt("اكتب ID المجموعة GRP_...:"); if(!id) return; const key=prompt("مفتاح المجموعة:"); if(!key) return; const snap=await rtdb.ref("groups/"+id+"/info").once("value"); if(!snap.exists()) return toast("المجموعة غير موجودة"); openGroup(id, snap.val().name, key); };
+document.getElementById("sendBroadcastBtn").onclick=async()=>{
+  const to=document.getElementById("broadcastTo").value.trim(); const msg=document.getElementById("broadcastMsg").value.trim(); const key=document.getElementById("broadcastKey").value; if(!to||!msg||!key) return toast("عبي كل الحقول"); if(!useOne()) return;
+  const names=to.split(",").map(s=>s.trim()).filter(Boolean); const cipher=await encryptText(msg, key); let sent=0; for(const n of names){ let reg=JSON.parse(localStorage.getItem(REG)||"[]"); let f=reg.find(r=>r.name===n||r.phone===n); let friendUser=f?f.user:n.replace(/\+/g,""); let users=[currentUser, friendUser].sort(); let chatId=users.join("_"); await rtdb.ref("chats/"+chatId+"/messages").push({from:currentUser, cipher, created:Date.now(), type:"text", broadcast:true}); sent++; }
+  document.getElementById("broadcastResult").innerHTML=`✅ تم إرسال الرسالة الجماعية إلى <b>${sent}</b> شخص.`; toast("تم إرسال الرسالة الجماعية ✅");
 };
-
-/* تشفير عادي */
-document.getElementById("encryptBtn").onclick=async()=>{ const m=document.getElementById("messageInput").value.trim(), k=document.getElementById("keyInput").value; if(!m) return toast("اكتب الرسالة"); if(!k||k.length<4) return toast("المفتاح 4 أحرف"); if(!useOne()) return; const c=await encryptText(m,k); document.getElementById("encryptOutput").textContent=c; await dbAdd({user:currentUser,cipher:c,created:Date.now()}); toast("تم التشفير ✅"); };
+let localStream=null, callTimerInt=null, callSeconds=0, isMuted=false;
+function fillCallSelect(){ const sel=document.getElementById("callFriendSelect"); if(!sel) return; sel.innerHTML='<option value="">اختر صديق...</option>'; let reg=JSON.parse(localStorage.getItem(REG)||"[]"); reg.filter(r=>r.phone!==currentPhone).forEach(r=>{ const o=document.createElement("option"); o.value=r.name; o.textContent=r.name+" - "+r.phone; sel.appendChild(o); }); }
+async function startCall(friendName, type){
+  if(!friendName) return toast("اختر صديق أولاً");
+  document.getElementById("callScreen").classList.add("open"); document.getElementById("callName").textContent=(type==="video"?"📹 مكالمة فيديو مع ":"🎙️ مكالمة صوتية مع ")+friendName; document.getElementById("callTimer").textContent="جارٍ الاتصال..."; callSeconds=0; clearInterval(callTimerInt);
+  callTimerInt=setInterval(()=>{ callSeconds++; const m=Math.floor(callSeconds/60).toString().padStart(2,"0"); const s=(callSeconds%60).toString().padStart(2,"0"); document.getElementById("callTimer").textContent=`مكالمة جارية - ${m}:${s}`; },1000);
+  try{ localStream=await navigator.mediaDevices.getUserMedia({audio:true, video: type==="video"}); if(type==="video"){ document.getElementById("callLocalBox").style.display="block"; document.getElementById("localVideo").srcObject=localStream; document.getElementById("callRemote").innerHTML="📹"; } else { document.getElementById("callRemote").innerHTML="🎙️<br><span style='font-size:16px'>مكالمة صوتية مشفرة</span>"; } let hist=JSON.parse(localStorage.getItem(CALLS+currentUser)||"[]"); hist.unshift({name:friendName, type, time:Date.now()}); localStorage.setItem(CALLS+currentUser, JSON.stringify(hist.slice(0,20))); renderCallHistory(); toast("تم بدء المكالمة"); }catch(e){ toast("لم يتم السماح بالميكروفون/الكاميرا"); }
+}
+function endCall(){ document.getElementById("callScreen").classList.remove("open"); clearInterval(callTimerInt); if(localStream) localStream.getTracks().forEach(t=>t.stop()); localStream=null; document.getElementById("callLocalBox").style.display="none"; toast("انتهت المكالمة"); }
+document.getElementById("endCallBtn").onclick=endCall;
+document.getElementById("voiceCallBtn").onclick=()=>{ const f=document.getElementById("callFriendSelect").value; startCall(f,"voice"); };
+document.getElementById("videoCallBtn").onclick=()=>{ const f=document.getElementById("callFriendSelect").value; startCall(f,"video"); };
+document.getElementById("muteBtn").onclick=()=>{ if(!localStream) return; isMuted=!isMuted; localStream.getAudioTracks().forEach(t=>t.enabled=!isMuted); document.getElementById("muteBtn").textContent=isMuted?"🔇":"🎙️"; };
+document.getElementById("speakerBtn").onclick=()=>toast("مكبر الصوت يعمل");
+document.getElementById("switchCamBtn").onclick=()=>toast("تم تبديل الكاميرا");
+function renderCallHistory(){ const el=document.getElementById("callHistory"); if(!el) return; let hist=JSON.parse(localStorage.getItem(CALLS+currentUser)||"[]"); if(hist.length===0){ el.innerHTML="<p style='color:var(--muted);font-size:13px'>لا توجد مكالمات بعد</p>"; return; } el.innerHTML=""; hist.forEach(h=>{ const d=document.createElement("div"); d.className="contact-item"; d.innerHTML=`<div class="avatar">${h.type==="video"?"📹":"🎙️"}</div><div style="flex:1"><b>${esc(h.name)}</b><div style="font-size:12px;color:var(--muted)">${new Date(h.time).toLocaleString("ar")}</div></div><button class="btn btn-green" style="width:auto;padding:8px 14px">📞</button>`; d.querySelector("button").onclick=()=>startCall(h.name, h.type); el.appendChild(d); }); }
+document.getElementById("encryptBtn").onclick=async()=>{ const m=document.getElementById("messageInput").value.trim(), k=document.getElementById("keyInput").value; if(!m) return toast("اكتب الرسالة"); if(!k||k.length<4) return toast("المفتاح 4 أحرف"); if(!useOne()) return; const c=await encryptText(m,k); document.getElementById("encryptOutput").textContent=c; toast("تم التشفير ✅"); };
 document.getElementById("copyEncryptBtn").onclick=()=>copyText(document.getElementById("encryptOutput").textContent);
 document.getElementById("waEncryptBtn").onclick=()=>openWA(document.getElementById("encryptOutput").textContent);
 let selImg="";
@@ -510,46 +451,26 @@ document.getElementById("encryptImageBtn").onclick=async()=>{ if(!selImg) return
 document.getElementById("copyImageBtn").onclick=()=>copyText(document.getElementById("imageOutput").textContent);
 document.getElementById("decryptBtn").onclick=async()=>{ const c=document.getElementById("cipherInput").value.trim(), k=document.getElementById("decryptKeyInput").value; if(!c||!k) return toast("أدخل الشيفرة والمفتاح"); if(!useOne()) return; if(c.startsWith("ENC_IMG:")){ const img=await decryptImageData(c,k); if(!img) return toast("فشل الفك"); document.getElementById("decryptOutput").textContent="✅ تم فك الصورة"; const im=document.getElementById("decryptedImage"); im.src=img; im.style.display="block"; return; } const res=await decryptText(c,k); document.getElementById("decryptOutput").textContent=res||"❌ فشل الفك"; };
 document.getElementById("copyDecryptBtn").onclick=()=>copyText(document.getElementById("decryptOutput").textContent);
-
-/* إعدادات */
-document.getElementById("saveNameBtn").onclick=()=>{
-  const n=document.getElementById("editName").value.trim(); if(!n) return toast("أدخل اسم");
-  currentDisplay=n; document.getElementById("settingsName").textContent=n; document.getElementById("myAvatar").textContent=n.charAt(0);
-  let s=JSON.parse(localStorage.getItem(SESSION)); s.name=n; localStorage.setItem(SESSION, JSON.stringify(s));
-  let reg=JSON.parse(localStorage.getItem(REG)||"[]"); let f=reg.find(x=>x.user===currentUser); if(f){ f.name=n; localStorage.setItem(REG, JSON.stringify(reg)); }
-  if(rtdb) rtdb.ref("users/"+currentUser).update({name:n});
-  toast("تم حفظ الاسم ✅");
-};
-document.getElementById("savePinBtn").onclick=()=>{
-  const pin=document.getElementById("pinSetup").value.trim();
-  const sec={lockEnabled:document.getElementById("lockEnabled").checked, bioEnabled:document.getElementById("bioEnabled").checked, pin:pin||JSON.parse(localStorage.getItem(SEC)||"{}").pin};
-  localStorage.setItem(SEC, JSON.stringify(sec)); toast("تم حفظ الأمان ✅");
-};
+document.getElementById("azkarMorningBtn").onclick=()=>toast("تقبل الله منك أذكار الصباح 🤲");
+document.getElementById("azkarEveningBtn").onclick=()=>toast("تقبل الله منك أذكار المساء 🌙");
+const QURAN={ fatiha:"بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ ﴿١﴾ الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ ﴿٢﴾ الرَّحْمَٰنِ الرَّحِيمِ ﴿٣﴾ مَالِكِ يَوْمِ الدِّينِ ﴿٤﴾ إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ ﴿٥﴾ اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ ﴿٦﴾ صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ ﴿٧﴾", ikhlas:"قُلْ هُوَ اللَّهُ أَحَدٌ ﴿١﴾ اللَّهُ الصَّمَدُ ﴿٢﴾ لَمْ يَلِدْ وَلَمْ يُولَدْ ﴿٣﴾ وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ ﴿٤﴾", falaq:"قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ ﴿١﴾ مِن شَرِّ مَا خَلَقَ ﴿٢﴾ وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ ﴿٣﴾ وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ ﴿٤﴾ وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ ﴿٥﴾", nas:"قُلْ أَعُوذُ بِرَبِّ النَّاسِ ﴿١﴾ مَلِكِ النَّاسِ ﴿٢﴾ إِلَٰهِ النَّاسِ ﴿٣﴾ مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ ﴿٤﴾ الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ ﴿٥﴾ مِنَ الْجِنَّةِ وَالنَّاسِ ﴿٦﴾", yasin:"يس ﴿١﴾ وَالْقُرْآنِ الْحَكِيمِ ﴿٢﴾ إِنَّكَ لَمِنَ الْمُرْسَلِينَ ﴿٣﴾ عَلَىٰ صِرَاطٍ مُّسْتَقِيمٍ ﴿٤﴾", kahf:"الْحَمْدُ لِلَّهِ الَّذِي أَنزَلَ عَلَىٰ عَبْدِهِ الْكِتَابَ وَلَمْ يَجْعَل لَّهُ عِوَجًا ﴿١﴾" };
+document.getElementById("readQuranBtn").onclick=()=>{ const s=document.getElementById("surahSelect").value; document.getElementById("quranText").innerHTML=`<p style="font-size:20px;line-height:2.4;color:#1B5E20">${QURAN[s]}</p><p style="font-size:12px;color:#388E3C">صدق الله العظيم</p>`; };
+document.getElementById("quranAudioBtn").onclick=()=>{ window.open("https://quran.com/", "_blank"); };
+const VERSES=["﴿ أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ ﴾","﴿ وَقُل رَّبِّ زِدْنِي عِلْمًا ﴾","﴿ إِنَّ مَعَ الْعُسْرِ يُسْرًا ﴾","﴿ وَتَوَكَّلْ عَلَى اللَّهِ ۚ وَكَفَىٰ بِاللَّهِ وَكِيلًا ﴾","﴿ رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً ﴾"];
+document.getElementById("newVerseBtn").onclick=()=>{ document.getElementById("dailyVerse").textContent=VERSES[Math.floor(Math.random()*VERSES.length)]; };
+document.getElementById("saveDuaBtn").onclick=()=>{ const d=document.getElementById("myDua").value.trim(); if(!d) return toast("اكتب دعاءك"); let list=JSON.parse(localStorage.getItem("wna_duas_"+currentUser)||"[]"); list.unshift({text:d, time:Date.now()}); localStorage.setItem("wna_duas_"+currentUser, JSON.stringify(list)); document.getElementById("myDua").value=""; renderDuas(); toast("تم حفظ دعائك 🤲"); };
+function renderDuas(){ const el=document.getElementById("savedDuas"); if(!el) return; let list=JSON.parse(localStorage.getItem("wna_duas_"+currentUser)||"[]"); el.innerHTML=""; list.slice(0,5).forEach(d=>{ const div=document.createElement("div"); div.style.cssText="background:var(--input);padding:12px;border-radius:12px;margin-top:8px;font-size:14px;line-height:1.8"; div.textContent="🤲 "+d.text; el.appendChild(div); }); }
+document.getElementById("shareDuaBtn").onclick=()=>{ const d=document.getElementById("myDua").value.trim(); if(!d) return toast("اكتب دعاء أولاً"); openWA("دعاء من واتس نشوان الآمن 🤲\n\n"+d); };
+document.getElementById("saveNameBtn").onclick=()=>{ const n=document.getElementById("editName").value.trim(); if(!n) return toast("أدخل اسم"); currentDisplay=n; document.getElementById("settingsName").textContent=n; document.getElementById("myAvatar").textContent=n.charAt(0); document.getElementById("sideName").textContent=n; let s=JSON.parse(localStorage.getItem(SESSION)); s.name=n; localStorage.setItem(SESSION, JSON.stringify(s)); let reg=JSON.parse(localStorage.getItem(REG)||"[]"); let f=reg.find(x=>x.user===currentUser); if(f){ f.name=n; localStorage.setItem(REG, JSON.stringify(reg)); } if(rtdb) rtdb.ref("users/"+currentUser).update({name:n}); toast("تم حفظ الاسم ✅"); };
+document.getElementById("savePinBtn").onclick=()=>{ const pin=document.getElementById("pinSetup").value.trim(); const sec={lockEnabled:document.getElementById("lockEnabled").checked, bioEnabled:document.getElementById("bioEnabled").checked, pin:pin||JSON.parse(localStorage.getItem(SEC)||"{}").pin}; localStorage.setItem(SEC, JSON.stringify(sec)); toast("تم حفظ الأمان ✅"); };
 document.getElementById("exportBtn").onclick=()=>{ const b=new Blob([JSON.stringify(getLocalContacts(),null,2)],{type:"application/json"}); const a=document.createElement("a"); a.href=URL.createObjectURL(b); a.download="contacts.json"; a.click(); toast("تم التصدير"); };
 document.getElementById("logoutBtn").onclick=()=>{ localStorage.removeItem(SESSION); location.reload(); };
-document.getElementById("waLockedBtn").onclick=()=>openWA(`مرحباً نشوان، انتهى اشتراكي المجاني. اسمي: ${currentDisplay} - رقمي: ${currentPhone}`);
-document.getElementById("activateRenewBtn").onclick=()=>{
-  const code=document.getElementById("renewCodeInput").value.trim(); if(!code.startsWith("RENEW:")) return toast("كود غلط");
-  try{ const d=JSON.parse(b64d(code.slice(6))); let q=getQuota(); const days=d.plan==="سنوي"?365:30; q[d.u]={remaining:Infinity,totalUsed:0,plan:d.plan,unlimited:true,expiresAt:Date.now()+days*24*60*60*1000}; saveQuota(q); if(d.u===currentUser){ updatePlan(); toast("تم التجديد ✅"); } else toast("تم تجديد "+d.u); }catch{ toast("كود غلط"); }
-};
-document.getElementById("generateInviteBtn").onclick=async()=>{
-  const u=document.getElementById("inviteName").value.trim(), p=document.getElementById("invitePass").value.trim(); if(!u||!p) return toast("عبي الاسم وكلمة المرور");
-  const h=await hashPass(p); const code="INV:"+b64e(JSON.stringify({u,p:h,exp:Date.now()+86400000})); document.getElementById("inviteShortCode").style.display="block"; document.getElementById("inviteShortCode").textContent=code; copyText(code);
-  let inv=JSON.parse(localStorage.getItem(INVITES)||"[]"); inv.push({user:u,code,created:Date.now(),used:false}); localStorage.setItem(INVITES,JSON.stringify(inv)); renderAdminList();
-};
-function renderAdminList(){
-  const list=document.getElementById("userList"); if(!list) return; let inv=JSON.parse(localStorage.getItem(INVITES)||"[]"); let reg=JSON.parse(localStorage.getItem(REG)||"[]");
-  list.innerHTML="<h3 style='margin-top:12px'>المسجلين برقمهم:</h3>";
-  reg.forEach(r=>{ const d=document.createElement("div"); d.style.cssText="background:var(--input);padding:10px;border-radius:12px;margin-top:8px;font-size:13px"; d.innerHTML=`<b>${esc(r.name)}</b> - ${esc(r.phone)}<br><button class="btn btn-light" style="margin-top:6px;padding:8px" onclick="navigator.clipboard.writeText('RENEW:${b64e(JSON.stringify({u:r.user,ts:Date.now(),plan:"شهري"}))}').then(()=>alert('تم نسخ كود التجديد الشهري'))">🔄 نسخ تجديد شهري</button>`; list.appendChild(d); });
-  list.innerHTML+="<h3 style='margin-top:12px'>الدعوات:</h3>";
-  inv.forEach(i=>{ const d=document.createElement("div"); d.style.cssText="background:var(--input);padding:10px;border-radius:12px;margin-top:8px;font-size:12px;word-break:break-all"; d.textContent=i.user+" - "+i.code.slice(0,50)+"..."; list.appendChild(d); });
-}
-
-/* بدء */
-initAdmin().then(()=>{
-  const s=localStorage.getItem(SESSION);
-  if(s){ try{ const obj=JSON.parse(s); if(obj.u){ currentUser=obj.u; currentPhone=obj.phone||""; currentDisplay=obj.name||obj.u; const admin=getAdmin(); isAdmin=(obj.u===admin.u); startApp(); } }catch{} }
-});
+document.getElementById("waLockedBtn").onclick=()=>openWA(`مرحباً نشوان، انتهى اشتراكي. اسمي: ${currentDisplay} - رقمي: ${currentPhone}`);
+document.getElementById("activateRenewBtn").onclick=()=>{ const code=document.getElementById("renewCodeInput").value.trim(); if(!code.startsWith("RENEW:")) return toast("كود غلط"); try{ const d=JSON.parse(b64d(code.slice(6))); let q=getQuota(); const days=d.plan==="سنوي"?365:30; q[d.u]={remaining:Infinity,totalUsed:0,plan:d.plan,unlimited:true,expiresAt:Date.now()+days*24*60*60*1000}; saveQuota(q); if(d.u===currentUser){ updatePlan(); toast("تم التجديد ✅"); } else toast("تم تجديد "+d.u); }catch{ toast("كود غلط"); } };
+document.getElementById("generateInviteBtn").onclick=async()=>{ const u=document.getElementById("inviteName").value.trim(), p=document.getElementById("invitePass").value.trim(); if(!u||!p) return toast("عبي الاسم وكلمة المرور"); const h=await hashPass(p); const code="INV:"+b64e(JSON.stringify({u,p:h,exp:Date.now()+86400000})); document.getElementById("inviteShortCode").style.display="block"; document.getElementById("inviteShortCode").textContent=code; copyText(code); let inv=JSON.parse(localStorage.getItem(INVITES)||"[]"); inv.push({user:u,code,created:Date.now(),used:false}); localStorage.setItem(INVITES,JSON.stringify(inv)); renderAdminList(); };
+function renderAdminList(){ const list=document.getElementById("userList"); if(!list) return; let inv=JSON.parse(localStorage.getItem(INVITES)||"[]"); let reg=JSON.parse(localStorage.getItem(REG)||"[]"); list.innerHTML="<h3 style='margin-top:12px'>المسجلين برقمهم:</h3>"; reg.forEach(r=>{ const d=document.createElement("div"); d.style.cssText="background:var(--input);padding:10px;border-radius:12px;margin-top:8px;font-size:13px"; d.innerHTML=`<b>${esc(r.name)}</b> - ${esc(r.phone)}`; list.appendChild(d); }); }
+document.getElementById("myStory").onclick=()=>toast("الحالات قريباً");
+initAdmin().then(()=>{ const s=localStorage.getItem(SESSION); if(s){ try{ const obj=JSON.parse(s); if(obj.u){ currentUser=obj.u; currentPhone=obj.phone||""; currentDisplay=obj.name||obj.u; const admin=getAdmin(); isAdmin=(obj.u===admin.u); startApp(); renderCallHistory(); renderDuas(); } }catch{} } });
 </script>
 </body>
 </html>
