@@ -12,29 +12,31 @@ body{margin:0;background:#f0f2f5;color:#111b21}
 /* دخول */
 #loginScreen{display:flex;align-items:center;justify-content:center;background:#075e54;padding:18px}
 .login-card{background:#fff;width:100%;max-width:380px;padding:22px;border-radius:18px;text-align:center}
-.logo{font-size:50px}
 .login-card input{width:100%;padding:12px;margin:6px 0;border:1px solid #ddd;border-radius:10px;font-size:16px}
 .login-card button{width:100%;padding:13px;background:#25d366;border:none;color:#fff;border-radius:10px;font-size:17px;font-weight:bold;cursor:pointer;margin-top:8px}
-.verse{background:#f0fdf4;border:1px solid #25d366;border-radius:12px;padding:10px;margin:10px 0;font-size:14px;line-height:1.7}
-/* هيدر جديد - صغير ونظيف ومرتب */
-.top-header{background:#075e54;color:#fff;padding:10px 14px 10px;position:sticky;top:0;z-index:10}
+.verse{background:#f0fdf4;border:1px solid #d9fdd3;border-radius:12px;padding:10px;margin:10px 0;font-size:13px;line-height:1.7}
+/* هيدر مرتب - صغير */
+.top-header{background:#075e54;color:#fff;padding:12px 14px 10px;position:sticky;top:0;z-index:10}
 .header-row{display:flex;justify-content:space-between;align-items:center}
 .header-row h2{margin:0;font-size:20px;font-weight:800}
-.header-row small{display:block;font-size:11px;opacity:.85;font-weight:400}
-.header-icons{display:flex;gap:14px;font-size:20px}
+.header-row small{display:block;font-size:11px;opacity:.85;font-weight:400;margin-top:2px}
+.header-icons{display:flex;gap:16px;font-size:20px}
 .header-icons span{cursor:pointer}
-.sub-line{background:rgba(255,255,255,.15);padding:5px 10px;border-radius:12px;font-size:12px;margin-top:8px;display:flex;justify-content:space-between;align-items:center}
-.sub-line button{background:#ffc107;border:none;padding:4px 10px;border-radius:10px;font-weight:bold;cursor:pointer;font-size:12px}
-.search-box{display:flex;background:#f0f2f5;border-radius:20px;padding:8px 12px;margin:10px 14px 8px}
-.search-box input{flex:1;border:none;background:transparent;outline:none;font-size:14px}
-.filters{display:flex;gap:7px;overflow-x:auto;padding:0 14px 8px;background:#fff}
+/* شريط اشتراك هادي - بدل الذهبي */
+.sub-line{background:rgba(255,255,255,.12);padding:6px 10px;border-radius:10px;font-size:12px;margin-top:9px;display:flex;justify-content:space-between;align-items:center}
+.sub-line button{background:#fff;color:#075e54;border:none;padding:5px 11px;border-radius:10px;font-weight:bold;cursor:pointer;font-size:12px}
+/* بحث مرتب - أيقونة يمين */
+.search-wrap{background:#fff;padding:10px 14px 8px}
+.search-box{display:flex;align-items:center;gap:8px;background:#f0f2f5;border-radius:20px;padding:9px 12px}
+.search-box span{font-size:16px}
+.search-box input{flex:1;border:none;background:transparent;outline:none;font-size:14px;text-align:right}
+.filters{display:flex;gap:7px;overflow-x:auto;padding:0 14px 10px;background:#fff}
 .filter{white-space:nowrap;border:none;background:#f0f2f5;padding:6px 13px;border-radius:16px;cursor:pointer;font-size:13px}
 .filter.active{background:#d9fdd3;color:#075e54;font-weight:bold}
 .duaa-bar{background:#fff;padding:8px 14px;font-size:12px;text-align:center;color:#075e54;border-bottom:1px solid #eee}
 /* قائمة */
 #chatList{padding-bottom:110px;background:#fff}
 .chat-item{display:flex;align-items:center;gap:11px;padding:11px 14px;border-bottom:1px solid #f5f5f5;cursor:pointer;background:#fff}
-/* صورة موحدة هادئة - بدون صور من النت */
 .avatar{width:48px;height:48px;border-radius:50%;background:#d9e8e0;color:#075e54;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;flex-shrink:0;overflow:hidden}
 .avatar img{width:100%;height:100%;object-fit:cover}
 .avatar.big{width:64px;height:64px;font-size:28px}
@@ -59,10 +61,20 @@ body{margin:0;background:#f0f2f5;color:#111b21}
 .fab-menu{display:none;flex-direction:column;gap:8px;background:#fff;padding:10px;border-radius:14px;box-shadow:0 4px 16px rgba(0,0,0,.2);min-width:165px}
 .fab-menu.open{display:flex}
 .fab-menu button{border:none;background:#f0f2f5;padding:10px;border-radius:10px;text-align:right;cursor:pointer;font-size:14px}
-.panel{position:fixed;inset:0;background:#fff;z-index:30;padding:18px;overflow:auto}
-.tool-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
-.tool-grid button{padding:13px;border:1px solid #eee;background:#f8f9fa;border-radius:12px;cursor:pointer;font-size:14px}
-.close-panel{width:100%;padding:12px;background:#075e54;color:#fff;border:none;border-radius:10px}
+/* أدوات منظمة */
+.panel{position:fixed;inset:0;background:#f0f2f5;z-index:30;padding:0;overflow:auto;padding-bottom:90px}
+.panel-head{background:#075e54;color:#fff;padding:16px}
+.panel-head h3{margin:0;font-size:18px}
+.tools-section{background:#fff;margin:10px 12px;border-radius:14px;padding:12px}
+.tools-section h4{margin:0 0 10px;font-size:14px;color:#075e54;border-bottom:1px solid #f0f0f0;padding-bottom:8px}
+.tool-row{display:flex;align-items:center;gap:10px;padding:11px 6px;border-bottom:1px solid #f8f8f8;cursor:pointer}
+.tool-row:last-child{border-bottom:none}
+.tool-row span{font-size:20px}
+.tool-row b{font-size:14px}
+.tool-row small{display:block;color:#888;font-size:12px}
+.tool-row em{margin-right:auto;font-style:normal;color:#ccc}
+.close-panel{width:calc(100% - 24px);margin:10px 12px;padding:12px;background:#075e54;color:#fff;border:none;border-radius:10px}
+/* محادثة */
 #chatScreen{display:flex;flex-direction:column;height:100vh;background:#efeae2}
 .chat-header{background:#075e54;color:#fff;display:flex;align-items:center;gap:10px;padding:9px}
 .chat-header button{background:none;border:none;color:#fff;font-size:20px;cursor:pointer}
@@ -71,12 +83,12 @@ body{margin:0;background:#f0f2f5;color:#111b21}
 .encrypt-bar{background:#075e54;color:#fff;padding:8px 10px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:12px}
 .encrypt-bar button{border:none;padding:6px 10px;border-radius:16px;cursor:pointer;font-weight:bold;font-size:12px}
 .btn-enc{background:#25d366;color:#fff}
-.btn-dec{background:#ffc107;color:#111}
+.btn-dec{background:#fff;color:#075e54}
 .btn-del{background:#ff3b30;color:#fff}
 .receipt-bar{background:#fff;padding:7px 10px;display:flex;justify-content:space-between;align-items:center;font-size:12px;border-bottom:1px solid #eee}
 .receipt-bar button{border:none;padding:5px 10px;border-radius:12px;cursor:pointer;font-weight:bold;font-size:12px}
 .receipt-on{background:#25d366;color:#fff}
-.receipt-off{background:#ddd}
+.receipt-off{background:#eee}
 #messagesArea{flex:1;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:7px}
 .msg{max-width:82%;padding:8px 11px;border-radius:12px;font-size:15px;line-height:1.5;word-break:break-word}
 .msg.me{align-self:flex-start;background:#d9fdd3}
@@ -101,19 +113,23 @@ body{margin:0;background:#f0f2f5;color:#111b21}
 .modal-box button.primary{background:#25d366;color:#fff;border:none}
 .modal-box input,.modal-box textarea{width:100%;padding:11px;border:1px solid #ddd;border-radius:10px;margin:5px 0}
 .contact-row{display:flex;justify-content:space-between;align-items:center;padding:10px;border-bottom:1px solid #eee}
-.enc-box{background:#f0fdf4;border:2px solid #25d366;border-radius:14px;padding:13px;margin:10px 0}
-.enc-box h4{margin:0 0 8px;color:#075e54}
-.enc-box textarea{width:100%;padding:10px;border:1px solid #ddd;border-radius:10px;min-height:55px}
-.enc-box .row{display:flex;gap:8px;margin:6px 0}
-.enc-box .row button{flex:1;padding:10px;border:none;border-radius:10px;cursor:pointer;font-weight:bold}
-.enc-box .del-btn{width:100%;background:#ff3b30!important;color:#fff!important;margin-top:8px}
-.enc-box.dec-box{background:#fffbe6;border-color:#ffc107}
-.sub-box{background:#fffbe6;border:2px solid #ffc107;border-radius:14px;padding:13px;margin:10px 0;text-align:center}
+.sub-box{background:#f0fdf4;border:1px solid #d9fdd3;border-radius:14px;padding:13px;margin:10px 0;text-align:center}
 .calc-box{background:#111;color:#fff;border-radius:14px;padding:14px;margin:10px 0;text-align:center}
 .calc-box input{width:100%;padding:12px;font-size:20px;text-align:center;border-radius:10px;border:none;margin-bottom:8px;color:#111}
 .calc-btns{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
 .calc-btns button{padding:12px;background:#333;color:#fff;border:none;border-radius:10px;font-size:16px;cursor:pointer}
-.prayer-box{background:#e8f5e9;border:1px solid #25d366;border-radius:12px;padding:12px;margin:10px 0;text-align:center}
+.prayer-box{background:#e8f5e9;border:1px solid #d9fdd3;border-radius:12px;padding:12px;margin:10px 0;text-align:center}
+/* صفحات تشفير وفك منفصلة - كل صفحة لحالها */
+.enc-page{position:fixed;inset:0;background:#fff;z-index:60;padding:16px;overflow:auto}
+.enc-page-head{display:flex;justify-content:space-between;align-items:center}
+.enc-page-head h3{margin:0;color:#075e54}
+.enc-page-head button{border:none;background:#f0f2f5;padding:8px 14px;border-radius:10px;cursor:pointer}
+.enc-card{background:#f8fdf8;border:1px solid #d9fdd3;border-radius:14px;padding:14px;margin:14px 0}
+.enc-card.dec{background:#fffdf5;border-color:#ffe69c}
+.enc-card textarea{width:100%;padding:11px;border:1px solid #ddd;border-radius:10px;min-height:70px;font-size:15px}
+.enc-card .row{display:flex;gap:8px;margin:8px 0}
+.enc-card .row button{flex:1;padding:12px;border:none;border-radius:10px;cursor:pointer;font-weight:bold;font-size:15px}
+.enc-card .del{width:100%;background:#ff3b30!important;color:#fff!important;margin-top:8px}
 body[data-theme="dark"]{background:#0b141a;color:#e9edef}
 body[data-theme="dark"] .top-header,body[data-theme="dark"] .chat-item,body[data-theme="dark"] .bottom-nav{background:#111b21;color:#e9edef}
 </style>
@@ -121,29 +137,53 @@ body[data-theme="dark"] .top-header,body[data-theme="dark"] .chat-item,body[data
 <body>
 
 <div id="loginScreen" class="screen">
-  <div class="login-card"><div class="logo">🛡️</div><h1>واتساب نشوان الآمن</h1><p>حماية البلاد - أمان - تشفير</p>
-  <div class="verse"><b>﴿ وَقُل رَّبِّ أَدْخِلْنِي مُدْخَلَ صِدْقٍ وَأَخْرِجْنِي مُخْرَجَ صِدْقٍ ﴾</b><br><small>الإسراء - 80</small></div>
-  <div style="display:flex;flex-direction:column;align-items:center;gap:6px"><div class="avatar big" id="myAvatarPreview">ن</div><label style="color:#075e54;cursor:pointer;font-size:13px;font-weight:bold">📷 اختر صورتك (اختياري - انت تحطها مو احنا)<input type="file" accept="image/*" onchange="previewMyAvatar(event)" hidden></label></div>
+  <div class="login-card"><div style="font-size:50px">🛡️</div><h1>واتساب نشوان الآمن</h1><p>حماية البلاد - أمان - تشفير</p>
+  <div class="verse"><b>﴿ وَقُل رَّبِّ أَدْخِلْنِي مُدْخَلَ صِدْقٍ ﴾</b><br><small>الإسراء - 80</small></div>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:6px"><div class="avatar big" id="myAvatarPreview">ن</div><label style="color:#075e54;cursor:pointer;font-size:13px;font-weight:bold">📷 اختر صورتك (انت تحطها)<input type="file" accept="image/*" onchange="previewMyAvatar(event)" hidden></label></div>
   <input id="myName" placeholder="اسمك مثلاً: نشوان" oninput="updateAvatarPreview()"><input id="myPhone" placeholder="رقمك مثلاً: 770385943" type="tel"><input id="myPass" placeholder="مفتاح التشفير (اختياري)" type="password"><button onclick="doLogin()">دخول للمحادثات →</button><small>بتدخل مرة واحدة، وبعدها بيفتح على طول</small><p style="font-size:12px;color:#666;margin-top:10px">🤲 اللهم احفظ اليمن وأهلها</p></div>
 </div>
 
 <div id="appScreen" class="screen hidden">
-  <!-- هيدر جديد - صغير ومرتب -->
   <header class="top-header">
-    <div class="header-row"><div><h2>واتساب نشوان الآمن</h2><small>🔒 مشفر - حماية البلاد 🇾🇪</small></div><div class="header-icons"><span onclick="openCamera()">📷</span><span onclick="switchTab('tools',document.querySelectorAll('.nav-btn')[3])">🛠️</span><span onclick="showMenu()">⋮</span></div></div>
+    <div class="header-row"><div><h2>واتساب نشوان الآمن</h2><small>🔒 مشفر - حماية البلاد 🇾🇪</small></div><div class="header-icons"><span onclick="openCamera()">📷</span><span onclick="openEncryptPage()">🔒</span><span onclick="openDecryptPage()">🔓</span><span onclick="showMenu()">⋮</span></div></div>
     <div class="sub-line"><span id="subBadge">🆓 مجاني - باقي 30 عملية</span><button onclick="openSubscribe()">⭐ اشترك 1000 / 7000</button></div>
   </header>
-  <div class="search-box"><input id="searchInput" placeholder="بحث..." oninput="renderChats()"><span>🔍</span></div>
+  <!-- بحث مرتب -->
+  <div class="search-wrap"><div class="search-box"><span>🔍</span><input id="searchInput" placeholder="بحث..." oninput="renderChats()"></div></div>
   <div class="filters"><button class="filter active" onclick="setFilter('all',this)">الكل</button><button class="filter" onclick="setFilter('unread',this)">غير مقروءة <b id="unreadCount"></b></button><button class="filter" onclick="setFilter('fav',this)">المفضلة</button><button class="filter" onclick="setFilter('groups',this)">المجموعات <b id="groupCount"></b></button></div>
   <div class="duaa-bar">🤲 اللهم احفظ اليمن وأهلها - <b>﴿ إِنَّ اللَّهَ يُدَافِعُ عَنِ الَّذِينَ آمَنُوا ﴾</b></div>
   <main id="chatList"></main>
-  <div class="fab-wrap"><div id="fabMenu" class="fab-menu"><button onclick="createGroup()">👥 إنشاء قروب جديد</button><button onclick="createCall()">📞 مكالمة جديدة</button><button onclick="openNewChat()">💬 محادثة جديدة</button><button onclick="openEncryptOnly()">🔒 تشفير</button><button onclick="openDecryptOnly()">🔓 فك</button></div><button class="fab" onclick="toggleFab()">+</button></div>
+  <div class="fab-wrap"><div id="fabMenu" class="fab-menu"><button onclick="createGroup()">👥 إنشاء قروب جديد</button><button onclick="createCall()">📞 مكالمة جديدة</button><button onclick="openNewChat()">💬 محادثة جديدة</button><button onclick="openEncryptPage()">🔒 تشفير</button><button onclick="openDecryptPage()">🔓 فك تشفير</button></div><button class="fab" onclick="toggleFab()">+</button></div>
   <nav class="bottom-nav"><button class="nav-btn active" onclick="switchTab('chats',this)"><span>💬</span><small>الدردشات</small></button><button class="nav-btn" onclick="switchTab('calls',this)"><span>📞</span><small>المكالمات</small></button><button class="nav-btn" onclick="switchTab('status',this)"><span>⭕</span><small>التحديثات</small></button><button class="nav-btn" onclick="switchTab('tools',this)"><span>🛠️</span><small>الأدوات</small></button></nav>
+  <!-- أدوات منظمة - 4 أقسام -->
   <div id="toolsPanel" class="panel hidden">
-    <h3>🛠️ الأدوات - واتساب نشوان الآمن</h3>
-    <div class="verse"><b>﴿ وَقُل رَّبِّ أَدْخِلْنِي مُدْخَلَ صِدْقٍ ﴾</b><br><small>🤲 اللهم احفظ بلادنا اليمن</small></div>
-    <div style="display:flex;align-items:center;gap:10px;background:#f0fdf4;padding:10px;border-radius:12px"><div class="avatar" id="toolsAvatar">ن</div><div><b id="toolsName">نشوان</b><br><small id="toolsPhone">-</small></div><label style="margin-right:auto;color:#075e54;cursor:pointer;font-size:12px;font-weight:bold">تغيير صورتي 📷<input type="file" accept="image/*" onchange="changeMyAvatar(event)" hidden></label></div>
-    <div class="tool-grid"><button onclick="openDashboard()">👑 لوحة التحكم</button><button onclick="openEncryptCenter()">🔒 مركز التشفير</button><button onclick="openDecryptOnly()">🔓 فك التشفير</button><button onclick="openSubscribe()">⭐ الاشتراك 1000 / 7000</button><button onclick="openCalculator()">🧮 الآلة الحاسبة</button><button onclick="openPrayer()">🕌 أوقات الصلاة + آذان</button><button onclick="openThemes()">🎨 الثيمات</button><button onclick="openContacts()">👥 جهات الاتصال</button><button onclick="openSettings()">⚙️ الإعدادات</button><button onclick="generateInvite()">🔗 رابط دعوة</button><button onclick="generateKey()">🔑 مفتاح تشفير</button><button onclick="lockApp()">🔒 قفل التطبيق</button></div>
+    <div class="panel-head"><h3>🛠️ الأدوات</h3><small>واتساب نشوان الآمن</small></div>
+    <div class="verse" style="margin:12px"><b>﴿ وَقُل رَّبِّ أَدْخِلْنِي مُدْخَلَ صِدْقٍ ﴾</b><br><small>🤲 اللهم احفظ بلادنا اليمن</small></div>
+    <div style="display:flex;align-items:center;gap:10px;background:#fff;margin:0 12px;padding:12px;border-radius:14px"><div class="avatar" id="toolsAvatar">ن</div><div><b id="toolsName">نشوان</b><br><small id="toolsPhone">-</small></div><label style="margin-right:auto;color:#075e54;cursor:pointer;font-size:12px;font-weight:bold">تغيير صورتي 📷<input type="file" accept="image/*" onchange="changeMyAvatar(event)" hidden></label></div>
+    <div class="tools-section"><h4>👑 حسابي واشتراكي</h4>
+      <div class="tool-row" onclick="openDashboard()"><span>👑</span><div><b>لوحة التحكم</b><small>المواطنين - التفعيل - الإحصائيات</small></div><em>›</em></div>
+      <div class="tool-row" onclick="openSubscribe()"><span>⭐</span><div><b>الاشتراك</b><small>شهري 1000 ريال - سنوي 7000 ريال</small></div><em>›</em></div>
+      <div class="tool-row" onclick="generateInvite()"><span>🔗</span><div><b>رابط دعوة</b><small>ادعُ أي شخص للتطبيق</small></div><em>›</em></div>
+    </div>
+    <div class="tools-section"><h4>🔒 الأمان والتشفير</h4>
+      <div class="tool-row" onclick="openEncryptPage()"><span>🔒</span><div><b>تشفير رسالة</b><small>صفحة تشفير لحالها</small></div><em>›</em></div>
+      <div class="tool-row" onclick="openDecryptPage()"><span>🔓</span><div><b>فك تشفير رسالة</b><small>صفحة فك لحالها</small></div><em>›</em></div>
+      <div class="tool-row" onclick="openImageEncryptPage()"><span>🖼️</span><div><b>تشفير الصور</b><small>تشفير وفك تشفير الصور</small></div><em>›</em></div>
+      <div class="tool-row" onclick="openCallEncryptPage()"><span>📞</span><div><b>تشفير المكالمات</b><small>مكالمات مشفرة</small></div><em>›</em></div>
+      <div class="tool-row" onclick="generateKey()"><span>🔑</span><div><b>مفتاح التشفير</b><small id="keyPreview">NASHWAN-2026-SECURE</small></div><em>›</em></div>
+    </div>
+    <div class="tools-section"><h4>🛠️ أدواتي</h4>
+      <div class="tool-row" onclick="openContacts()"><span>👥</span><div><b>جهات الاتصال</b><small>مثبت - مش مثبت</small></div><em>›</em></div>
+      <div class="tool-row" onclick="openCalculator()"><span>🧮</span><div><b>الآلة الحاسبة</b><small>حساب سريع</small></div><em>›</em></div>
+      <div class="tool-row" onclick="openPrayer()"><span>🕌</span><div><b>أوقات الصلاة + تنبيه الآذان</b><small>صنعاء - اليمن</small></div><em>›</em></div>
+      <div class="tool-row" onclick="openThemes()"><span>🎨</span><div><b>الثيمات</b><small>أخضر - ليلي</small></div><em>›</em></div>
+    </div>
+    <div class="tools-section"><h4>⚙️ الإعدادات</h4>
+      <div class="tool-row" onclick="openSettings()"><span>⚙️</span><div><b>الإعدادات</b><small>حسابي - الاستلام - القفل</small></div><em>›</em></div>
+      <div class="tool-row" onclick="setReceipt(true)"><span>✅</span><div><b>تفعيل الاستلام ✅✅</b><small>استلام الرسائل</small></div><em>›</em></div>
+      <div class="tool-row" onclick="setReceipt(false)"><span>❌</span><div><b>إيقاف الاستلام</b><small>عدم استلام الرسائل</small></div><em>›</em></div>
+      <div class="tool-row" onclick="lockApp()"><span>🔒</span><div><b>قفل التطبيق</b><small>خروج وطلب كلمة مرور</small></div><em>›</em></div>
+    </div>
     <div id="toolsContent"></div>
     <button class="close-panel" onclick="switchTab('chats',document.querySelectorAll('.nav-btn')[0])">رجوع للمحادثات</button>
   </div>
@@ -159,9 +199,35 @@ body[data-theme="dark"] .top-header,body[data-theme="dark"] .chat-item,body[data
   <footer class="msg-input"><label class="attach">📎<input type="file" accept="image/*" onchange="sendImage(event)" hidden></label><label class="attach">📷<input type="file" accept="image/*" capture="camera" onchange="sendImage(event)" hidden></label><input id="msgInput" placeholder="اكتب رسالة..." onkeypress="if(event.key==='Enter') sendMessage()"><button onclick="sendMessage()">➤</button></footer>
 </div>
 
-<div id="dashboardModal" class="modal hidden"><div class="modal-box"><h3>👑 لوحة تحكم واتساب نشوان الآمن</h3><div class="verse"><b>﴿ إِنَّ اللَّهَ يُدَافِعُ عَنِ الَّذِينَ آمَنُوا ﴾</b><br><small>حماية البلاد 🇾🇪</small></div><div class="stats"><div><b id="statTotal">0</b><small>مواطن</small></div><div><b id="statInstalled">0</b><small>مثبت</small></div><div><b id="statOnline">0</b><small>متصل</small></div><div><b id="statOps">30</b><small>عمليات</small></div></div><div class="sub-box"><h3>⭐ الاشتراك</h3><p id="subStatusText">أنت الآن مجاني - باقي لك 30 عملية</p><button onclick="subscribe('monthly')" style="background:#075e54;color:#fff">📅 شهري - 1000 ريال</button><button onclick="subscribe('yearly')" style="background:#ffc107">📅 سنوي - 7000 ريال</button><button onclick="activateSub()" style="background:#25d366;color:#fff">✅ تفعيل الاشتراك الآن</button></div><button class="primary" onclick="generateInvite()">🔗 توليد رابط دعوة</button><input id="inviteLink" readonly placeholder="رابط الدعوة بيظهر هنا"><button onclick="copyInvite()">نسخ الرابط</button><h4>🔒 التشفير</h4><button onclick="enableGlobalEncrypt()">تفعيل التشفير للكل</button><button onclick="disableGlobalEncrypt()">إيقاف التشفير للكل</button><button onclick="clearAllEnc()" style="background:#ff3b30;color:#fff">🗑️ حذف كل التشفيرات</button><h4>📩 استلام الرسائل</h4><button onclick="setReceipt(true)">✅✅ تفعيل الاستلام</button><button onclick="setReceipt(false)">❌ إيقاف الاستلام</button><h4>المواطنين</h4><div id="adminUsers"></div><h4>الثيمات</h4><div id="adminThemes"></div><button onclick="closeDashboard()">إغلاق</button></div></div>
-<div id="subModal" class="modal hidden"><div class="modal-box"><h3>⭐ اشترك في واتساب نشوان الآمن</h3><p>المجاني: 30 عملية فقط</p><div class="sub-box"><h3>📅 شهري - 1000 ريال</h3><button onclick="subscribe('monthly')" style="background:#075e54;color:#fff">اشترك شهري - 1000 ريال</button></div><div class="sub-box"><h3>📅 سنوي - 7000 ريال</h3><button onclick="subscribe('yearly')" style="background:#ffc107">اشترك سنوي - 7000 ريال</button></div><button onclick="activateSub()" style="background:#25d366;color:#fff">✅ تفعيل الاشتراك الآن</button><button onclick="closeSubscribe()">إغلاق</button></div></div>
-<div id="encryptModal" class="modal hidden"><div class="modal-box"><h3>🔒 مركز التشفير</h3><div class="enc-box" id="boxEnc"><h4>1. تشفير رسالة 🔒</h4><textarea id="encInput" placeholder="اكتب الرسالة..."></textarea><div class="row"><button onclick="encryptTextBox()" style="background:#075e54;color:#fff">🔒 تشفير</button><button onclick="copyEnc()" style="background:#25d366;color:#fff">نسخ</button></div><textarea id="encOutput" placeholder="النتيجة..." readonly></textarea><button class="del-btn" onclick="deleteBox('boxEnc')">🗑️ حذف هذا المربع</button></div><div class="enc-box dec-box" id="boxDec"><h4>2. فك تشفير 🔓</h4><textarea id="decInput" placeholder="الصق النص المشفر..."></textarea><div class="row"><button onclick="decryptTextBox()" style="background:#ffc107">🔓 فك</button><button onclick="copyDec()" style="background:#075e54;color:#fff">نسخ</button></div><textarea id="decOutput" placeholder="النتيجة..." readonly></textarea><button class="del-btn" onclick="deleteBox('boxDec')">🗑️ حذف هذا المربع</button></div><div class="enc-box" id="boxImg"><h4>3. تشفير الصور 🖼️🔒</h4><input type="file" accept="image/*" onchange="encryptImageFile(event)"><div id="encImageResult"></div><button class="del-btn" onclick="deleteBox('boxImg')">🗑️ حذف هذا المربع</button></div><div class="enc-box" id="boxCall"><h4>4. تشفير المكالمات 📞🔒</h4><p id="callEncStatus">مفعل 🔒</p><div class="row"><button onclick="toggleCallEncrypt()" style="background:#075e54;color:#fff">تشغيل / إيقاف</button><button onclick="createCall()" style="background:#25d366;color:#fff">📞 مكالمة مشفرة</button></div><button class="del-btn" onclick="deleteBox('boxCall')">🗑️ حذف هذا المربع</button></div><div class="enc-box" id="boxKey"><h4>5. مفتاح التشفير 🔑</h4><input id="myKey" readonly value="NASHWAN-2026-SECURE"><div class="row"><button onclick="generateKey()" style="background:#075e54;color:#fff">🔑 توليد</button><button onclick="copyKey()" style="background:#25d366;color:#fff">نسخ</button></div><button class="del-btn" onclick="deleteBox('boxKey')">🗑️ حذف هذا المربع</button></div><button onclick="closeEncryptCenter()">إغلاق</button><button onclick="clearAllEnc()" style="background:#ff3b30;color:#fff">🗑️ حذف الكل</button></div></div>
+<!-- صفحة تشفير لحالها -->
+<div id="encryptPage" class="enc-page hidden">
+  <div class="enc-page-head"><h3>🔒 تشفير رسالة</h3><button onclick="closeEncPages()">✕ إغلاق</button></div>
+  <p style="color:#666;font-size:13px">اكتب رسالتك، اضغط تشفير، وارسل النتيجة المشفرة</p>
+  <div class="enc-card"><h4>اكتب رسالتك هنا</h4><textarea id="encInput" placeholder="اكتب الرسالة هنا لتشفيرها..."></textarea><div class="row"><button onclick="encryptTextBox()" style="background:#075e54;color:#fff">🔒 تشفير</button><button onclick="copyEnc()" style="background:#25d366;color:#fff">نسخ</button></div><h4>النتيجة المشفرة</h4><textarea id="encOutput" placeholder="النتيجة المشفرة بتطلع هنا..." readonly></textarea><button class="del" onclick="clearEncPage()">🗑️ حذف هذا المربع</button></div>
+  <button onclick="closeEncPages()" style="width:100%;padding:12px;background:#075e54;color:#fff;border:none;border-radius:10px">رجوع</button>
+</div>
+<!-- صفحة فك لحالها -->
+<div id="decryptPage" class="enc-page hidden">
+  <div class="enc-page-head"><h3>🔓 فك تشفير رسالة</h3><button onclick="closeEncPages()">✕ إغلاق</button></div>
+  <p style="color:#666;font-size:13px">الصق النص المشفر، اضغط فك، وبتطلع الرسالة الأصلية</p>
+  <div class="enc-card dec"><h4>الصق النص المشفر هنا</h4><textarea id="decInput" placeholder="الصق النص المشفر هنا..."></textarea><div class="row"><button onclick="decryptTextBox()" style="background:#ffc107">🔓 فك التشفير</button><button onclick="copyDec()" style="background:#075e54;color:#fff">نسخ</button></div><h4>النتيجة المفكوكة</h4><textarea id="decOutput" placeholder="النتيجة المفكوكة بتطلع هنا..." readonly></textarea><button class="del" onclick="clearDecPage()">🗑️ حذف هذا المربع</button></div>
+  <button onclick="closeEncPages()" style="width:100%;padding:12px;background:#075e54;color:#fff;border:none;border-radius:10px">رجوع</button>
+</div>
+<!-- صفحة تشفير صور لحالها -->
+<div id="imgEncPage" class="enc-page hidden">
+  <div class="enc-page-head"><h3>🖼️ تشفير الصور</h3><button onclick="closeEncPages()">✕ إغلاق</button></div>
+  <div class="enc-card"><p>ارفع صورة وبتتشفر</p><input type="file" accept="image/*" onchange="encryptImageFile(event)"><div id="encImageResult"></div><button class="del" onclick="document.getElementById('encImageResult').innerHTML=''">🗑️ حذف</button></div>
+  <button onclick="closeEncPages()" style="width:100%;padding:12px;background:#075e54;color:#fff;border:none;border-radius:10px">رجوع</button>
+</div>
+<!-- صفحة تشفير مكالمات لحالها -->
+<div id="callEncPage" class="enc-page hidden">
+  <div class="enc-page-head"><h3>📞 تشفير المكالمات</h3><button onclick="closeEncPages()">✕ إغلاق</button></div>
+  <div class="enc-card"><p id="callEncStatus">حالة تشفير المكالمات: <b>مفعل 🔒</b></p><div class="row"><button onclick="toggleCallEncrypt()" style="background:#075e54;color:#fff">تشغيل / إيقاف</button><button onclick="createCall()" style="background:#25d366;color:#fff">📞 مكالمة مشفرة</button></div><button class="del" onclick="toggleCallEncrypt()">🗑️ حذف / إيقاف</button></div>
+  <button onclick="closeEncPages()" style="width:100%;padding:12px;background:#075e54;color:#fff;border:none;border-radius:10px">رجوع</button>
+</div>
+
+<div id="dashboardModal" class="modal hidden"><div class="modal-box"><h3>👑 لوحة تحكم واتساب نشوان الآمن</h3><div class="verse"><b>﴿ إِنَّ اللَّهَ يُدَافِعُ عَنِ الَّذِينَ آمَنُوا ﴾</b><br><small>حماية البلاد 🇾🇪</small></div><div class="stats"><div><b id="statTotal">0</b><small>مواطن</small></div><div><b id="statInstalled">0</b><small>مثبت</small></div><div><b id="statOnline">0</b><small>متصل</small></div><div><b id="statOps">30</b><small>عمليات</small></div></div><div class="sub-box"><h3>⭐ الاشتراك</h3><p id="subStatusText">أنت الآن مجاني</p><button onclick="subscribe('monthly')" style="background:#075e54;color:#fff">📅 شهري - 1000 ريال</button><button onclick="subscribe('yearly')" style="background:#fff;color:#075e54;border:1px solid #075e54">📅 سنوي - 7000 ريال</button><button onclick="activateSub()" style="background:#25d366;color:#fff">✅ تفعيل الاشتراك الآن</button></div><button class="primary" onclick="generateInvite()">🔗 توليد رابط دعوة</button><input id="inviteLink" readonly placeholder="رابط الدعوة بيظهر هنا"><button onclick="copyInvite()">نسخ الرابط</button><h4>🔒 التشفير</h4><button onclick="enableGlobalEncrypt()">تفعيل التشفير للكل</button><button onclick="disableGlobalEncrypt()">إيقاف التشفير للكل</button><button onclick="clearAllEnc()" style="background:#ff3b30;color:#fff">🗑️ حذف كل التشفيرات</button><h4>📩 استلام الرسائل</h4><button onclick="setReceipt(true)">✅✅ تفعيل الاستلام</button><button onclick="setReceipt(false)">❌ إيقاف الاستلام</button><h4>المواطنين</h4><div id="adminUsers"></div><h4>الثيمات</h4><div id="adminThemes"></div><button onclick="closeDashboard()">إغلاق</button></div></div>
+<div id="subModal" class="modal hidden"><div class="modal-box"><h3>⭐ اشترك في واتساب نشوان الآمن</h3><p>المجاني: 30 عملية فقط</p><div class="sub-box"><h3>📅 شهري - 1000 ريال</h3><button onclick="subscribe('monthly')" style="background:#075e54;color:#fff">اشترك شهري - 1000 ريال</button></div><div class="sub-box"><h3>📅 سنوي - 7000 ريال</h3><button onclick="subscribe('yearly')" style="background:#075e54;color:#fff">اشترك سنوي - 7000 ريال</button></div><button onclick="activateSub()" style="background:#25d366;color:#fff">✅ تفعيل الاشتراك الآن</button><button onclick="closeSubscribe()">إغلاق</button></div></div>
 <div id="extraModal" class="modal hidden"><div class="modal-box"><h3 id="extraTitle">أدوات</h3><div id="extraContent"></div><button onclick="closeExtra()">إغلاق</button></div></div>
 
 <script>
@@ -175,12 +241,11 @@ let opsLeft=parseInt(localStorage.getItem('nashwan_ops')||'30');
 let subType=localStorage.getItem('nashwan_sub')||'free';
 let receiptEnabled=localStorage.getItem('nashwan_receipt')!=='off';
 let tempAvatar='';
-// لا صور من النت أبداً - فقط حرف أول الاسم بخلفية هادئة
 function avatarHTML(name,photo){if(photo) return `<div class="avatar"><img src="${photo}"></div>`; let ch=(name||'?').trim().charAt(0)||'?'; return `<div class="avatar">${ch}</div>`;}
 function avatarDiv(name,photo){let el=document.getElementById('chatAvatarDiv'); if(photo) el.innerHTML=`<img src="${photo}" style="width:100%;height:100%;object-fit:cover">`; else el.textContent=(name||'?').trim().charAt(0)||'?';}
 function previewMyAvatar(e){let f=e.target.files[0];if(!f) return;let r=new FileReader();r.onload=()=>{tempAvatar=r.result;document.getElementById('myAvatarPreview').innerHTML=`<img src="${tempAvatar}" style="width:100%;height:100%;object-fit:cover">`;};r.readAsDataURL(f);}
 function updateAvatarPreview(){let n=document.getElementById('myName').value.trim();if(n&&!tempAvatar) document.getElementById('myAvatarPreview').textContent=n.charAt(0);}
-function changeMyAvatar(e){let f=e.target.files[0];if(!f) return;let r=new FileReader();r.onload=()=>{if(me){me.photo=r.result;save();}document.getElementById('toolsAvatar').innerHTML=`<img src="${r.result}" style="width:100%;height:100%;object-fit:cover">`;alert('تم تغيير صورتك ✅ - انت اللي حطيتها');renderChats();};r.readAsDataURL(f);}
+function changeMyAvatar(e){let f=e.target.files[0];if(!f) return;let r=new FileReader();r.onload=()=>{if(me){me.photo=r.result;save();}document.getElementById('toolsAvatar').innerHTML=`<img src="${r.result}" style="width:100%;height:100%;object-fit:cover">`;alert('تم تغيير صورتك ✅');renderChats();};r.readAsDataURL(f);}
 const defaultContacts=[
  {id:'c1',name:'البدري',phone:'967770385943',photo:'',installed:true},
  {id:'c2',name:'رشاد',phone:'967777123456',photo:'',installed:true},
@@ -199,7 +264,7 @@ function setReceipt(on){receiptEnabled=on;save();updateReceiptUI();alert(on?'ت�
 function updateReceiptUI(){let onBtn=document.getElementById('receiptOnBtn');let offBtn=document.getElementById('receiptOffBtn');if(!onBtn) return;onBtn.className=receiptEnabled?'receipt-on':'receipt-off';offBtn.className=!receiptEnabled?'receipt-on':'receipt-off';}
 function doLogin(){let name=document.getElementById('myName').value.trim()||'نشوان';let phone=document.getElementById('myPhone').value.trim()||'967770385943';me={name,phone,pass:document.getElementById('myPass').value,photo:tempAvatar||me?.photo||'',installed:true,loginAt:Date.now()};save();showApp();}
 function lockApp(){localStorage.removeItem('nashwan_me');me=null;location.reload();}
-function showApp(){if(!me){document.getElementById('loginScreen').classList.remove('hidden');return;}document.getElementById('loginScreen').classList.add('hidden');document.getElementById('appScreen').classList.remove('hidden');defaultContacts.forEach(c=>{if(!chats.find(x=>x.phone===c.phone)) chats.push({id:'chat_'+c.id,phone:c.phone,name:c.name,photo:'',installed:c.installed,type:'chat',fav:false,encrypted:false,imgEncrypted:false,messages:[],unread:0});});let ta=document.getElementById('toolsAvatar');if(ta){if(me.photo) ta.innerHTML=`<img src="${me.photo}" style="width:100%;height:100%;object-fit:cover">`;else ta.textContent=(me.name||'ن').charAt(0);}document.getElementById('toolsName').textContent=me.name;document.getElementById('toolsPhone').textContent=me.phone;save();renderChats();updateSubUI();updateReceiptUI();}
+function showApp(){if(!me){document.getElementById('loginScreen').classList.remove('hidden');return;}document.getElementById('loginScreen').classList.add('hidden');document.getElementById('appScreen').classList.remove('hidden');defaultContacts.forEach(c=>{if(!chats.find(x=>x.phone===c.phone)) chats.push({id:'chat_'+c.id,phone:c.phone,name:c.name,photo:'',installed:c.installed,type:'chat',fav:false,encrypted:false,imgEncrypted:false,messages:[],unread:0});});let ta=document.getElementById('toolsAvatar');if(ta){if(me.photo) ta.innerHTML=`<img src="${me.photo}" style="width:100%;height:100%;object-fit:cover">`;else ta.textContent=(me.name||'ن').charAt(0);}document.getElementById('toolsName').textContent=me.name;document.getElementById('toolsPhone').textContent=me.phone;document.getElementById('keyPreview').textContent=myKey;save();renderChats();updateSubUI();updateReceiptUI();}
 function setFilter(f,el){currentFilter=f;document.querySelectorAll('.filter').forEach(b=>b.classList.remove('active'));el.classList.add('active');renderChats();}
 function switchTab(tab,btn){document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');let tools=document.getElementById('toolsPanel');if(tab==='tools'){tools.classList.remove('hidden');}else{tools.classList.add('hidden');if(tab==='calls') openCalls();if(tab==='status') alert('التحديثات - الحالات قريباً');if(tab==='chats') renderChats();}}
 function toggleFab(){document.getElementById('fabMenu').classList.toggle('open');}
@@ -215,12 +280,10 @@ function shareMsg(idx){let c=chats.find(x=>x.id===currentChatId);let m=c.message
 function deleteMsg(idx){if(!confirm('حذف هذه الرسالة؟')) return;let c=chats.find(x=>x.id===currentChatId);c.messages.splice(idx,1);save();renderMessages();}
 function decryptMsg(idx){let c=chats.find(x=>x.id===currentChatId);c.messages[idx].decrypted=true;save();renderMessages();}
 function decryptImage(idx){let c=chats.find(x=>x.id===currentChatId);c.messages[idx].decrypted=true;save();renderMessages();alert('تم فك تشفير الصورة 🔓🖼️');}
-// --- إرسال واستقبال - مضمون ---
 function sendMessage(){if(!receiptEnabled){alert('استلام الرسائل موقف ❌\nفعّل الاستلام من زر ✅✅');return;}if(!useOp()) return;let inp=document.getElementById('msgInput');let text=inp.value.trim();if(!text) return;let c=chats.find(x=>x.id===currentChatId);let msg={text:c.encrypted?enc(text):text,fromMe:true,time:Date.now(),encrypted:!!c.encrypted,chatId:c.id};c.messages.push(msg);save();inp.value='';renderMessages();BC.postMessage({type:'new-msg',chatPhone:c.phone,msg:{...msg,fromMe:false}});localStorage.setItem('nashwan_last_msg',JSON.stringify({phone:c.phone,msg:{...msg,fromMe:false},time:Date.now()}));}
 function sendImage(e){if(!useOp()) return;let file=e.target.files[0];if(!file) return;let reader=new FileReader();reader.onload=()=>{let c=chats.find(x=>x.id===currentChatId);let isEnc=c.imgEncrypted||imageEncrypt;let msg={image:isEnc?'ENCRYPTED':reader.result,imageData:reader.result,fromMe:true,time:Date.now(),chatId:c.id,imgEncrypted:isEnc,decrypted:!isEnc};c.messages.push(msg);save();renderMessages();BC.postMessage({type:'new-msg',chatPhone:c.phone,msg:{...msg,fromMe:false}});localStorage.setItem('nashwan_last_msg',JSON.stringify({phone:c.phone,msg:{...msg,fromMe:false},time:Date.now()}));};reader.readAsDataURL(file);}
 BC.onmessage=(ev)=>{if(ev.data.type==='new-msg'){if(!receiptEnabled) return; receiveMsg(ev.data.chatPhone,ev.data.msg);}if(ev.data.type==='call'){alert('📞🔒 مكالمة مشفرة واردة من '+ev.data.from);showIncomingCall(ev.data.from);}};
 function receiveMsg(phone,msg){let c=chats.find(x=>x.phone===phone);if(!c){c={id:'chat_'+Date.now(),phone:phone,name:phone,photo:'',installed:true,type:'chat',messages:[],unread:0};chats.push(c);}c.messages.push(msg);if(currentChatId!==c.id) c.unread=(c.unread||0)+1;save();renderChats();if(currentChatId===c.id) renderMessages();}
-// استقبال حتى لو التبويب مغلق - عبر storage
 window.addEventListener('storage',(e)=>{if(e.key==='nashwan_last_msg'&&e.newValue){let d=JSON.parse(e.newValue);if(d.msg && !chats.find(x=>x.phone===d.phone)?.messages.find(m=>m.time===d.msg.time)){receiveMsg(d.phone,d.msg);}}});
 function enableEncrypt(){let c=chats.find(x=>x.id===currentChatId);if(!c) return;c.encrypted=true;save();updateEncryptUI();alert('تم تفعيل تشفير الرسائل 🔒');}
 function disableEncrypt(){let c=chats.find(x=>x.id===currentChatId);if(!c) return;c.encrypted=false;c.messages.forEach(m=>m.decrypted=true);save();updateEncryptUI();renderMessages();alert('تم فك تشفير المحادثة 🔓');}
@@ -240,19 +303,22 @@ function renderDashboard(){document.getElementById('statTotal').textContent=chat
 function toggleUser(id){let c=chats.find(x=>x.id===id);c.installed=!c.installed;save();renderDashboard();renderChats();}
 function enableGlobalEncrypt(){chats.forEach(c=>c.encrypted=true);save();renderChats();alert('تم تفعيل التشفير للكل 🔒');}
 function disableGlobalEncrypt(){chats.forEach(c=>{c.encrypted=false;c.messages.forEach(m=>m.decrypted=true);});save();renderChats();alert('تم فك التشفير للكل 🔓');}
-function openEncryptOnly(){document.getElementById('encryptModal').classList.remove('hidden');['boxDec','boxImg','boxCall','boxKey'].forEach(id=>document.getElementById(id).style.display='none');document.getElementById('boxEnc').style.display='block';}
-function openDecryptOnly(){document.getElementById('encryptModal').classList.remove('hidden');['boxEnc','boxImg','boxCall','boxKey'].forEach(id=>document.getElementById(id).style.display='none');document.getElementById('boxDec').style.display='block';}
-function openEncryptCenter(){document.getElementById('encryptModal').classList.remove('hidden');['boxEnc','boxDec','boxImg','boxCall','boxKey'].forEach(id=>document.getElementById(id).style.display='block');document.getElementById('myKey').value=myKey;document.getElementById('callEncStatus').innerHTML='مفعل 🔒';}
-function closeEncryptCenter(){document.getElementById('encryptModal').classList.add('hidden');}
-function deleteBox(id){if(!confirm('حذف هذا المربع؟')) return;document.getElementById(id).style.display='none';}
-function clearAllEnc(){if(!confirm('حذف كل التشفيرات؟')) return;['encInput','encOutput','decInput','decOutput'].forEach(id=>{let e=document.getElementById(id);if(e) e.value='';});document.getElementById('encImageResult').innerHTML='';chats.forEach(c=>{c.encrypted=false;c.messages.forEach(m=>m.decrypted=true);});save();renderChats();alert('تم حذف كل التشفيرات 🗑️');}
+// صفحات منفصلة - كل صفحة لحالها
+function openEncryptPage(){closeEncPages();document.getElementById('encryptPage').classList.remove('hidden');}
+function openDecryptPage(){closeEncPages();document.getElementById('decryptPage').classList.remove('hidden');}
+function openImageEncryptPage(){closeEncPages();document.getElementById('imgEncPage').classList.remove('hidden');}
+function openCallEncryptPage(){closeEncPages();document.getElementById('callEncPage').classList.remove('hidden');document.getElementById('callEncStatus').innerHTML='حالة تشفير المكالمات: <b>'+(callEncrypt?'مفعل 🔒':'متوقف')+'</b>';}
+function closeEncPages(){['encryptPage','decryptPage','imgEncPage','callEncPage'].forEach(id=>document.getElementById(id).classList.add('hidden'));}
+function clearEncPage(){document.getElementById('encInput').value='';document.getElementById('encOutput').value='';}
+function clearDecPage(){document.getElementById('decInput').value='';document.getElementById('decOutput').value='';}
+function clearAllEnc(){if(!confirm('حذف كل التشفيرات؟')) return;clearEncPage();clearDecPage();document.getElementById('encImageResult').innerHTML='';chats.forEach(c=>{c.encrypted=false;c.messages.forEach(m=>m.decrypted=true);});save();renderChats();alert('تم حذف كل التشفيرات 🗑️');}
 function encryptTextBox(){let t=document.getElementById('encInput').value;if(!t) return alert('اكتب رسالة أولاً');document.getElementById('encOutput').value=enc(t);}
 function decryptTextBox(){let t=document.getElementById('decInput').value||document.getElementById('encOutput').value;if(!t) return alert('اكتب نص مشفر');document.getElementById('decOutput').value=dec(t);}
 function copyEnc(){let o=document.getElementById('encOutput');o.select();navigator.clipboard.writeText(o.value);alert('تم النسخ ✅');}
 function copyDec(){let o=document.getElementById('decOutput');o.select();navigator.clipboard.writeText(o.value);alert('تم النسخ ✅');}
-function encryptImageFile(e){let f=e.target.files[0];if(!f) return;let r=new FileReader();r.onload=()=>{document.getElementById('encImageResult').innerHTML='<p>✅ تم تشفير الصورة 🔒</p><img src="'+r.result+'" style="max-width:100%;border-radius:10px;filter:blur(8px)"><br><button onclick="alert(\'تم فك تشفير الصورة 🔓\')" style="background:#075e54;color:#fff">🔓 فك تشفير الصورة</button>';};r.readAsDataURL(f);}
-function toggleCallEncrypt(){callEncrypt=!callEncrypt;document.getElementById('callEncStatus').innerHTML=callEncrypt?'مفعل 🔒':'متوقف';alert(callEncrypt?'تم تفعيل تشفير المكالمات 🔒':'تم إيقاف تشفير المكالمات');}
-function generateKey(){myKey='NASHWAN-'+Math.random().toString(36).substring(2,10).toUpperCase()+'-'+Date.now().toString().slice(-4);localStorage.setItem('nashwan_key',myKey);document.getElementById('myKey').value=myKey;alert('مفتاح جديد: '+myKey);}
+function encryptImageFile(e){let f=e.target.files[0];if(!f) return;let r=new FileReader();r.onload=()=>{document.getElementById('encImageResult').innerHTML='<p>✅ تم تشفير الصورة 🔒</p><img src="'+r.result+'" style="max-width:100%;border-radius:10px;filter:blur(8px)"><br><button onclick="alert(\'تم فك تشفير الصورة 🔓\')" style="background:#075e54;color:#fff;padding:10px;border:none;border-radius:10px;width:100%">🔓 فك تشفير الصورة</button>';};r.readAsDataURL(f);}
+function toggleCallEncrypt(){callEncrypt=!callEncrypt;document.getElementById('callEncStatus').innerHTML='حالة تشفير المكالمات: <b>'+(callEncrypt?'مفعل 🔒':'متوقف')+'</b>';alert(callEncrypt?'تم تفعيل تشفير المكالمات 🔒':'تم إيقاف تشفير المكالمات');}
+function generateKey(){myKey='NASHWAN-'+Math.random().toString(36).substring(2,10).toUpperCase()+'-'+Date.now().toString().slice(-4);localStorage.setItem('nashwan_key',myKey);document.getElementById('keyPreview').textContent=myKey;alert('مفتاح جديد: '+myKey);}
 function copyKey(){navigator.clipboard.writeText(myKey);alert('تم نسخ المفتاح ✅');}
 function generateInvite(){let code=Math.random().toString(36).substring(2,8).toUpperCase();let link=location.origin+location.pathname+'?invite='+code;document.getElementById('inviteLink').value=link;document.getElementById('toolsContent').innerHTML='<p>رابط الدعوة:</p><input value="'+link+'" readonly><button onclick="copyInvite()">نسخ</button>';return link;}
 function copyInvite(){let i=document.getElementById('inviteLink');i.select();navigator.clipboard.writeText(i.value);alert('تم نسخ رابط الدعوة ✅');}
@@ -260,7 +326,7 @@ function openCalculator(){document.getElementById('extraModal').classList.remove
 function calcAdd(v){document.getElementById('calcInput').value+=v;}
 function calcClear(){document.getElementById('calcInput').value='';}
 function calcEq(){try{document.getElementById('calcInput').value=eval(document.getElementById('calcInput').value);}catch(e){alert('خطأ في الحساب');}}
-function openPrayer(){document.getElementById('extraModal').classList.remove('hidden');document.getElementById('extraTitle').textContent='🕌 أوقات الصلاة - صنعاء';document.getElementById('extraContent').innerHTML=`<div class="prayer-box"><h3>🕌 أوقات الصلاة - صنعاء، اليمن</h3><p>الفجر: 05:10 🕋</p><p>الظهر: 12:15</p><p>العصر: 03:30</p><p>المغرب: 06:05</p><p>العشاء: 07:20</p><button onclick="enableAthan()" style="background:#075e54;color:#fff;padding:12px;border:none;border-radius:10px;width:100%">🔔 تفعيل تنبيه الآذان</button><button onclick="playAthan()" style="background:#ffc107;padding:12px;border:none;border-radius:10px;width:100%">🔊 تشغيل صوت الآذان الآن</button><p>🤲 اللهم تقبل منا</p></div>`;}
+function openPrayer(){document.getElementById('extraModal').classList.remove('hidden');document.getElementById('extraTitle').textContent='🕌 أوقات الصلاة - صنعاء';document.getElementById('extraContent').innerHTML=`<div class="prayer-box"><h3>🕌 أوقات الصلاة - صنعاء، اليمن</h3><p>الفجر: 05:10 🕋</p><p>الظهر: 12:15</p><p>العصر: 03:30</p><p>المغرب: 06:05</p><p>العشاء: 07:20</p><button onclick="enableAthan()" style="background:#075e54;color:#fff;padding:12px;border:none;border-radius:10px;width:100%">🔔 تفعيل تنبيه الآذان</button><button onclick="playAthan()" style="background:#fff;padding:12px;border:1px solid #075e54;border-radius:10px;width:100%">🔊 تشغيل صوت الآذان الآن</button><p>🤲 اللهم تقبل منا</p></div>`;}
 function enableAthan(){alert('✅ تم تفعيل تنبيه الآذان');}
 function playAthan(){alert('🔊 الله أكبر... حي على الصلاة');}
 function closeExtra(){document.getElementById('extraModal').classList.add('hidden');}
@@ -270,7 +336,7 @@ function endCall(){if(localStream) localStream.getTracks().forEach(t=>t.stop());
 function startVideo(){if(subType==='free' && opsLeft<=0){openSubscribe();return;} alert('مكالمة فيديو مشفرة 🔒📹');startCall();}
 function openCamera(){alert('الكاميرا - اختر صورتك من الأدوات');}
 function showMenu(){alert('القائمة: لوحة تحكم - مركز التشفير - إعدادات');}
-function openCalls(){document.getElementById('chatList').innerHTML='<div style="padding:30px;text-align:center">📞🔒 سجل المكالمات المشفرة<br><br><button onclick="createCall()" style="padding:10px 18px;background:#25d366;color:#fff;border:none;border-radius:10px">📞 مكالمة جديدة</button><br><br><button onclick="openSubscribe()" style="padding:10px 18px;background:#ffc107;border:none;border-radius:10px">⭐ اشترك - 1000 / 7000</button><br><br><button onclick="renderChats()" style="padding:10px 18px;background:#075e54;color:#fff;border:none;border-radius:10px">رجوع للمحادثات</button></div>';}
+function openCalls(){document.getElementById('chatList').innerHTML='<div style="padding:30px;text-align:center">📞🔒 سجل المكالمات المشفرة<br><br><button onclick="createCall()" style="padding:10px 18px;background:#25d366;color:#fff;border:none;border-radius:10px">📞 مكالمة جديدة</button><br><br><button onclick="openSubscribe()" style="padding:10px 18px;background:#fff;border:1px solid #075e54;border-radius:10px">⭐ اشترك - 1000 / 7000</button><br><br><button onclick="renderChats()" style="padding:10px 18px;background:#075e54;color:#fff;border:none;border-radius:10px">رجوع للمحادثات</button></div>';}
 if(localStorage.getItem('nashwan_theme')) document.body.setAttribute('data-theme',localStorage.getItem('nashwan_theme'));
 showApp();updateSubUI();
 </script>
