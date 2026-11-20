@@ -3,212 +3,216 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>الرسائل المشفرة | نشوان البدري - v16</title>
-<meta name="theme-color" content="#0f766e">
+<title>واتس نشوان الآمن</title>
+<meta name="theme-color" content="#008069">
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <style>
-:root{--bg:#f8fafc;--text:#1e293b;--muted:#64748b;--accent:#0f766e;--card:#ffffff;--border:#e2e8f0;--input:#f1f5f9;--success:#16a34a;--warn:#d97706;--danger:#dc2626;--shadow:0 10px 30px rgba(15,23,42,.08);--grad:linear-gradient(135deg,#0f766e,#14b8a6)}
-[data-theme="matrix"]{--bg:#020617;--text:#dcfce7;--muted:#86efac;--accent:#22c55e;--card:#0f172a;--border:rgba(34,197,94,.3);--input:#020617;--grad:linear-gradient(135deg,#15803d,#22c55e)}
-[data-theme="ocean"]{--bg:#020617;--text:#e0f2fe;--muted:#7dd3fc;--accent:#38bdf8;--card:#0c4a6e;--border:rgba(56,189,248,.3);--input:#082f49;--grad:linear-gradient(135deg,#0369a1,#38bdf8)}
-[data-theme="neon"]{--bg:#1a0033;--text:#fdf4ff;--muted:#e879f9;--accent:#d946ef;--card:#2e1065;--border:rgba(217,70,239,.3);--input:#1a0033;--grad:linear-gradient(135deg,#a21caf,#d946ef)}
-[data-theme="fire"]{--bg:#1c0a00;--text:#ffedd5;--muted:#fdba74;--accent:#f97316;--card:#431407;--border:rgba(249,115,22,.35);--input:#1c0a00;--grad:linear-gradient(135deg,#c2410c,#f97316)}
+:root{--bg:#efeae2;--card:#fff;--text:#111b21;--muted:#667781;--accent:#008069;--accent2:#25D366;--border:#e9edef;--input:#f0f2f5;--bubble-me:#d9fdd3;--bubble-other:#fff;--header:#008069;--nav:#fff}
+[data-theme="dark"]{--bg:#0b141a;--card:#111b21;--text:#e9edef;--muted:#8696a0;--accent:#00a884;--accent2:#00a884;--border:#222d34;--input:#202c33;--bubble-me:#005c4b;--bubble-other:#202c33;--header:#202c33;--nav:#202c33}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{font-family:'Segoe UI',Tahoma,sans-serif;background:var(--bg);color:var(--text);min-height:100dvh}
-.topbar{position:sticky;top:0;z-index:100;background:var(--card);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:12px 14px}
-.topbar h1{font-size:19px}.topbar h1 span{color:var(--accent)}
-.menu-btn{width:42px;height:42px;border-radius:12px;border:1px solid var(--border);background:var(--input);font-size:20px;cursor:pointer;color:var(--text)}
-.app{max-width:620px;margin:0 auto;padding:12px 14px 20px}
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:.3s;z-index:200}.overlay.show{opacity:1;pointer-events:auto}
-.sidebar{position:fixed;top:0;right:0;bottom:0;width:290px;max-width:85vw;background:var(--card);z-index:201;transform:translateX(100%);transition:.35s;padding:18px;display:flex;flex-direction:column;overflow-y:auto}
-.sidebar.open{transform:translateX(0)}
-.side-head{display:flex;gap:12px;padding-bottom:14px;border-bottom:1px solid var(--border);margin-bottom:14px;align-items:center}
-.avatar{width:50px;height:50px;border-radius:50%;background:var(--grad);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800}
-.side-item{padding:13px;border-radius:14px;display:flex;gap:10px;align-items:center;cursor:pointer;font-weight:600;margin-bottom:5px}
-.side-item.active{background:var(--input);color:var(--accent)}
-.card{background:var(--card);border:1px solid var(--border);border-radius:22px;padding:0;margin-bottom:14px;box-shadow:var(--shadow);overflow:hidden}
-.card-head{padding:16px 18px 14px;display:flex;gap:12px;align-items:center;cursor:pointer}
-.card-head .card-ic{width:46px;height:46px;border-radius:14px;background:var(--grad);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px}
-.card-head h2{font-size:16px}.card-head p{font-size:12px;color:var(--muted)}
-.card-body{padding:0 18px 18px}
-label{display:block;font-size:13px;color:var(--muted);margin:12px 0 6px;font-weight:700}
-.label-row{display:flex;justify-content:space-between;align-items:center;margin:12px 0 6px}.label-row label{margin:0}
-input,textarea,select{width:100%;padding:13px 14px;border-radius:13px;border:1px solid var(--border);background:var(--input);color:var(--text);font-size:15px;font-family:inherit}
+body{font-family:'Segoe UI',Tahoma,sans-serif;background:var(--bg);color:var(--text);min-height:100dvh;padding-bottom:78px}
+a{color:var(--accent)}
+/* ===== شاشة التسجيل مثل واتساب ===== */
+.auth-screen{position:fixed;inset:0;background:#fff;z-index:2000;display:flex;flex-direction:column;overflow-y:auto}
+.auth-top{background:var(--header);color:#fff;padding:28px 20px 22px;text-align:center}
+.auth-top h1{font-size:26px;font-weight:900}.auth-top p{font-size:13px;opacity:.9;margin-top:6px}
+.auth-body{padding:22px 20px;max-width:420px;margin:0 auto;width:100%}
+.auth-body h2{font-size:19px;margin-bottom:8px}.auth-body p{font-size:13px;color:#667781;line-height:1.8}
+label{display:block;font-size:13px;color:var(--muted);margin:14px 0 6px;font-weight:700}
+input,textarea,select{width:100%;padding:14px;border-radius:12px;border:1px solid #d1d7db;background:#fff;color:#111;font-size:16px;font-family:inherit;outline:none}
+input:focus{border-color:var(--accent)}
+.otp-input{font-size:28px!important;text-align:center!important;letter-spacing:10px!important;font-weight:900}
+.btn{padding:14px;border-radius:28px;border:none;cursor:pointer;font-size:15px;font-weight:800;display:flex;justify-content:center;gap:8px;align-items:center;width:100%}
+.btn-green{background:var(--accent);color:#fff}.btn-light{background:#f0f2f5;color:#111}.btn-danger{background:#ea0038;color:#fff}
+.country-row{display:flex;gap:8px}.country-row select{width:110px}
+.otp-box{background:#e7fce3;border:1px dashed #00a884;border-radius:14px;padding:14px;text-align:center;margin-top:14px}
+.otp-box b{font-size:26px;letter-spacing:8px;color:#008069}
+/* ===== الهيدر ===== */
+.header{position:sticky;top:0;z-index:100;background:var(--header);color:#fff;padding:10px 14px;display:flex;align-items:center;gap:10px}
+.header h1{font-size:20px;font-weight:900;flex:1}.header h1 span{font-size:11px;background:#25D366;padding:2px 8px;border-radius:20px;color:#fff;margin-right:6px}
+.icon-btn{width:40px;height:40px;border-radius:50%;border:none;background:rgba(255,255,255,.15);color:#fff;font-size:18px;cursor:pointer}
+.avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#00a884,#25D366);color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;flex-shrink:0}
+.avatar img{width:100%;height:100%;border-radius:50%;object-fit:cover}
+.app{max-width:620px;margin:0 auto}
+/* ستوري */
+.stories{display:flex;gap:12px;overflow-x:auto;padding:12px 14px;scrollbar-width:none}
+.stories::-webkit-scrollbar{display:none}
+.story{text-align:center;flex-shrink:0;cursor:pointer}.story .ring{width:62px;height:62px;border-radius:50%;border:3px solid #25D366;padding:2px;background:#fff}.story .ring div{width:100%;height:100%;border-radius:50%;background:#e9edef;display:flex;align-items:center;justify-content:center;font-size:22px;overflow:hidden}.story p{font-size:11px;margin-top:4px}
+.search-box{margin:0 14px 10px;background:var(--card);border-radius:28px;padding:11px 16px;display:flex;gap:8px;align-items:center;color:var(--muted);font-size:14px}.search-box input{border:none;background:transparent;padding:0;font-size:14px}
+/* قائمة المحادثات */
+.chat-list{padding:0 8px}
+.chat-item{display:flex;gap:12px;padding:12px 10px;border-radius:14px;cursor:pointer;align-items:center;background:var(--card);margin-bottom:2px}
+.chat-item:active{background:#f0f2f5}
+.chat-item .info{flex:1;min-width:0}.chat-item .top{display:flex;justify-content:space-between}.chat-item .top b{font-size:15px}.chat-item .top span{font-size:11px;color:var(--muted)}
+.chat-item .last{font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:3px}
+.unread{background:#25D366;color:#fff;font-size:11px;min-width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800}
+/* بطاقات */
+.card{background:var(--card);border-radius:18px;padding:16px;margin:12px 14px;border:1px solid var(--border)}
+.card h2{font-size:16px}.card p{font-size:13px;color:var(--muted);line-height:1.7}
 textarea{min-height:90px;resize:vertical;line-height:1.7}
-input.code-input,textarea.code-input{direction:ltr!important;text-align:left!important;font-family:monospace}
-.btn{padding:13px 16px;border-radius:13px;border:none;cursor:pointer;font-size:14px;font-weight:800;display:inline-flex;justify-content:center;gap:8px;align-items:center}
-.btn-primary{background:var(--grad);color:#fff}.btn-success{background:linear-gradient(135deg,#15803d,#16a34a);color:#fff}.btn-warn{background:linear-gradient(135deg,#b45309,#f59e0b);color:#fff}.btn-danger{background:linear-gradient(135deg,#b91c1c,#ef4444);color:#fff}.btn-ghost{background:transparent;color:var(--text);border:1px solid var(--border)}
-.btn-row{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}.btn-row .btn{flex:1}
-.clear-btn{background:rgba(220,38,38,.1);color:var(--danger);border:1px solid rgba(220,38,38,.2);border-radius:20px;padding:4px 11px;font-size:12px;font-weight:700;cursor:pointer}
-.output{padding:14px;border-radius:13px;background:var(--input);border:1px solid var(--accent);font-family:monospace;font-size:13px;word-break:break-all;white-space:pre-wrap;margin-top:14px;min-height:60px;color:var(--accent);direction:ltr;text-align:left}
-.output.empty{border-color:var(--border);color:var(--muted);font-family:inherit;direction:rtl;text-align:right}
-.login-screen{position:fixed;inset:0;background:var(--bg);display:flex;justify-content:center;align-items:center;z-index:1000;padding:14px;overflow-y:auto}
-.login-box{background:var(--card);padding:22px 20px;border-radius:24px;width:100%;max-width:420px;border:1px solid var(--border);text-align:center;box-shadow:var(--shadow)}
-.login-tabs{display:flex;background:var(--input);border-radius:13px;padding:4px;margin:14px 0}
-.login-tabs button{flex:1;padding:11px;border:none;border-radius:10px;cursor:pointer;font-weight:700;background:transparent;color:var(--muted)}
-.login-tabs button.active{background:var(--accent);color:#fff}
-.toast{position:fixed;top:16px;left:50%;transform:translateX(-50%) translateY(-80px);background:var(--success);color:#fff;padding:12px 20px;border-radius:13px;font-weight:700;opacity:0;transition:.35s;z-index:9999;max-width:90vw;text-align:center}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}.toast.error{background:var(--danger)}
-.theme-row{display:flex;gap:8px;margin:12px 0;flex-wrap:wrap}.theme-dot{flex:1;min-width:52px;height:44px;border-radius:12px;cursor:pointer;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:20px}.theme-dot.active{border-color:var(--accent)}
-.badge{background:var(--accent);color:#fff;font-size:12px;padding:2px 9px;border-radius:10px}
+.code-out{padding:14px;border-radius:12px;background:#f0f2f5;border:1px solid var(--accent);font-family:monospace;font-size:13px;word-break:break-all;white-space:pre-wrap;margin-top:12px;min-height:60px;color:#008069;direction:ltr;text-align:left}
+.btn-row{display:flex;gap:8px;margin-top:12px}.btn-row .btn{flex:1}
+.contact-item{display:flex;gap:10px;padding:11px;background:var(--input);border-radius:14px;margin-top:10px;align-items:center}
+.toast{position:fixed;top:14px;left:50%;transform:translateX(-50%) translateY(-80px);background:#111b21;color:#fff;padding:12px 20px;border-radius:28px;font-weight:700;opacity:0;transition:.3s;z-index:9999}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+/* شاشة المحادثة */
+.chat-screen{position:fixed;inset:0;background:var(--bg);z-index:300;display:none;flex-direction:column}
+.chat-screen.open{display:flex}
+.chat-header{background:var(--header);color:#fff;padding:10px 12px;display:flex;gap:10px;align-items:center}
+.chat-header .info{flex:1}.chat-header .info b{display:block}.chat-header .info span{font-size:11px;opacity:.85}
+.chat-messages{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px}
+.msg{max-width:82%;padding:9px 11px;border-radius:14px;font-size:14px;line-height:1.6;word-break:break-word;position:relative}
+.msg.me{background:var(--bubble-me);align-self:flex-start;margin-right:auto;border-bottom-right-radius:4px}
+.msg.other{background:var(--bubble-other);align-self:flex-end;margin-left:auto;border-bottom-left-radius:4px;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.msg small{display:block;font-size:10px;color:var(--muted);margin-top:4px;text-align:left}
+.chat-input-bar{background:var(--card);padding:8px;display:flex;gap:8px;align-items:center}
+.chat-input-bar input{flex:1;border-radius:28px;background:var(--input);border:none;padding:12px 16px}
+.send-btn{width:48px;height:48px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:20px;cursor:pointer;flex-shrink:0}
+/* تنقل سفلي مثل تليجرام / واتساب */
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:var(--nav);border-top:1px solid var(--border);display:flex;z-index:200;padding:6px 4px calc(6px + env(safe-area-inset-bottom))}
+.nav-item{flex:1;text-align:center;padding:8px 2px;cursor:pointer;color:var(--muted);font-size:11px;font-weight:700;border-radius:12px}
+.nav-item.active{color:var(--accent);background:rgba(0,168,132,.08)}
+.nav-item .ic{font-size:22px;display:block;margin-bottom:2px}
+.fab{position:fixed;bottom:88px;left:16px;width:56px;height:56px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:24px;box-shadow:0 6px 16px rgba(0,0,0,.25);cursor:pointer;z-index:150}
 .tab-content{display:none}.tab-content.active{display:block}
-.locked-box{background:linear-gradient(135deg,#dc2626,#991b1b);color:#fff;border-radius:20px;padding:20px;text-align:center;margin-bottom:14px}
-.wa-btn{background:#25D366;color:#fff;border:none;padding:14px 18px;border-radius:13px;font-weight:800;font-size:15px;width:100%;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:12px}
-.contact-item{display:flex;justify-content:space-between;padding:12px;background:var(--input);border-radius:13px;border:1px solid var(--border);margin-top:10px;align-items:center;gap:8px}
-.contact-item .remove{background:rgba(220,38,38,.12);color:var(--danger);border:none;border-radius:10px;padding:7px 11px;cursor:pointer;font-weight:700}
-.user-card{background:var(--input);border:1px solid var(--border);border-radius:16px;padding:13px;margin-top:12px}
-.step-box{display:flex;gap:10px;padding:13px;background:var(--input);border-radius:14px;border:1px solid var(--border);margin-top:10px}
-.step-num{width:32px;height:32px;border-radius:50%;background:var(--grad);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800}
-.designer{text-align:center;padding:18px;background:var(--card);border:1px solid var(--border);border-radius:20px;color:var(--muted);font-size:13px}.designer strong{color:var(--accent);font-size:18px;display:block}
-.lock-screen{position:fixed;inset:0;background:var(--bg);display:none;justify-content:center;align-items:center;z-index:2000;padding:16px}
-.lock-screen.show{display:flex}
-.pin-box{background:var(--card);padding:24px;border-radius:24px;width:100%;max-width:360px;text-align:center;border:1px solid var(--border);box-shadow:var(--shadow)}
-.pin-input{font-size:28px!important;text-align:center!important;letter-spacing:12px!important;font-family:monospace!important}
-.switch-row{display:flex;justify-content:space-between;align-items:center;background:var(--input);padding:12px;border-radius:12px;margin-top:10px;border:1px solid var(--border)}
-.switch-row input{width:50px!important;accent-color:var(--accent);height:24px;cursor:pointer}
-.img-preview{max-width:100%;border-radius:12px;margin-top:10px;display:none;border:1px solid var(--border)}
-.chat-box{background:var(--input);border:1px solid var(--border);border-radius:14px;height:280px;overflow-y:auto;padding:10px;margin-top:12px}
-.chat-msg{padding:8px 10px;border-radius:12px;margin-bottom:8px;max-width:85%;font-size:14px;line-height:1.6;word-break:break-word}
-.chat-me{background:var(--accent);color:#fff;margin-right:auto}
-.chat-other{background:var(--card);border:1px solid var(--border)}
-.online-dot{width:10px;height:10px;border-radius:50%;background:#22c55e;display:inline-block}
+.lock-box{background:#ea0038;color:#fff;border-radius:18px;padding:18px;text-align:center;margin:12px 14px}
+.switch-row{display:flex;justify-content:space-between;align-items:center;background:var(--input);padding:12px;border-radius:12px;margin-top:10px}
+.switch-row input{width:50px!important}
+.group-item{display:flex;gap:10px;padding:12px;background:var(--input);border-radius:14px;margin-top:10px;align-items:center;cursor:pointer}
+.badge{background:#25D366;color:#fff;font-size:11px;padding:2px 8px;border-radius:12px}
 </style>
 </head>
 <body>
 
-<div class="lock-screen" id="lockScreen"><div class="pin-box"><div style="font-size:48px">🔒</div><h2 style="margin:10px 0">التطبيق مقفل</h2><p style="font-size:13px;color:var(--muted)">ادخل PIN أو البصمة</p><input id="pinInput" class="pin-input" type="password" inputmode="numeric" maxlength="6" placeholder="••••" style="margin-top:14px"><button class="btn btn-primary" style="width:100%;margin-top:12px" id="unlockPinBtn">فتح بـ PIN</button><button class="btn btn-ghost" style="width:100%;margin-top:8px" id="unlockBioBtn">👆 فتح بالبصمة</button><button class="btn btn-ghost" style="width:100%;margin-top:8px" id="skipLockBtn">دخول بدون قفل (أول مرة)</button></div></div>
+<!-- ===== تسجيل مثل واتساب ===== -->
+<div class="auth-screen" id="authScreen">
+  <div class="auth-top"><div style="font-size:48px">🛡️</div><h1>واتس نشوان الآمن</h1><p>مراسلة مشفرة • محادثات • قروبات • بدون تجسس</p></div>
+  <div class="auth-body" id="stepPhone">
+    <h2>أدخل رقم هاتفك</h2>
+    <p>سنرسل لك رمز تأكيد عبر واتساب المدير. أدخل رقمك الحقيقي عشان أصحابك يلاقونك.</p>
+    <label>الدولة</label>
+    <div class="country-row"><select id="countryCode"><option value="+967">🇾🇪 اليمن +967</option><option value="+966">🇸🇦 السعودية +966</option><option value="+20">🇪🇬 مصر +20</option><option value="+962">🇯🇴 الأردن +962</option><option value="+961">🇱🇧 لبنان +961</option><option value="+971">🇦🇪 الإمارات +971</option><option value="+1">🇺🇸 أمريكا +1</option></select><input id="phoneInput" type="tel" placeholder="771713275" inputmode="numeric"></div>
+    <label>اسمك الذي سيظهر لأصدقائك</label>
+    <input id="displayName" placeholder="مثال: نشوان البدري">
+    <label>كلمة مرور حسابك (تذكرها)</label>
+    <input id="regPass" type="password" placeholder="6 أحرف على الأقل">
+    <button class="btn btn-green" id="sendOtpBtn" style="margin-top:18px">التالي ➜ إرسال رمز التأكيد</button>
+    <p style="text-align:center;margin-top:14px;font-size:12px">بالضغط على التالي أنت توافق على شروط واتس نشوان الآمن<br>صُمم بواسطة <b style="color:#008069">نشوان البدري - 771713275</b></p>
+    <button class="btn btn-light" id="goAdminBtn" style="margin-top:12px">👑 أنا المدير - دخول مباشر</button>
+  </div>
+  <div class="auth-body" id="stepOtp" style="display:none">
+    <h2>أدخل رمز التأكيد</h2>
+    <p>أرسلنا رمز مكون من 6 أرقام إلى <b id="otpPhoneShow"></b><br>اطلبه من المدير على واتساب إذا لم يصلك.</p>
+    <label>رمز التأكيد</label>
+    <input id="otpInput" class="otp-input" inputmode="numeric" maxlength="6" placeholder="••••••">
+    <button class="btn btn-green" id="verifyOtpBtn" style="margin-top:16px">تأكيد ودخول ✅</button>
+    <button class="btn btn-light" id="resendOtpBtn" style="margin-top:10px">إعادة إرسال الرمز 🔄</button>
+    <button class="btn btn-light" id="backPhoneBtn" style="margin-top:10px">⬅ تغيير الرقم</button>
+    <div class="otp-box" id="demoOtpBox" style="display:none"><div style="font-size:12px;color:#667781">كود تجريبي - للتجربة الآن (بيختفي بعد ربط SMS):</div><b id="demoOtpText"></b><p style="font-size:11px;color:#667781">انسخ الكود وادخله فوق</p></div>
+    <button class="btn btn-light" id="waOtpBtn" style="margin-top:12px;background:#25D366;color:#fff">💬 اطلب الكود من واتساب المدير</button>
+  </div>
+  <div class="auth-body" id="stepAdmin" style="display:none">
+    <h2>👑 دخول المدير</h2>
+    <label>اسم المدير</label><input id="adminUser" placeholder="NASH">
+    <label>كلمة مرور المدير</label><input id="adminPass" type="password" placeholder="كلمة المرور">
+    <button class="btn btn-green" id="adminLoginBtn" style="margin-top:16px">دخول المدير 👑</button>
+    <button class="btn btn-light" id="backFromAdmin" style="margin-top:10px">⬅ رجوع للتسجيل</button>
+  </div>
+  <p id="authError" style="color:#ea0038;text-align:center;font-weight:700;font-size:13px;padding:0 20px 20px"></p>
+</div>
 
-<div class="login-screen" id="loginScreen"><div class="login-box"><div style="font-size:48px">🔐</div><h2 style="color:var(--accent)">الرسائل المشفرة</h2><span style="background:var(--danger);color:#fff;font-size:11px;padding:3px 10px;border-radius:20px;display:inline-block;margin-top:6px">🔒 تطبيق خاص - دعوة فقط - بدون انترنت - v16 + محادثات</span><div class="login-tabs"><button id="tabBtnAdmin" class="active">👑 أنا المدير</button><button id="tabBtnGuest">💌 أنا مدعو</button></div><div id="adminLoginBox"><label style="text-align:right">اسم المدير</label><input id="loginUser" placeholder="اكتب اسم المدير" autocomplete="off"><label style="text-align:right">كلمة مرور المدير</label><input type="password" id="loginPass" placeholder="اكتب كلمة المرور"><button class="btn btn-primary" style="width:100%;margin-top:16px" id="loginBtn">دخول المدير 👑</button></div><div id="guestLoginBox" style="display:none"><p style="font-size:13px;color:var(--muted)">الصق كود الدعوة</p><label style="text-align:right">الصق كود الدعوة هنا</label><input id="inviteCodeInput" class="code-input" placeholder="INV:..."><button class="btn btn-warn" style="width:100%;margin-top:12px" id="activateInviteBtn">تفعيل الدعوة والدخول 💌</button><label style="text-align:right;margin-top:12px">أو REV: أو RENEW:</label><input id="revokeCodeInput" class="code-input" placeholder="REV:... أو RENEW:..."><button class="btn btn-danger" style="width:100%;margin-top:10px" id="activateRevokeBtn">تنفيذ الكود 🚫 / 🔄</button></div><p id="loginError" style="color:var(--danger);margin-top:12px;font-weight:700;font-size:13px"></p><button class="wa-btn" id="waBtnLogin">💬 واتساب نشوان البدري - 771713275</button><p style="font-size:11px;color:var(--muted);margin-top:10px">AES-GCM • v16 • 15 عملية مجانية • محادثات Realtime</p></div></div>
-
-<div class="topbar" id="topbar" style="display:none"><button class="menu-btn" id="openMenu">☰</button><h1>الرسائل <span>المشفرة</span></h1><div style="width:42px;text-align:center;font-size:20px">🔒</div></div>
-<div class="overlay" id="overlay"></div>
-<aside class="sidebar" id="sidebar">
-<div class="side-head"><div class="avatar" id="avatarLetter">N</div><div><div style="font-weight:800" id="sideUser">مستخدم</div><div style="font-size:12px;color:var(--muted)" id="sideRole">مستخدم عادي</div><div style="font-size:11px"><span class="online-dot"></span> <span id="fbStatus">جاري الاتصال...</span></div></div></div>
-<div class="side-item active" data-tab="encrypt">✍️ إنشاء رسالة مشفرة</div>
-<div class="side-item" data-tab="decrypt">🔓 فك رسالة</div>
-<div class="side-item" data-tab="mychats">💬 محادثاتي <span class="badge" id="chatCount">0</span></div>
-<div class="side-item" data-tab="mygroups">👥 قروباتي</div>
-<div class="side-item" data-tab="contacts">📇 الأرقام <span class="badge" id="contactCount">0</span></div>
-<div class="side-item" data-tab="settings">⚙️ الإعدادات</div>
-<div class="side-item" data-tab="guide">📖 كيف أستخدم التطبيق؟</div>
-<div class="side-item" data-tab="admin" id="adminMenu" style="display:none">👑 لوحة الإدارة</div>
-<div class="side-item" id="logoutItem" style="color:var(--danger)">🚪 خروج</div>
-<div style="font-size:13px;color:var(--muted);margin-top:12px;font-weight:700">🎨 ثيمات</div>
-<div class="theme-row"><div class="theme-dot active" data-th="light">☀️</div><div class="theme-dot" data-th="matrix" style="background:#020617;color:#22c55e">🟢</div><div class="theme-dot" data-th="ocean" style="background:#082f49;color:#38bdf8">🌊</div><div class="theme-dot" data-th="neon" style="background:#2e1065;color:#d946ef">💜</div><div class="theme-dot" data-th="fire" style="background:#431407;color:#f97316">🔥</div></div>
-<div style="margin-top:auto;padding-top:14px;border-top:1px solid var(--border);font-size:12px;color:var(--muted);text-align:center">صُمم بواسطة<br><b style="color:var(--accent)">نشوان البدري</b><br>الإصدار 16.0</div>
-</aside>
+<!-- ===== الواجهة الرئيسية ===== -->
+<div class="header" id="mainHeader" style="display:none">
+  <div class="avatar" id="myAvatar">N</div>
+  <h1>واتس نشوان الآمن <span>مشفر 🔒</span></h1>
+  <button class="icon-btn" id="searchBtn">🔍</button>
+  <button class="icon-btn" id="themeBtn">🌙</button>
+  <button class="icon-btn" id="menuBtn">⋮</button>
+</div>
 
 <div class="app" id="mainApp" style="display:none">
-<p style="margin-bottom:10px;color:var(--muted)">مرحباً، <b id="welcomeUser" style="color:var(--accent)"></b> 👋 <span id="quotaText" style="font-size:13px;font-weight:800"></span></p>
+  <!-- تبويب المحادثات -->
+  <div class="tab-content active" id="tab-chats">
+    <div class="stories" id="storiesRow">
+      <div class="story" id="myStory"><div class="ring"><div>➕</div></div><p>حالتي</p></div>
+      <div class="story"><div class="ring"><div>🛡️</div></div><p>نشوان</p></div>
+      <div class="story"><div class="ring"><div>🔒</div></div><p>آمن</p></div>
+      <div class="story"><div class="ring"><div>💬</div></div><p>أصدقائي</p></div>
+    </div>
+    <div class="search-box">🔍 <input id="chatSearch" placeholder="بحث في المحادثات والأرقام..."></div>
+    <div style="padding:0 14px;display:flex;justify-content:space-between;align-items:center"><b>المحادثات</b><span style="font-size:12px;color:var(--muted)" id="totalChats">0 محادثة</span></div>
+    <div class="chat-list" id="chatList"></div>
+    <div class="card"><h2>💡 كيف تبدأ؟</h2><p>1. اضغط زر <b>+</b> تحت واختر صديق<br>2. اكتب اسم صديقك في التطبيق + المفتاح<br>3. ارسل رسالة، توصله في نفس الثانية</p><button class="btn btn-green" id="startFirstChatBtn" style="margin-top:10px">+ ابدأ محادثة جديدة</button></div>
+    <div class="card"><h2>👥 قروباتي</h2><p>أنشئ قروب مشفر وشارك ID القروب مع أصحابك.</p><div id="myGroupsList"></div><div class="btn-row"><button class="btn btn-green" id="createGroupQuickBtn">+ إنشاء قروب</button><button class="btn btn-light" id="joinGroupQuickBtn">دخول قروب</button></div></div>
+  </div>
 
-<div class="locked-box" id="lockedBox" style="display:none"><h2 style="color:#fff">انتهى اشتراكك المجاني!</h2><p>استخدمت 15 عملية. اختر باقة.</p><div style="background:rgba(255,255,255,.12);border-radius:14px;padding:14px;margin-top:12px;text-align:right"><b>📅 شهري - 1000 ريال - غير محدود ♾️</b><button class="wa-btn" data-plan="شهري" style="background:#fff;color:#111">💬 اطلب الشهري</button></div><div style="background:rgba(250,204,21,.15);border:2px solid #facc15;border-radius:14px;padding:14px;margin-top:10px;text-align:right"><b>⭐ سنوي - 10000 ريال - غير محدود ♾️</b><button class="wa-btn" data-plan="سنوي" style="background:#facc15;color:#111">💬 اطلب السنوي</button></div><button class="wa-btn" id="waBtnLocked">💬 واتساب 771713275</button><label style="color:#fff;text-align:right">عندك كود تجديد RENEW: ؟</label><input id="renewCodeInput" class="code-input" placeholder="RENEW:..." style="background:#fff;color:#111"><button class="btn btn-success" style="width:100%;margin-top:10px" id="activateRenewBtn">تفعيل التجديد 🔄</button></div>
+  <!-- تبويب التشفير -->
+  <div class="tab-content" id="tab-encrypt">
+    <div class="card"><h2>✍️ إنشاء رسالة مشفرة</h2><p>لو ما عندك نت، شفر هنا وارسلها واتساب عادي.</p>
+    <label>الرسالة</label><textarea id="messageInput" placeholder="اكتب رسالتك..."></textarea>
+    <label>🔑 كلمة المفتاح</label><input type="password" id="keyInput" placeholder="4 أحرف على الأقل">
+    <label>⏳ تختفي بعد؟</label><select id="expireSelect"><option value="0">أبداً</option><option value="10">10 ثواني</option><option value="60">1 دقيقة</option><option value="3600">1 ساعة</option><option value="86400">1 يوم</option></select>
+    <div class="btn-row"><button class="btn btn-green" id="encryptBtn">🔒 تشفير الآن</button></div>
+    <div class="code-out" id="encryptOutput">ستظهر الشيفرة هنا...</div>
+    <div class="btn-row"><button class="btn btn-light" id="copyEncryptBtn">📋 نسخ</button><button class="btn btn-light" id="waEncryptBtn" style="background:#25D366;color:#fff">💬 إرسال واتساب</button></div></div>
+    <div class="card"><h2>🖼️ تشفير صورة</h2><label>اختر صورة</label><input type="file" id="imageInput" accept="image/*"><img id="imagePreview" style="max-width:100%;border-radius:12px;margin-top:10px;display:none"><label>🔑 مفتاح الصورة</label><input type="password" id="imageKey" placeholder="مفتاح الصورة"><div class="btn-row"><button class="btn btn-green" id="encryptImageBtn">🖼️ تشفير الصورة</button></div><div class="code-out" id="imageOutput">شيفرة الصورة هنا...</div><div class="btn-row"><button class="btn btn-light" id="copyImageBtn">📋 نسخ</button></div></div>
+  </div>
 
-<div class="tab-content active" id="tab-encrypt">
-<div class="card"><div class="card-head"><div class="card-ic">✍️</div><div><h2>إنشاء رسالة مشفرة</h2><p>اكتب رسالتك • شفرها • أرسلها</p></div></div><div class="card-body">
-<label>الرقم المرسل إليه</label><select id="recipientSelect"><option value="">— بدون رقم —</option></select>
-<div class="label-row"><label>✉️ الرسالة</label><button class="clear-btn" id="clearMessageBtn">🗑️ تفريغ</button></div><textarea id="messageInput" placeholder="اكتب رسالتك هنا..."></textarea>
-<div class="label-row"><label>🔑 كلمة مفتاح التشفير</label><button class="clear-btn" id="clearKeyBtn">🗑️ تفريغ</button></div><input type="password" id="keyInput" placeholder="4 أحرف على الأقل">
-<label>⏳ متى تختفي الرسالة؟</label><select id="expireSelect"><option value="0">أبداً - لا تختفي</option><option value="10">بعد 10 ثواني</option><option value="60">بعد 1 دقيقة</option><option value="3600">بعد 1 ساعة</option><option value="86400">بعد 1 يوم</option></select>
-<div class="btn-row"><button class="btn btn-success" id="encryptBtn">🔒 تشفير الآن</button><button class="btn btn-ghost" id="smsBtn" disabled>📱 إرسال SMS</button></div>
-<label style="margin-top:14px">📤 الناتج - الشيفرة</label><div class="output empty" id="encryptOutput">ستظهر الشيفرة هنا...</div>
-<div class="btn-row"><button class="btn btn-ghost" id="copyEncryptBtn" disabled>📋 نسخ الشيفرة</button><button class="btn btn-danger" id="clearEncryptAllBtn">🗑️ مسح الكل</button></div>
-</div></div>
-<div class="card"><div class="card-head"><div class="card-ic" style="background:linear-gradient(135deg,#7c3aed,#a855f7)">🖼️</div><div><h2>تشفير صورة</h2><p>شفر أي صورة وارسلها مشفرة</p></div></div><div class="card-body">
-<label>اختر صورة</label><input type="file" id="imageInput" accept="image/*"><img id="imagePreview" class="img-preview">
-<label>🔑 مفتاح الصورة</label><input type="password" id="imageKey" placeholder="نفس المفتاح">
-<div class="btn-row"><button class="btn btn-success" id="encryptImageBtn">🖼️ تشفير الصورة</button></div>
-<label style="margin-top:12px">📤 شيفرة الصورة</label><div class="output empty" id="imageOutput">ستظهر شيفرة الصورة هنا...</div>
-<div class="btn-row"><button class="btn btn-ghost" id="copyImageBtn" disabled>📋 نسخ شيفرة الصورة</button></div>
-</div></div>
+  <!-- تبويب فك التشفير -->
+  <div class="tab-content" id="tab-decrypt">
+    <div class="card"><h2>🔓 فك رسالة</h2><label>الصق الشيفرة</label><textarea id="cipherInput" placeholder="ENC:... أو ENC_IMG:..."></textarea><label>🔑 المفتاح</label><input type="password" id="decryptKeyInput" placeholder="نفس المفتاح"><div class="btn-row"><button class="btn btn-green" id="decryptBtn">🔓 فك الآن</button></div><div class="code-out" id="decryptOutput">الناتج هنا...</div><img id="decryptedImage" style="max-width:100%;border-radius:12px;margin-top:10px;display:none"><div class="btn-row"><button class="btn btn-light" id="copyDecryptBtn">📋 نسخ</button></div></div>
+  </div>
+
+  <!-- تبويب جهات الاتصال - دمج الأرقام -->
+  <div class="tab-content" id="tab-contacts">
+    <div class="card"><h2>👥 جهات الاتصال - كل المسجلين</h2><p>أي شخص يسجل برقمه في التطبيق، يظهر هنا تلقائياً. اضغط عليه لتبدأ محادثة معه.</p>
+    <label>🔍 بحث بالاسم أو الرقم</label><input id="contactSearch" placeholder="ابحث...">
+    <div id="contactList"></div></div>
+    <div class="card"><h2>➕ إضافة رقم يدوياً</h2><label>الاسم</label><input id="contactName" placeholder="مثال: أحمد"><label>الرقم</label><input id="phoneAdd" type="tel" placeholder="+967771234567"><div class="btn-row"><button class="btn btn-green" id="addPhoneBtn">+ إضافة</button></div></div>
+    <div class="card"><h2>📤 دعوة صديق</h2><p>انسخ رابط الدعوة وارسله لصديقك، يسجل برقمه ويدخل على طول.</p><div class="code-out" id="inviteLinkOut">https://chatstruct...</div><div class="btn-row"><button class="btn btn-green" id="copyInviteLinkBtn">📋 نسخ رابط الدعوة</button><button class="btn btn-light" id="waInviteBtn" style="background:#25D366;color:#fff">💬 دعوة واتساب</button></div></div>
+  </div>
+
+  <!-- تبويب الإعدادات -->
+  <div class="tab-content" id="tab-settings">
+    <div class="card"><h2>⚙️ الإعدادات</h2>
+    <div style="display:flex;gap:12px;align-items:center"><div class="avatar" id="settingsAvatar" style="width:60px;height:60px;font-size:24px">N</div><div><b id="settingsName">مستخدم</b><div style="font-size:12px;color:var(--muted)" id="settingsPhone">+967...</div><div style="font-size:12px;color:#25D366">● متصل الآن - مشفر</div></div></div>
+    <label>تغيير اسمي</label><input id="editName"><div class="btn-row"><button class="btn btn-green" id="saveNameBtn">حفظ الاسم</button></div>
+    <div class="switch-row"><span>🌙 الوضع الليلي</span><input type="checkbox" id="darkToggle"></div>
+    <div class="switch-row"><span>🔒 قفل بـ PIN</span><input type="checkbox" id="lockEnabled"></div>
+    <label>رمز PIN</label><input id="pinSetup" type="password" inputmode="numeric" maxlength="6" placeholder="1234">
+    <div class="switch-row"><span>👆 بصمة</span><input type="checkbox" id="bioEnabled"></div>
+    <div class="btn-row"><button class="btn btn-green" id="savePinBtn">حفظ الأمان</button></div>
+    <label style="margin-top:14px">💳 اشتراكي</label><div style="background:#e7fce3;border-radius:12px;padding:12px;font-size:13px;line-height:1.8" id="myPlanBox">مجاني - 15 عملية</div>
+    <div class="btn-row"><button class="btn btn-light" id="exportBtn">📤 تصدير أرقامي</button><button class="btn btn-light" id="logoutBtn" style="background:#ea0038;color:#fff">🚪 خروج</button></div>
+    <div id="adminPanel" style="display:none;margin-top:14px;border-top:1px solid var(--border);padding-top:14px"><h2>👑 لوحة المدير</h2><label>اسم مستخدم جديد</label><input id="inviteName" placeholder="ahmed"><label>كلمة مرور له</label><input id="invitePass" type="password" placeholder="كلمة مرور"><div class="btn-row"><button class="btn btn-green" id="generateInviteBtn">توليد دعوة</button></div><div class="code-out" id="inviteShortCode" style="display:none"></div><div id="userList"></div></div>
+    </div>
+    <div class="card" style="text-align:center"><b style="color:#008069;font-size:18px">واتس نشوان الآمن</b><p>الإصدار 17.0 • صُمم بواسطة نشوان البدري<br>واتساب: 771713275<br>شهري 1000 ريال غير محدود ♾️ / سنوي 10000 غير محدود ♾️</p></div>
+  </div>
+
+  <div class="lock-box" id="lockedBox" style="display:none"><h2>انتهى اشتراكك المجاني!</h2><p>استخدمت 15 عملية. اطلب تجديد من المدير.</p><button class="btn btn-light" id="waLockedBtn" style="background:#fff;color:#111;margin-top:10px">💬 اطلب تجديد - واتساب 771713275</button><label style="color:#fff;text-align:right">عندك كود RENEW: ؟</label><input id="renewCodeInput" placeholder="RENEW:..."><button class="btn btn-green" id="activateRenewBtn" style="margin-top:10px">تفعيل التجديد 🔄</button></div>
 </div>
 
-<div class="tab-content" id="tab-decrypt"><div class="card"><div class="card-head"><div class="card-ic" style="background:linear-gradient(135deg,#b45309,#f59e0b)">🔓</div><div><h2>فك رسالة مشفرة</h2><p>الصق الشيفرة • اكتب المفتاح</p></div></div><div class="card-body">
-<div class="label-row"><label>📥 الصق الشيفرة</label><button class="clear-btn" id="clearCipherBtn">🗑️ تفريغ</button></div><textarea id="cipherInput" class="code-input" placeholder="ENC:... أو ENC_IMG:..."></textarea>
-<div class="label-row"><label>🔑 كلمة المفتاح</label><button class="clear-btn" id="clearDecryptKeyBtn">🗑️ تفريغ</button></div><input type="password" id="decryptKeyInput" placeholder="نفس كلمة المفتاح">
-<div class="btn-row"><button class="btn btn-warn" id="decryptBtn">🔓 فك التشفير الآن</button></div>
-<label style="margin-top:14px">📩 الناتج</label><div class="output empty" id="decryptOutput">ستظهر الرسالة هنا...</div><img id="decryptedImage" class="img-preview">
-<div class="btn-row"><button class="btn btn-ghost" id="copyDecryptBtn" disabled>📋 نسخ الرسالة</button><button class="btn btn-danger" id="clearDecryptAllBtn">🗑️ مسح الكل</button></div>
-<p id="expireNote" style="font-size:12px;color:var(--warn);margin-top:8px;display:none">⏳ ستختفي بعد <span id="expireCountdown"></span></p>
-</div></div></div>
-
-<!-- محادثات v16 -->
-<div class="tab-content" id="tab-mychats"><div class="card"><div class="card-head"><div class="card-ic">💬</div><div><h2>محادثاتي</h2><p>محادثة مشفرة داخل التطبيق - Realtime</p></div></div><div class="card-body">
-<label>اختر صديقك من الأرقام</label><select id="chatFriend"></select>
-<label>اسم صديقك في التطبيق (لازم يكون نفس الاسم اللي دخل به)</label><input id="chatFriendUser" placeholder="مثال: ahmed">
-<label>المفتاح المشترك بينكم</label><input type="password" id="chatKey" placeholder="نفس المفتاح - 4 أحرف على الأقل">
-<button class="btn btn-primary" style="width:100%;margin-top:10px" id="openChatBtn">فتح المحادثة 🔓</button>
-<div id="chatBox" class="chat-box"><p style="text-align:center;color:var(--muted)">اختر صديق وافتح المحادثة</p></div>
-<label>اكتب رسالتك</label><textarea id="chatInput" placeholder="اكتب هنا..."></textarea>
-<div class="btn-row"><button class="btn btn-success" id="sendChatBtn">📩 إرسال مشفر</button><button class="btn btn-ghost" id="sendChatImageBtn">🖼️ صورة</button></div>
-<input type="file" id="chatImageInput" accept="image/*" style="display:none">
-<p style="font-size:12px;color:var(--muted);margin-top:8px">⚠️ لازم صديقك يفتح نفس المحادثة بنفس المفتاح عشان يشوف رسائلك. الرسائل تتشفر قبل الإرسال.</p>
-</div></div></div>
-
-<!-- قروبات v16 -->
-<div class="tab-content" id="tab-mygroups"><div class="card"><div class="card-head"><div class="card-ic" style="background:linear-gradient(135deg,#7c3aed,#a855f7)">👥</div><div><h2>قروباتي</h2><p>قروب مشفر لأصحابك</p></div></div><div class="card-body">
-<label>اسم القروب</label><input id="groupName" placeholder="مثال: أصحاب الحارة">
-<label>مفتاح القروب (واحد للكل)</label><input type="password" id="groupKey" placeholder="مفتاح واحد للكل">
-<button class="btn btn-primary" style="width:100%;margin-top:10px" id="createGroupBtn">+ إنشاء قروب</button>
-<label>أو ادخل قروب موجود - اكتب ID القروب</label><input id="joinGroupId" placeholder="GRP_...">
-<button class="btn btn-ghost" style="width:100%;margin-top:8px" id="joinGroupBtn">دخول قروب موجود</button>
-<div id="groupList" style="margin-top:12px"></div>
-<div id="groupChatBox" class="chat-box" style="display:none"></div>
-<textarea id="groupInput" placeholder="رسالة للقروب..." style="display:none"></textarea>
-<button class="btn btn-success" id="sendGroupBtn" style="width:100%;margin-top:8px;display:none">📩 إرسال للقروب</button>
-<p style="font-size:12px;color:var(--muted);margin-top:8px">انسخ ID القروب وارسله لأصحابك، واعطهم المفتاح في رسالة ثانية.</p>
-</div></div></div>
-
-<div class="tab-content" id="tab-contacts"><div class="card"><div class="card-head"><div class="card-ic" style="background:linear-gradient(135deg,#0369a1,#38bdf8)">📇</div><div><h2>الأرقام المحفوظة</h2><p>أضف أرقام أصدقائك</p></div></div><div class="card-body">
-<label>👤 اسم الرقم</label><input id="contactName" placeholder="مثال: أحمد">
-<label>📞 رقم الهاتف</label><input type="tel" id="phoneInput" placeholder="+967771234567">
-<button class="btn btn-primary" style="width:100%;margin-top:14px" id="addPhoneBtn">+ إضافة الرقم</button>
-<div id="contactList"></div>
-</div></div></div>
-
-<div class="tab-content" id="tab-settings"><div class="card"><div class="card-head"><div class="card-ic" style="background:linear-gradient(135deg,#475569,#94a3b8)">⚙️</div><div><h2>الإعدادات والأمان</h2><p>قفل • سكرين شوت • ثيم</p></div></div><div class="card-body">
-<b>🔒 الأمان</b>
-<div class="switch-row"><span>🔒 قفل التطبيق بـ PIN</span><input type="checkbox" id="lockEnabled"></div>
-<label>رمز PIN (4-6 أرقام)</label><input id="pinSetup" type="password" inputmode="numeric" maxlength="6" placeholder="مثال: 1234">
-<button class="btn btn-primary" style="width:100%;margin-top:10px" id="savePinBtn">حفظ PIN وتفعيل القفل</button>
-<div class="switch-row"><span>📸 منع لقطة الشاشة</span><input type="checkbox" id="noScreenshot" checked></div>
-<div class="switch-row"><span>👆 تفعيل البصمة عند الفتح</span><input type="checkbox" id="bioEnabled"></div>
-<label style="margin-top:16px">🎨 ثيمات</label>
-<div class="btn-row"><button class="btn btn-ghost" data-th-btn="light">☀️ فاتح</button><button class="btn btn-ghost" data-th-btn="matrix">🟢 ماتركس</button></div>
-<div class="btn-row"><button class="btn btn-ghost" data-th-btn="ocean">🌊 محيط</button><button class="btn btn-ghost" data-th-btn="neon">💜 نيون</button></div>
-<div class="btn-row"><button class="btn btn-ghost" data-th-btn="fire">🔥 نار</button></div>
-<label>البيانات</label>
-<div class="btn-row"><button class="btn btn-ghost" id="exportBtn">📤 تصدير</button><button class="btn btn-ghost" id="importBtn">📥 استيراد</button></div>
-<input type="file" id="importFile" accept=".json" style="display:none">
-<div class="btn-row"><button class="btn btn-danger" id="clearAllBtn">🗑️ حذف أرقامي</button><button class="btn btn-ghost" id="clearDbBtn">🗑️ مسح قاعدة البيانات</button></div>
-<label style="margin-top:14px">تفعيل كود</label><textarea id="quickCodeInput" class="code-input" placeholder="INV:... أو RENEW:... أو REV:..."></textarea>
-<div class="btn-row"><button class="btn btn-warn" id="quickCodeBtn">تنفيذ الكود</button></div>
-<button class="wa-btn" id="waBtnSettings">💬 واتساب نشوان البدري - 771713275</button>
-<div style="background:var(--input);border-radius:13px;padding:12px;margin-top:12px;font-size:13px;line-height:1.8"><b>💳 أسعار الاشتراك:</b><br>📅 شهري: 1000 ريال - غير محدود ♾️ لمدة شهر<br>⭐ سنوي: 10000 ريال - غير محدود ♾️ لمدة سنة</div>
-</div></div></div>
-
-<div class="tab-content" id="tab-guide"><div class="card"><div class="card-head"><div class="card-ic">📖</div><div><h2>كيف أستخدم التطبيق؟</h2><p>شرح كامل</p></div></div><div class="card-body">
-<div class="step-box"><div class="step-num">1</div><div><b>ادخل بدعوة</b><div style="font-size:13px;color:var(--muted)">الصق كود INV:</div></div></div>
-<div class="step-box"><div class="step-num">2</div><div><b>أضف رقم صديقك</b><div style="font-size:13px;color:var(--muted)">من قسم الأرقام.</div></div></div>
-<div class="step-box"><div class="step-num">3</div><div><b>محادثة داخل التطبيق - جديد</b><div style="font-size:13px;color:var(--muted)">روح محادثاتي > اختر صديقك > اكتب اسم صديقك في التطبيق > اكتب المفتاح المشترك > افتح المحادثة > ارسل. صديقك يفتح نفس المحادثة بنفس المفتاح.</div></div></div>
-<div class="step-box"><div class="step-num">4</div><div><b>قروب - جديد</b><div style="font-size:13px;color:var(--muted)">روح قروباتي > انشئ قروب > انسخ ID القروب وارسله لأصحابك + اعطهم المفتاح.</div></div></div>
-<div class="step-box"><div class="step-num">5</div><div><b>تشفير قديم</b><div style="font-size:13px;color:var(--muted)">لو ما عندك نت، استخدم قسم إنشاء رسالة مشفرة وارسلها واتساب.</div></div></div>
-</div></div></div>
-
-<div class="tab-content" id="tab-admin"><div class="card" id="adminSection" style="display:none"><div class="card-head"><div class="card-ic">👑</div><div><h2>لوحة تحكم المدير</h2><p>كل حساباتك - تجديد - حظر</p></div></div><div class="card-body">
-<div style="display:flex;gap:8px;flex-wrap:wrap"><div style="flex:1;background:var(--input);border-radius:14px;padding:10px;text-align:center"><b id="statTotal">0</b><div style="font-size:11px;color:var(--muted)">إجمالي</div></div><div style="flex:1;background:var(--input);border-radius:14px;padding:10px;text-align:center"><b id="statUsed">0</b><div style="font-size:11px;color:var(--muted)">دخل</div></div><div style="flex:1;background:var(--input);border-radius:14px;padding:10px;text-align:center"><b id="statBlocked">0</b><div style="font-size:11px;color:var(--muted)">محظور</div></div></div>
-<div style="background:rgba(15,118,110,.07);border:1px solid var(--accent);border-radius:16px;padding:14px;margin:14px 0"><b>🔐 تغيير اسم المدير وكلمة مروره</b><label>اسم المدير الجديد</label><input id="newAdminName" placeholder="اسم جديد"><label>كلمة مرور جديدة</label><input type="password" id="newAdminPass" placeholder="6 أحرف على الأقل"><button class="btn btn-danger" style="width:100%;margin-top:12px" id="changeAdminBtn">تغيير بيانات المدير</button></div>
-<b>💌 توليد كود دعوة</b><label>اسم المستخدم الجديد</label><input id="inviteName" placeholder="مثال: ahmed"><label>كلمة مرور له</label><input type="password" id="invitePass" placeholder="كلمة مرور"><button class="btn btn-primary" style="width:100%;margin-top:12px" id="generateInviteBtn">توليد كود دعوة</button>
-<div id="inviteOutputWrap" style="display:none"><div style="background:var(--input);border-radius:12px;padding:11px;font-family:monospace;font-size:12px;direction:ltr;word-break:break-all;margin-top:10px" id="inviteShortCode">INV:...</div><button class="btn btn-success" id="copyInviteBtn" style="width:100%;margin-top:8px">📋 نسخ بضغطة</button><div id="inviteOutput" style="font-size:12px;margin-top:8px"></div></div>
-<h2 style="margin-top:14px">📋 كل الحسابات</h2><div id="userList"></div>
-</div></div></div>
-
-<div class="designer">تطبيق خاص - دعوة فقط - 15 عملية مجانية<br>صُمم بواسطة<strong>نشوان البدري - واتساب 771713275</strong><div style="font-size:12px;opacity:.6">الإصدار 16.0 • Realtime Database • شهري 1000 غير محدود / سنوي 10000 غير محدود</div></div>
+<!-- شاشة محادثة -->
+<div class="chat-screen" id="chatScreen">
+  <div class="chat-header"><button class="icon-btn" id="backChatBtn">⬅</button><div class="avatar" id="chatAvatar">A</div><div class="info"><b id="chatTitle">صديق</b><span id="chatStatus">متصل الآن • مشفر 🔒</span></div><button class="icon-btn" id="chatCallBtn">📞</button><button class="icon-btn" id="chatInfoBtn">⋮</button></div>
+  <div class="chat-messages" id="chatMessages"></div>
+  <div style="padding:6px 12px;font-size:11px;color:var(--muted);text-align:center" id="chatKeyHint">🔒 الرسائل مشفرة - لا أحد يقرأها إلا أنت وصديقك</div>
+  <div class="chat-input-bar"><button class="icon-btn" style="background:transparent;color:var(--muted)" id="attachBtn">📎</button><input id="chatInput" placeholder="اكتب رسالة..."><input type="file" id="chatImageInput" accept="image/*" style="display:none"><button class="icon-btn" style="background:transparent;color:var(--muted)" id="chatImageBtn">🖼️</button><button class="send-btn" id="sendChatBtn">➤</button></div>
 </div>
+
+<!-- تنقل سفلي -->
+<div class="bottom-nav" id="bottomNav" style="display:none">
+  <div class="nav-item active" data-tab="chats"><span class="ic">💬</span>محادثات</div>
+  <div class="nav-item" data-tab="encrypt"><span class="ic">✍️</span>تشفير</div>
+  <div class="nav-item" data-tab="decrypt"><span class="ic">🔓</span>فك</div>
+  <div class="nav-item" data-tab="contacts"><span class="ic">👥</span>جهات</div>
+  <div class="nav-item" data-tab="settings"><span class="ic">⚙️</span>إعدادات</div>
+</div>
+<button class="fab" id="fabBtn" style="display:none">+</button>
 <div class="toast" id="toast"></div>
 
 <script>
-/* ============ Firebase - chatstruct - v16 ============ */
 const firebaseConfig = {
   apiKey: "AIzaSyBvH0siWoOLreCbBeKrTVpkB4uy6RJbyBQ",
   authDomain: "chatstruct.firebaseapp.com",
@@ -219,236 +223,332 @@ const firebaseConfig = {
   appId: "1:1058907485659:web:4b26228c6a74f4c2f223fe"
 };
 let rtdb=null;
-try{
-  firebase.initializeApp(firebaseConfig);
-  rtdb=firebase.database();
-  firebase.auth().signInAnonymously().catch(e=>console.log("auth",e));
-  rtdb.ref(".info/connected").on("value",s=>{
-    const el=document.getElementById("fbStatus");
-    if(el) el.textContent=s.val()?"متصل ✅ Realtime":"غير متصل - يشتغل بدون نت";
-  });
-}catch(e){ console.log("Firebase error",e); }
+try{ firebase.initializeApp(firebaseConfig); rtdb=firebase.database(); firebase.auth().signInAnonymously().catch(()=>{}); }catch(e){ console.log(e); }
 
-/* ============ IndexedDB - محلي ============ */
-const DB_NAME='NashDB_v15', DB_VER=1; let dbPromise=null;
-function openDB(){ if(dbPromise) return dbPromise; dbPromise=new Promise((res,rej)=>{ const req=indexedDB.open(DB_NAME,DB_VER); req.onupgradeneeded=e=>{ const db=e.target.result; if(!db.objectStoreNames.contains('messages')) db.createObjectStore('messages',{keyPath:'id',autoIncrement:true}); if(!db.objectStoreNames.contains('media')) db.createObjectStore('media',{keyPath:'id',autoIncrement:true}); }; req.onsuccess=()=>res(req.result); req.onerror=()=>rej(req.error); }); return dbPromise; }
-async function dbAdd(store,obj){ const db=await openDB(); return new Promise((res,rej)=>{const tx=db.transaction(store,'readwrite');tx.objectStore(store).add(obj);tx.oncomplete=()=>res(true);tx.onerror=()=>rej(tx.error)}); }
-async function dbGetAll(store){ const db=await openDB(); return new Promise((res,rej)=>{const tx=db.transaction(store,'readonly');const r=tx.objectStore(store).getAll();r.onsuccess=()=>res(r.result||[]);r.onerror=()=>rej(r.error)}); }
-async function dbDelete(store,id){ const db=await openDB(); return new Promise((res)=>{const tx=db.transaction(store,'readwrite');tx.objectStore(store).delete(id);tx.oncomplete=()=>res(true)}); }
-async function dbClear(store){ const db=await openDB(); return new Promise((res)=>{const tx=db.transaction(store,'readwrite');tx.objectStore(store).clear();tx.oncomplete=()=>res(true)}); }
-setInterval(async()=>{ try{ const all=await dbGetAll('messages'); const now=Date.now(); for(const m of all){ if(m.expireAt && m.expireAt<=now) await dbDelete('messages',m.id); } }catch{} },5000);
+/* IndexedDB */
+const DB_NAME='NashDB_v15'; let dbPromise=null;
+function openDB(){ if(dbPromise) return dbPromise; dbPromise=new Promise((res,rej)=>{ const req=indexedDB.open(DB_NAME,1); req.onupgradeneeded=e=>{ const db=e.target.result; if(!db.objectStoreNames.contains('messages')) db.createObjectStore('messages',{keyPath:'id',autoIncrement:true}); }; req.onsuccess=()=>res(req.result); req.onerror=()=>rej(req.error); }); return dbPromise; }
+async function dbAdd(obj){ const db=await openDB(); return new Promise((res)=>{const tx=db.transaction('messages','readwrite');tx.objectStore('messages').add(obj);tx.oncomplete=()=>res(true)}); }
 
-/* ============ أساسيات v14-v15 محفوظة ============ */
-const USERS="nash_users_v14", SESSION="nash_session_v14", CONTACTS="nash_contacts_v14_", BLOCKED="nash_blocked_v14", THEME="nash_theme_v14", INVITES="nash_invites_v14", ADMIN_KEY="nash_admin_v14", QUOTA="nash_quota_v14"; const SEC="nash_sec_v15";
-let currentUser=null, isAdmin=false; const OWNER_WA="967771713275", FREE_LIMIT=15;
-function toast(m,e=false){const t=document.getElementById("toast");t.textContent=(e?"❌ ":"✅ ")+m;t.className="toast show"+(e?" error":"");setTimeout(()=>t.className="toast",3000)}
+/* أساس */
+const USERS="wna_users_v17", SESSION="wna_session_v17", CONTACTS="wna_contacts_v17_", QUOTA="wna_quota_v17", SEC="wna_sec_v17", ADMIN_KEY="wna_admin_v17", INVITES="wna_invites_v17", BLOCKED="wna_blocked_v17", REG="wna_registered_v17";
+let currentUser=null, currentPhone="", currentDisplay="", isAdmin=false, currentChatId=null, currentChatKey="", currentChatFriend="", currentGroupId=null, currentGroupKey="";
+const OWNER_WA="967771713275", FREE_LIMIT=15;
+function toast(m){const t=document.getElementById("toast");t.textContent=m;t.className="toast show";setTimeout(()=>t.className="toast",3000)}
 function esc(s){return String(s).replace(/[&<>\"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
 function b64e(s){return btoa(unescape(encodeURIComponent(s))).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"")}
 function b64d(s){s=s.replace(/-/g,"+").replace(/_/g,"/");while(s.length%4)s+="=";return decodeURIComponent(escape(atob(s)))}
-async function hashPass(p){const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode("NASHWAN_SALT_V14_"+p));return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,"0")).join("")}
-async function copyText(t){try{await navigator.clipboard.writeText(t);toast("تم النسخ ✅")}catch{const ta=document.createElement("textarea");ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand("copy");ta.remove();toast("تم النسخ ✅")}}
-function openWhatsApp(msg){window.open("https://wa.me/"+OWNER_WA+"?text="+encodeURIComponent(msg),"_blank")}
-function getSec(){try{return JSON.parse(localStorage.getItem(SEC)||"{}")}catch{return{}}}
-function saveSec(o){localStorage.setItem(SEC,JSON.stringify(o))}
+async function hashPass(p){const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode("NASHWAN_SALT_V17_"+p));return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,"0")).join("")}
+async function copyText(t){try{await navigator.clipboard.writeText(t);toast("✅ تم النسخ")}catch{const ta=document.createElement("textarea");ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand("copy");ta.remove();toast("✅ تم النسخ")}}
+function openWA(msg){window.open("https://wa.me/"+OWNER_WA+"?text="+encodeURIComponent(msg),"_blank")}
 function getQuota(){try{return JSON.parse(localStorage.getItem(QUOTA)||"{}")}catch{return{}}}
 function saveQuota(q){localStorage.setItem(QUOTA,JSON.stringify(q))}
-function isUnlimited(user){const q=getQuota()[user];if(!q)return false;if(q.unlimited&&q.expiresAt&&Date.now()>q.expiresAt){const all=getQuota();all[user]={remaining:0,totalUsed:q.totalUsed||0,plan:"منتهي",unlimited:false};saveQuota(all);return false}return !!(q.unlimited&&q.expiresAt&&Date.now()<q.expiresAt)}
-function getRemaining(user){if(isUnlimited(user))return Infinity;const q=getQuota();if(!q[user])return FREE_LIMIT;return q[user].remaining}
-function useOneOperation(){ if(isAdmin)return true; if(isUnlimited(currentUser)){const q=getQuota();q[currentUser].totalUsed=(q[currentUser].totalUsed||0)+1;saveQuota(q);return true} let rem=getRemaining(currentUser);if(rem<=0){showLocked();return false} rem--;const q=getQuota();q[currentUser]={remaining:rem,totalUsed:(q[currentUser]?.totalUsed||0)+1,plan:q[currentUser]?.plan||"مجاني",unlimited:false};saveQuota(q);updateQuotaUI(); if(rem===0)setTimeout(showLocked,400);return true; }
-function updateQuotaUI(){ if(isAdmin)return; const rem=getRemaining(currentUser), unlimited=isUnlimited(currentUser); document.getElementById("quotaText").textContent=unlimited?"غير محدود ♾️":rem+" / "+FREE_LIMIT+" متبقية"; if(!unlimited&&rem<=0)showLocked();else hideLocked(); }
-function showLocked(){if(isAdmin||isUnlimited(currentUser))return;document.getElementById("lockedBox").style.display="block"}
-function hideLocked(){document.getElementById("lockedBox").style.display="none"}
-function setupWhatsApp(){ document.getElementById("waBtnLogin").onclick=()=>openWhatsApp("مرحباً نشوان البدري، أريد تفعيل اشتراكي."); document.getElementById("waBtnLocked").onclick=()=>openWhatsApp("مرحباً نشوان، انتهى اشتراكي المجاني. أريد التجديد، اسمي: "+(currentUser||"")); document.getElementById("waBtnSettings").onclick=()=>openWhatsApp("مرحباً نشوان، أريد الاستفسار عن تجديد اشتراكي. اسمي: "+(currentUser||"")); document.querySelectorAll("[data-plan]").forEach(b=>b.onclick=()=>{const plan=b.dataset.plan;openWhatsApp(`مرحباً نشوان، أريد الاشتراك ${plan}. اسمي: ${currentUser||""}`)}); }
-setupWhatsApp();
-
-/* تشفير */
+function isUnlimited(u){const q=getQuota()[u];return !!(q&&q.unlimited&&q.expiresAt&&Date.now()<q.expiresAt)}
+function getRemaining(u){if(isUnlimited(u))return Infinity;const q=getQuota();return q[u]?.remaining??FREE_LIMIT}
+function useOne(){ if(isAdmin) return true; if(isUnlimited(currentUser)){let q=getQuota();q[currentUser].totalUsed=(q[currentUser].totalUsed||0)+1;saveQuota(q);return true} let r=getRemaining(currentUser); if(r<=0){document.getElementById("lockedBox").style.display="block";return false} let q=getQuota();q[currentUser]={remaining:r-1,totalUsed:(q[currentUser]?.totalUsed||0)+1,plan:q[currentUser]?.plan||"مجاني",unlimited:false};saveQuota(q);updatePlan();return true}
+function updatePlan(){ const el=document.getElementById("myPlanBox"); if(!el) return; if(isAdmin) el.innerHTML="👑 مدير - غير محدود ♾️"; else if(isUnlimited(currentUser)) el.innerHTML="⭐ غير محدود ♾️ - "+(getQuota()[currentUser].plan||""); else el.innerHTML="مجاني - "+getRemaining(currentUser)+" / "+FREE_LIMIT+" متبقية"; if(!isAdmin&&!isUnlimited(currentUser)&&getRemaining(currentUser)<=0) document.getElementById("lockedBox").style.display="block"; else document.getElementById("lockedBox").style.display="none"; }
 async function deriveKey(p,salt){const km=await crypto.subtle.importKey("raw",new TextEncoder().encode(p),"PBKDF2",false,["deriveKey"]);return crypto.subtle.deriveKey({name:"PBKDF2",salt,iterations:150000,hash:"SHA-256"},km,{name:"AES-GCM",length:256},false,["encrypt","decrypt"])}
 async function encryptText(plain,password){const salt=crypto.getRandomValues(new Uint8Array(16)),iv=crypto.getRandomValues(new Uint8Array(12));const key=await deriveKey(password,salt);const c=await crypto.subtle.encrypt({name:"AES-GCM",iv},key,new TextEncoder().encode(plain));const all=new Uint8Array(16+12+c.byteLength);all.set(salt,0);all.set(iv,16);all.set(new Uint8Array(c),28);return "ENC:"+btoa(String.fromCharCode(...all))}
 async function decryptText(enc,password){try{if(!enc.startsWith("ENC:"))return null;const raw=Uint8Array.from(atob(enc.slice(4)),c=>c.charCodeAt(0));const key=await deriveKey(password,raw.slice(0,16));const p=await crypto.subtle.decrypt({name:"AES-GCM",iv:raw.slice(16,28)},key,raw.slice(28));return new TextDecoder().decode(p)}catch{return null}}
-async function encryptImageData(dataUrl,password){ const enc=await encryptText(dataUrl,password); return enc.replace("ENC:","ENC_IMG:"); }
-async function decryptImageData(enc,password){ if(!enc.startsWith("ENC_IMG:"))return null; return await decryptText(enc.replace("ENC_IMG:","ENC:"),password); }
+async function encryptImageData(d,p){return (await encryptText(d,p)).replace("ENC:","ENC_IMG:")}
+async function decryptImageData(enc,p){ if(!enc.startsWith("ENC_IMG:"))return null; return await decryptText(enc.replace("ENC_IMG:","ENC:"),p); }
 
-/* قفل PIN + بصمة */
-function checkLock(){ const sec=getSec(); if(sec.lockEnabled && sec.pin){ document.getElementById("lockScreen").classList.add("show"); return true; } return false; }
-async function tryBio(){ try{ if(!window.PublicKeyCredential){ toast("جهازك ما يدعم البصمة",true); return false; } const cred=await navigator.credentials.get({publicKey:{challenge:new Uint8Array(32),allowCredentials:[],userVerification:"required",timeout:60000}}); return !!cred; }catch{ toast("فشل البصمة - استخدم PIN",true); return false; } }
-document.getElementById("unlockPinBtn").onclick=()=>{ const sec=getSec(); const v=document.getElementById("pinInput").value; if(v && v===sec.pin){ document.getElementById("lockScreen").classList.remove("show"); document.getElementById("pinInput").value=""; toast("تم فتح التطبيق ✅"); } else toast("PIN غلط",true); };
-document.getElementById("unlockBioBtn").onclick=async()=>{ const sec=getSec(); if(!sec.bioEnabled){ toast("فعل البصمة من الإعدادات أولاً",true); return; } if(await tryBio()){ document.getElementById("lockScreen").classList.remove("show"); toast("تم فتح بالبصمة ✅"); } };
-document.getElementById("skipLockBtn").onclick=()=>{ document.getElementById("lockScreen").classList.remove("show"); toast("دخلت بدون قفل"); };
-document.getElementById("savePinBtn").onclick=()=>{ const pin=document.getElementById("pinSetup").value.trim(); const lockOn=document.getElementById("lockEnabled").checked; if(lockOn && (!pin || pin.length<4)){ toast("ادخل PIN 4 أرقام",true); return; } const sec=getSec(); sec.lockEnabled=lockOn; if(pin) sec.pin=pin; sec.bioEnabled=document.getElementById("bioEnabled").checked; sec.noScreenshot=document.getElementById("noScreenshot").checked; saveSec(sec); applyScreenshotProtection(); toast("تم حفظ إعدادات الأمان ✅"); };
-document.getElementById("lockEnabled").onchange=e=>{ const sec=getSec(); sec.lockEnabled=e.target.checked; saveSec(sec); };
-document.getElementById("bioEnabled").onchange=e=>{ const sec=getSec(); sec.bioEnabled=e.target.checked; saveSec(sec); };
-document.getElementById("noScreenshot").onchange=e=>{ const sec=getSec(); sec.noScreenshot=e.target.checked; saveSec(sec); applyScreenshotProtection(); };
-function applyScreenshotProtection(){ const sec=getSec(); if(sec.noScreenshot){ document.addEventListener('visibilitychange',()=>{ if(document.hidden){ document.body.style.filter='blur(20px)'; } else{ document.body.style.filter=''; } }); } }
+/* ===== تسجيل مثل واتساب - OTP ===== */
+let pendingPhone="", pendingName="", pendingPass="", pendingOtp="";
+function genOtp(){ return Math.floor(100000+Math.random()*900000).toString(); }
+document.getElementById("sendOtpBtn").onclick=()=>{
+  const code=document.getElementById("countryCode").value;
+  const phone=document.getElementById("phoneInput").value.trim().replace(/^0+/,"");
+  const name=document.getElementById("displayName").value.trim();
+  const pass=document.getElementById("regPass").value;
+  if(!phone||phone.length<8) return document.getElementById("authError").textContent="أدخل رقم صحيح";
+  if(!name) return document.getElementById("authError").textContent="أدخل اسمك";
+  if(!pass||pass.length<6) return document.getElementById("authError").textContent="كلمة المرور 6 أحرف على الأقل";
+  pendingPhone=code+phone; pendingName=name; pendingPass=pass; pendingOtp=genOtp();
+  // حفظ OTP في Firebase عشان المدير يشوفه
+  if(rtdb) rtdb.ref("otps/"+pendingPhone.replace(/\+/g,"")).set({otp:pendingOtp, name, created:Date.now()});
+  document.getElementById("stepPhone").style.display="none";
+  document.getElementById("stepOtp").style.display="block";
+  document.getElementById("otpPhoneShow").textContent=pendingPhone;
+  document.getElementById("demoOtpBox").style.display="block";
+  document.getElementById("demoOtpText").textContent=pendingOtp;
+  document.getElementById("authError").textContent="";
+  // إرسال للمدير على واتساب - المدير يعطي الكود للعميل
+  // openWA(`طلب تسجيل جديد في واتس نشوان الآمن:\nالاسم: ${name}\nالرقم: ${pendingPhone}\nكود التأكيد: ${pendingOtp}`);
+  toast("تم توليد رمز التأكيد ✅");
+};
+document.getElementById("resendOtpBtn").onclick=()=>{ pendingOtp=genOtp(); document.getElementById("demoOtpText").textContent=pendingOtp; if(rtdb) rtdb.ref("otps/"+pendingPhone.replace(/\+/g,"")).set({otp:pendingOtp,name:pendingName,created:Date.now()}); toast("تم إعادة إرسال الرمز"); };
+document.getElementById("backPhoneBtn").onclick=()=>{ document.getElementById("stepOtp").style.display="none"; document.getElementById("stepPhone").style.display="block"; };
+document.getElementById("waOtpBtn").onclick=()=>openWA(`مرحباً نشوان، سجلت في واتس نشوان الآمن.\nاسمي: ${pendingName}\nرقمي: ${pendingPhone}\nأرسل لي رمز التأكيد`);
+document.getElementById("verifyOtpBtn").onclick=async()=>{
+  const v=document.getElementById("otpInput").value.trim();
+  if(v!==pendingOtp) return document.getElementById("authError").textContent="❌ الرمز غلط - جرب مرة ثانية";
+  // تسجيل المستخدم
+  const username=pendingPhone.replace(/\+/g,"").replace(/\s/g,""); // اسم المستخدم = الرقم
+  const hashed=await hashPass(pendingPass);
+  let users=JSON.parse(localStorage.getItem(USERS)||"{}");
+  users[username]=hashed; localStorage.setItem(USERS,JSON.stringify(users));
+  let reg=JSON.parse(localStorage.getItem(REG)||"[]");
+  if(!reg.find(x=>x.phone===pendingPhone)){ reg.push({phone:pendingPhone, name:pendingName, user:username, created:Date.now()}); localStorage.setItem(REG,JSON.stringify(reg)); }
+  // حفظ في Firebase عشان يظهر عند كل الناس
+  if(rtdb) rtdb.ref("users/"+username).set({phone:pendingPhone, name:pendingName, user:username, created:Date.now()});
+  let q=getQuota(); if(!q[username]){ q[username]={remaining:FREE_LIMIT,totalUsed:0,plan:"مجاني",unlimited:false}; saveQuota(q); }
+  currentUser=username; currentPhone=pendingPhone; currentDisplay=pendingName; isAdmin=false;
+  localStorage.setItem(SESSION, JSON.stringify({u:username, phone:pendingPhone, name:pendingName}));
+  startApp(); toast("أهلاً "+pendingName+" - تم تأكيد رقمك ✅");
+};
+document.getElementById("goAdminBtn").onclick=()=>{ document.getElementById("stepPhone").style.display="none"; document.getElementById("stepOtp").style.display="none"; document.getElementById("stepAdmin").style.display="block"; };
+document.getElementById("backFromAdmin").onclick=()=>{ document.getElementById("stepAdmin").style.display="none"; document.getElementById("stepPhone").style.display="block"; };
+function getAdmin(){ try{return JSON.parse(localStorage.getItem(ADMIN_KEY)||'{"u":"","pHash":""}')}catch{return{u:"",pHash:""}} }
+async function initAdmin(){ let admin=getAdmin(); if(!admin.pHash){ admin={u:"NASH", pHash:await hashPass("7717132")}; localStorage.setItem(ADMIN_KEY,JSON.stringify(admin)); } }
+document.getElementById("adminLoginBtn").onclick=async()=>{
+  const u=document.getElementById("adminUser").value.trim(), p=document.getElementById("adminPass").value;
+  const admin=getAdmin(); const h=await hashPass(p);
+  if(u===admin.u && h===admin.pHash){ currentUser=u; currentDisplay="نشوان البدري"; currentPhone="+967771713275"; isAdmin=true; localStorage.setItem(SESSION, JSON.stringify({u, phone:currentPhone, name:currentDisplay})); startApp(); toast("أهلاً مدير 👑"); }
+  else document.getElementById("authError").textContent="بيانات المدير غلط";
+};
 
-/* دخول */
-document.getElementById("tabBtnAdmin").onclick=()=>{document.getElementById("tabBtnAdmin").classList.add("active");document.getElementById("tabBtnGuest").classList.remove("active");document.getElementById("adminLoginBox").style.display="block";document.getElementById("guestLoginBox").style.display="none"};
-document.getElementById("tabBtnGuest").onclick=()=>{document.getElementById("tabBtnGuest").classList.add("active");document.getElementById("tabBtnAdmin").classList.remove("active");document.getElementById("guestLoginBox").style.display="block";document.getElementById("adminLoginBox").style.display="none"};
-const sidebar=document.getElementById("sidebar"), overlay=document.getElementById("overlay");
-function openMenu(){sidebar.classList.add("open");overlay.classList.add("show")} function closeMenu(){sidebar.classList.remove("open");overlay.classList.remove("show")}
-document.getElementById("openMenu").onclick=openMenu; overlay.onclick=closeMenu;
-document.querySelectorAll(".side-item[data-tab]").forEach(el=>el.onclick=()=>{document.querySelectorAll(".side-item").forEach(x=>x.classList.remove("active"));el.classList.add("active");document.querySelectorAll(".tab-content").forEach(c=>c.classList.remove("active"));document.getElementById("tab-"+el.dataset.tab).classList.add("active");closeMenu();window.scrollTo({top:0,behavior:"smooth"})});
-document.getElementById("logoutItem").onclick=()=>{localStorage.removeItem(SESSION);location.reload()};
-function applyTheme(n){if(n==="light")document.documentElement.removeAttribute("data-theme");else document.documentElement.setAttribute("data-theme",n);document.querySelectorAll(".theme-dot").forEach(d=>d.classList.toggle("active",d.dataset.th===n));localStorage.setItem(THEME,n)}
-document.querySelectorAll(".theme-dot").forEach(d=>d.onclick=()=>applyTheme(d.dataset.th));
-document.querySelectorAll("[data-th-btn]").forEach(b=>b.onclick=()=>applyTheme(b.dataset.thBtn));
-function getAdmin(){try{return JSON.parse(localStorage.getItem(ADMIN_KEY)||'{"u":"","pHash":""}')}catch{return{u:"",pHash:""}}}
-async function initAdmin(){ let users=JSON.parse(localStorage.getItem(USERS)||"{}");let admin=getAdmin(); if(!admin.pHash){const defaultHash=await hashPass("7717132");admin={u:"NASH",pHash:defaultHash};localStorage.setItem(ADMIN_KEY,JSON.stringify(admin));} if(admin.u && !users[admin.u]){users[admin.u]=admin.pHash;localStorage.setItem(USERS,JSON.stringify(users))} if(!localStorage.getItem(BLOCKED))localStorage.setItem(BLOCKED,"[]"); if(!localStorage.getItem(INVITES))localStorage.setItem(INVITES,"[]"); if(!localStorage.getItem(QUOTA))localStorage.setItem(QUOTA,"{}"); }
-document.getElementById("loginBtn").onclick=async()=>{ const u=document.getElementById("loginUser").value.trim(), p=document.getElementById("loginPass").value; if(!u||!p) return document.getElementById("loginError").textContent="أدخل اسم المدير وكلمة مروره"; const admin=getAdmin();const h=await hashPass(p); if(u===admin.u && h===admin.pHash){currentUser=u;isAdmin=true;localStorage.setItem(SESSION,u);startApp()} else document.getElementById("loginError").textContent="بيانات المدير غير صحيحة"; };
-document.getElementById("changeAdminBtn").onclick=async()=>{ const newU=document.getElementById("newAdminName").value.trim(), newP=document.getElementById("newAdminPass").value; if(!newU||!newP) return toast("عبي الاسم الجديد وكلمة المرور",true); if(newP.length<6) return toast("كلمة المرور 6 أحرف",true); if(!confirm("تغيير بيانات المدير؟")) return; const oldAdmin=getAdmin();const newHash=await hashPass(newP); let users=JSON.parse(localStorage.getItem(USERS)||"{}");if(oldAdmin.u)delete users[oldAdmin.u];users[newU]=newHash;localStorage.setItem(USERS,JSON.stringify(users)); localStorage.setItem(ADMIN_KEY,JSON.stringify({u:newU,pHash:newHash}));localStorage.setItem(SESSION,newU);currentUser=newU; toast("تم تغيير بيانات المدير"); };
-function cleanCode(raw){let code=(raw||"").trim();code=code.replace(/\s+/g,"");if(code.includes("code=")){try{code=decodeURIComponent(code.split("code=")[1])}catch{code=code.split("code=")[1]||code}}try{let d=decodeURIComponent(code);if(d!==code)code=d}catch{}return code.trim()}
-async function processCode(rawInput){ let code=cleanCode(rawInput);if(!code){document.getElementById("loginError").textContent="الصق الكود أولاً";return} const upper=code.toUpperCase(); if(upper.startsWith("RENEW:")){ try{ const d=JSON.parse(b64d(code.slice(6)));let q=getQuota();const target=d.u;const plan=d.plan||"شهري";const days=plan==="سنوي"?365:30;const expiresAt=Date.now()+days*24*60*60*1000; q[target]={remaining:Infinity,totalUsed:q[target]?.totalUsed||0,plan:plan,unlimited:true,expiresAt};saveQuota(q); if(currentUser===target){updateQuotaUI();hideLocked();toast(`تم تجديد ${plan} غير محدود ♾️ ✅`)}else toast(`تم تجديد ${target} ${plan} ✅`); let users=JSON.parse(localStorage.getItem(USERS)||"{}");if(!currentUser&&users[target]){currentUser=target;isAdmin=false;localStorage.setItem(SESSION,target);startApp()} return; }catch{document.getElementById("loginError").textContent="كود تجديد غير صالح";return} } const prefix=code.slice(0,4).toUpperCase(); if(prefix==="INV:"){ try{ const d=JSON.parse(b64d(code.slice(4)));if(d.exp&&Date.now()>d.exp)return document.getElementById("loginError").textContent="⏰ انتهت الدعوة"; let users=JSON.parse(localStorage.getItem(USERS)||"{}");if(users[d.u])return document.getElementById("loginError").textContent="هذا الاسم مسجل مسبقاً"; const blocked=JSON.parse(localStorage.getItem(BLOCKED)||"[]");if(blocked.includes(d.u))return document.getElementById("loginError").textContent="هذا الحساب محظور"; let invites=JSON.parse(localStorage.getItem(INVITES)||"[]");const existing=invites.find(x=>x.user===d.u&&x.used);if(existing)return document.getElementById("loginError").textContent="هذه الدعوة استخدمت من قبل"; users[d.u]=d.p;localStorage.setItem(USERS,JSON.stringify(users));invites.push({user:d.u,hash:d.p,code:code,created:Date.now(),expires:d.exp||0,used:true});localStorage.setItem(INVITES,JSON.stringify(invites)); let q=getQuota();if(!q[d.u]){q[d.u]={remaining:FREE_LIMIT,totalUsed:0,plan:"مجاني",unlimited:false};saveQuota(q)} currentUser=d.u;isAdmin=false;localStorage.setItem(SESSION,d.u);startApp();toast("مرحباً "+d.u+" - عندك 15 عملية مجانية ✅"); }catch{document.getElementById("loginError").textContent="كود دعوة غير صالح"} return; } if(prefix==="REV:"){try{const u=b64d(code.slice(4));let blocked=JSON.parse(localStorage.getItem(BLOCKED)||"[]");if(!blocked.includes(u)){blocked.push(u);localStorage.setItem(BLOCKED,JSON.stringify(blocked))}let users=JSON.parse(localStorage.getItem(USERS)||"{}");if(users[u]){delete users[u];localStorage.setItem(USERS,JSON.stringify(users))}toast("🚫 تم الحظر",true);if(currentUser===u){localStorage.removeItem(SESSION);setTimeout(()=>location.reload(),1500)}}catch{}return} if(prefix==="ACT:"){try{const u=b64d(code.slice(4));let blocked=JSON.parse(localStorage.getItem(BLOCKED)||"[]").filter(x=>x!==u);localStorage.setItem(BLOCKED,JSON.stringify(blocked));toast("تم فك الحظر")}catch{}return} document.getElementById("loginError").textContent="كود غير معروف"; }
-document.getElementById("activateInviteBtn").onclick=()=>processCode(document.getElementById("inviteCodeInput").value);
-document.getElementById("activateRevokeBtn").onclick=()=>processCode(document.getElementById("revokeCodeInput").value);
-document.getElementById("quickCodeBtn").onclick=()=>processCode(document.getElementById("quickCodeInput").value);
-document.getElementById("activateRenewBtn").onclick=()=>processCode(document.getElementById("renewCodeInput").value);
-function startApp(){ document.getElementById("loginScreen").style.display="none"; document.getElementById("mainApp").style.display="block"; document.getElementById("topbar").style.display="flex"; document.getElementById("welcomeUser").textContent=currentUser;document.getElementById("sideUser").textContent=currentUser; document.getElementById("avatarLetter").textContent=currentUser.charAt(0).toUpperCase(); document.getElementById("sideRole").textContent=isAdmin?"مدير التطبيق 👑":"مستخدم مدعو ✅"; if(isAdmin){document.getElementById("adminMenu").style.display="flex";document.getElementById("adminSection").style.display="block";renderAdminPanel()} applyTheme(localStorage.getItem(THEME)||"light");renderContacts();updateQuotaUI();setupWhatsApp(); fillChatFriends(); const sec=getSec(); document.getElementById("lockEnabled").checked=!!sec.lockEnabled; document.getElementById("bioEnabled").checked=!!sec.bioEnabled; document.getElementById("noScreenshot").checked=sec.noScreenshot!==false; applyScreenshotProtection(); setTimeout(()=>checkLock(),500); }
-document.getElementById("generateInviteBtn").onclick=async()=>{ const u=document.getElementById("inviteName").value.trim(), p=document.getElementById("invitePass").value.trim(); if(!u||!p) return toast("عبي الاسم وكلمة المرور",true); let users=JSON.parse(localStorage.getItem(USERS)||"{}");if(users[u])return toast("هذا الاسم مسجل مسبقاً",true); const hashed=await hashPass(p);const expires=Date.now()+24*60*60*1000; const code="INV:"+b64e(JSON.stringify({u,p:hashed,exp:expires})); let invites=JSON.parse(localStorage.getItem(INVITES)||"[]");invites.push({user:u,hash:hashed,code,created:Date.now(),expires,used:false});localStorage.setItem(INVITES,JSON.stringify(invites)); let q=getQuota();q[u]={remaining:FREE_LIMIT,totalUsed:0,plan:"مجاني",unlimited:false};saveQuota(q); document.getElementById("inviteOutputWrap").style.display="block";document.getElementById("inviteShortCode").textContent=code;document.getElementById("inviteOutput").textContent="كلمة مرور المستخدم: "+p; document.getElementById("copyInviteBtn").onclick=()=>copyText(code);renderAdminPanel(); };
-function renderAdminPanel(){ const invites=JSON.parse(localStorage.getItem(INVITES)||"[]");const blocked=JSON.parse(localStorage.getItem(BLOCKED)||"[]");const q=getQuota(); document.getElementById("statTotal").textContent=invites.length;document.getElementById("statUsed").textContent=invites.filter(x=>x.used).length;document.getElementById("statBlocked").textContent=blocked.length; const list=document.getElementById("userList");list.innerHTML="";if(invites.length===0){list.innerHTML="<p style='text-align:center;color:var(--muted);padding:14px'>لا توجد حسابات بعد.</p>";return} [...invites].reverse().forEach(inv=>{ const qq=q[inv.user];const unlimited=qq?.unlimited&&qq?.expiresAt&&Date.now()<qq.expiresAt;const rem=unlimited?"غير محدود ♾️":(qq?.remaining??FREE_LIMIT)+" متبقية"; const div=document.createElement("div");div.className="user-card";div.innerHTML=`<div style="display:flex;justify-content:space-between"><b>👤 ${esc(inv.user)}</b><span>${inv.used?"✅ دخل":"🟢 دعوة نشطة"}</span></div><div style="font-size:12px;color:var(--muted);margin-top:8px">💳 ${esc(qq?.plan||"مجاني")} - ${rem}<br>كود: ${esc(inv.code).slice(0,40)}...</div><div style="display:flex;gap:8px;margin-top:10px"><button class="btn btn-success" style="flex:1" data-act="renewM">🔄 شهري</button><button class="btn btn-warn" style="flex:1" data-act="renewY">⭐ سنوي</button></div><div style="display:flex;gap:8px;margin-top:8px"><button class="btn btn-ghost" style="flex:1" data-act="copy">📋 نسخ دعوة</button><button class="btn btn-danger" style="flex:1" data-act="block">🚫 حظر</button></div><div style="font-size:12px;margin-top:8px;word-break:break-all" data-out></div>`; div.querySelector('[data-act="copy"]').onclick=()=>copyText(inv.code); function makeRenew(plan){const renewCode="RENEW:"+b64e(JSON.stringify({u:inv.user,ts:Date.now(),plan}));const out=div.querySelector('[data-out]');out.innerHTML=`<b>🔄 كود تجديد ${plan} لـ ${esc(inv.user)}</b><br>${renewCode}<br><button class="btn btn-success" style="width:100%;margin-top:6px" onclick="navigator.clipboard.writeText('${renewCode}').then(()=>alert('تم النسخ'))">📋 نسخ كود التجديد</button>`;toast("تم توليد كود التجديد "+plan)} div.querySelector('[data-act="renewM"]').onclick=()=>makeRenew("شهري"); div.querySelector('[data-act="renewY"]').onclick=()=>makeRenew("سنوي"); div.querySelector('[data-act="block"]').onclick=()=>{let b=JSON.parse(localStorage.getItem(BLOCKED)||"[]");if(!b.includes(inv.user)){b.push(inv.user);localStorage.setItem(BLOCKED,JSON.stringify(b))}toast("تم الحظر");renderAdminPanel()}; list.appendChild(div); }); }
-
-/* أرقام */
-function loadContacts(){try{return JSON.parse(localStorage.getItem(CONTACTS+currentUser)||"[]")}catch{return[]}}
-function saveContacts(l){localStorage.setItem(CONTACTS+currentUser,JSON.stringify(l))}
-function renderContacts(){ const cs=loadContacts();const list=document.getElementById("contactList"), sel=document.getElementById("recipientSelect");list.innerHTML="";sel.innerHTML='<option value="">— بدون رقم —</option>';document.getElementById("contactCount").textContent=cs.length; cs.forEach((c,i)=>{const d=document.createElement("div");d.className="contact-item";d.innerHTML=`<div><b>${esc(c.name||"بدون اسم")}</b><div style="font-size:12px;color:var(--muted)">${esc(c.number)}</div></div>`;const rm=document.createElement("button");rm.className="remove";rm.textContent="حذف";rm.onclick=()=>{const a=loadContacts();a.splice(i,1);saveContacts(a);renderContacts()};d.appendChild(rm);list.appendChild(d);const o=document.createElement("option");o.value=c.number;o.textContent=(c.name?c.name+" — ":"")+c.number;sel.appendChild(o)}); fillChatFriends(); }
-document.getElementById("addPhoneBtn").onclick=()=>{const n=document.getElementById("phoneInput").value.trim(), name=document.getElementById("contactName").value.trim();if(!n)return toast("أدخل رقماً",true);const cs=loadContacts();if(cs.some(c=>c.number===n))return toast("الرقم موجود",true);cs.push({name,number:n});saveContacts(cs);document.getElementById("phoneInput").value="";document.getElementById("contactName").value="";renderContacts();toast("تمت الإضافة")};
-
-/* تشفير عادي */
-document.getElementById("encryptBtn").onclick=async()=>{ if(!isAdmin && !isUnlimited(currentUser) && getRemaining(currentUser)<=0){showLocked();return toast("انتهى اشتراكك",true)} const m=document.getElementById("messageInput").value.trim(), k=document.getElementById("keyInput").value;if(!m)return toast("اكتب الرسالة",true);if(!k||k.length<4)return toast("المفتاح 4 أحرف",true); const c=await encryptText(m,k);const o=document.getElementById("encryptOutput");o.classList.remove("empty");o.textContent=c;document.getElementById("copyEncryptBtn").disabled=false;document.getElementById("smsBtn").disabled=false; const expireSec=parseInt(document.getElementById("expireSelect").value||"0"); await dbAdd('messages',{user:currentUser,type:'text',cipher:c,expireAt: expireSec>0?Date.now()+expireSec*1000:0,created:Date.now(),to:document.getElementById("recipientSelect").value||""}); if(useOneOperation()) toast("تم التشفير ✅"); };
-document.getElementById("copyEncryptBtn").onclick=()=>copyText(document.getElementById("encryptOutput").textContent);
-document.getElementById("smsBtn").onclick=()=>{const t=document.getElementById("encryptOutput").textContent, r=document.getElementById("recipientSelect").value;window.location.href=`sms:${r}?body=${encodeURIComponent(t)}`};
-document.getElementById("clearMessageBtn").onclick=()=>{document.getElementById("messageInput").value="";toast("تم التفريغ")};
-document.getElementById("clearKeyBtn").onclick=()=>{document.getElementById("keyInput").value=""};
-document.getElementById("clearEncryptAllBtn").onclick=()=>{document.getElementById("messageInput").value="";document.getElementById("keyInput").value="";document.getElementById("encryptOutput").textContent="ستظهر الشيفرة هنا...";document.getElementById("encryptOutput").classList.add("empty")};
-document.getElementById("clearCipherBtn").onclick=()=>{document.getElementById("cipherInput").value=""};
-document.getElementById("clearDecryptKeyBtn").onclick=()=>{document.getElementById("decryptKeyInput").value=""};
-document.getElementById("clearDecryptAllBtn").onclick=()=>{document.getElementById("cipherInput").value="";document.getElementById("decryptKeyInput").value="";document.getElementById("decryptOutput").textContent="ستظهر الرسالة هنا...";document.getElementById("decryptedImage").style.display="none"};
-let expireTimer=null;
-document.getElementById("decryptBtn").onclick=async()=>{ if(!isAdmin && !isUnlimited(currentUser) && getRemaining(currentUser)<=0){showLocked();return toast("انتهى اشتراكك",true)} const c=document.getElementById("cipherInput").value.trim(), k=document.getElementById("decryptKeyInput").value;if(!c||!k)return toast("أدخل الشيفرة والمفتاح",true); const o=document.getElementById("decryptOutput"); if(c.startsWith("ENC_IMG:")){ const img=await decryptImageData(c,k); if(!img){o.textContent="❌ تعذر فك الصورة";toast("فشل الفك",true);return} o.textContent="✅ تم فك الصورة - شوفها تحت";o.style.color="var(--success)"; const im=document.getElementById("decryptedImage");im.src=img;im.style.display="block"; if(useOneOperation()) toast("تم فك الصورة ✅"); return; } const res=await decryptText(c,k);o.classList.remove("empty"); if(res===null){o.textContent="❌ تعذر الفك";toast("فشل الفك",true)} else{ o.textContent=res;o.style.color="var(--success)";document.getElementById("copyDecryptBtn").disabled=false; const all=await dbGetAll('messages');const found=all.find(x=>x.cipher===c); if(found && found.expireAt){ const note=document.getElementById("expireNote");note.style.display="block"; clearInterval(expireTimer); expireTimer=setInterval(()=>{ const left=Math.max(0,Math.floor((found.expireAt-Date.now())/1000)); document.getElementById("expireCountdown").textContent=left+" ثانية"; if(left<=0){clearInterval(expireTimer);o.textContent="⏳ هذه الرسالة اختفت";note.style.display="none";dbDelete('messages',found.id)} },1000); } if(useOneOperation()) toast("تم الفك ✅"); } };
-document.getElementById("copyDecryptBtn").onclick=()=>copyText(document.getElementById("decryptOutput").textContent);
-let selectedImageData="";
-document.getElementById("imageInput").onchange=e=>{ const f=e.target.files[0];if(!f)return; const r=new FileReader();r.onload=ev=>{selectedImageData=ev.target.result;const p=document.getElementById("imagePreview");p.src=selectedImageData;p.style.display="block";toast("تم اختيار الصورة")};r.readAsDataURL(f); };
-document.getElementById("encryptImageBtn").onclick=async()=>{ if(!selectedImageData) return toast("اختر صورة أولاً",true); const k=document.getElementById("imageKey").value;if(!k||k.length<4) return toast("المفتاح 4 أحرف",true); if(!isAdmin && !isUnlimited(currentUser) && getRemaining(currentUser)<=0){showLocked();return toast("انتهى اشتراكك",true)} const enc=await encryptImageData(selectedImageData,k); const o=document.getElementById("imageOutput");o.classList.remove("empty");o.textContent=enc;document.getElementById("copyImageBtn").disabled=false; await dbAdd('media',{user:currentUser,type:'image',cipher:enc,created:Date.now()}); if(useOneOperation()) toast("تم تشفير الصورة ✅"); };
-document.getElementById("copyImageBtn").onclick=()=>copyText(document.getElementById("imageOutput").textContent);
-document.getElementById("exportBtn").onclick=()=>{const b=new Blob([JSON.stringify(loadContacts(),null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=`contacts_${currentUser}.json`;a.click();toast("تم التصدير")};
-document.getElementById("importBtn").onclick=()=>document.getElementById("importFile").click();
-document.getElementById("importFile").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{try{const d=JSON.parse(ev.target.result);const m=loadContacts();d.forEach(c=>{if(c.number&&!m.some(x=>x.number===c.number))m.push(c)});saveContacts(m);renderContacts();toast("تم الاستيراد")}catch{toast("ملف غير صالح",true)}};r.readAsText(f)};
-document.getElementById("clearAllBtn").onclick=()=>{if(!confirm("حذف كل أرقامك؟"))return;localStorage.removeItem(CONTACTS+currentUser);renderContacts();toast("تم الحذف")};
-document.getElementById("clearDbBtn").onclick=async()=>{if(!confirm("مسح كل الرسائل والصور؟"))return;await dbClear('messages');await dbClear('media');toast("تم مسح قاعدة البيانات")};
-
-/* ============ محادثات Realtime - v16 ============ */
-let currentChatId=null, currentChatKey="", currentGroupId=null, currentGroupKey="", chatListener=null, groupListener=null;
-function fillChatFriends(){ const cs=loadContacts(); const sel=document.getElementById("chatFriend"); if(!sel) return; sel.innerHTML='<option value="">اختر صديق...</option>'; cs.forEach(c=>{ const o=document.createElement("option"); o.value=c.name||c.number; o.textContent=(c.name||"")+ " - "+c.number; sel.appendChild(o); }); }
-function renderChatMsg(data, key){
-  const box=document.getElementById("chatBox");
-  const div=document.createElement("div");
-  div.className="chat-msg "+(data.from===currentUser?"chat-me":"chat-other");
-  div.textContent="جاري فك التشفير...";
-  box.appendChild(div); box.scrollTop=9999;
-  decryptText(data.cipher, key).then(txt=>{
-    div.textContent=(data.from===currentUser?"أنت: ":""+data.from+": ")+(txt||"🔒 رسالة مشفرة - المفتاح غلط");
-  });
+/* ===== بدء التطبيق ===== */
+function startApp(){
+  document.getElementById("authScreen").style.display="none";
+  document.getElementById("mainHeader").style.display="flex";
+  document.getElementById("mainApp").style.display="block";
+  document.getElementById("bottomNav").style.display="flex";
+  document.getElementById("fabBtn").style.display="block";
+  document.getElementById("myAvatar").textContent=(currentDisplay||currentUser).charAt(0).toUpperCase();
+  document.getElementById("settingsAvatar").textContent=(currentDisplay||currentUser).charAt(0).toUpperCase();
+  document.getElementById("settingsName").textContent=currentDisplay||currentUser;
+  document.getElementById("settingsPhone").textContent=currentPhone||"";
+  document.getElementById("editName").value=currentDisplay||currentUser;
+  document.getElementById("inviteLinkOut").textContent=location.origin+location.pathname+"?invite="+currentUser;
+  if(isAdmin) document.getElementById("adminPanel").style.display="block";
+  updatePlan(); renderContacts(); renderChatList(); renderGroups(); loadTheme();
+  const sec=JSON.parse(localStorage.getItem(SEC)||"{}"); document.getElementById("lockEnabled").checked=!!sec.lockEnabled; document.getElementById("bioEnabled").checked=!!sec.bioEnabled;
+  if(sec.lockEnabled) setTimeout(()=>{ const pin=prompt("🔒 التطبيق مقفل - أدخل PIN:"); if(pin!==sec.pin){ alert("PIN غلط"); location.reload(); } },500);
 }
-document.getElementById("openChatBtn").onclick=()=>{
-  if(!rtdb) return toast("Firebase غير متصل - تأكد من النت",true);
-  const friendUser=document.getElementById("chatFriendUser").value.trim();
-  const key=document.getElementById("chatKey").value;
-  if(!friendUser) return toast("اكتب اسم صديقك في التطبيق",true);
-  if(!key||key.length<4) return toast("ادخل المفتاح",true);
-  const users=[currentUser, friendUser].sort();
-  currentChatId=users.join("_"); currentChatKey=key;
-  const box=document.getElementById("chatBox"); box.innerHTML="<p style='text-align:center;color:var(--muted)'>تم فتح المحادثة مع "+esc(friendUser)+" 🔒</p>";
-  if(chatListener) rtdb.ref("chats/"+currentChatId+"/messages").off("child_added", chatListener);
-  // تحميل القديم + الجديد
-  rtdb.ref("chats/"+currentChatId+"/messages").orderByChild("created").limitToLast(50).once("value", snap=>{
-    snap.forEach(child=>{ renderChatMsg(child.val(), key); });
-  });
-  chatListener=(snap)=>{ renderChatMsg(snap.val(), key); };
-  rtdb.ref("chats/"+currentChatId+"/messages").orderByChild("created").limitToLast(1).on("child_added", chatListener);
-  toast("تم فتح المحادثة ✅");
-};
-document.getElementById("sendChatBtn").onclick=async()=>{
-  if(!currentChatId) return toast("افتح المحادثة أولاً",true);
-  if(!rtdb) return toast("Firebase غير متصل",true);
-  const msg=document.getElementById("chatInput").value.trim();
-  const key=document.getElementById("chatKey").value;
-  if(!msg) return toast("اكتب رسالة",true);
-  if(!isAdmin && !isUnlimited(currentUser) && getRemaining(currentUser)<=0){showLocked();return toast("انتهى اشتراكك",true)}
-  const cipher=await encryptText(msg, key);
-  await rtdb.ref("chats/"+currentChatId+"/messages").push({from:currentUser, cipher, created:Date.now(), type:"text"});
-  document.getElementById("chatInput").value="";
-  if(useOneOperation()) toast("تم الإرسال ✅");
-};
-document.getElementById("sendChatImageBtn").onclick=()=>document.getElementById("chatImageInput").click();
-document.getElementById("chatImageInput").onchange=e=>{
-  const f=e.target.files[0]; if(!f) return;
-  const r=new FileReader(); r.onload=async(ev)=>{
-    if(!currentChatId) return toast("افتح المحادثة أولاً",true);
-    const key=document.getElementById("chatKey").value;
-    const enc=await encryptImageData(ev.target.result, key);
-    await rtdb.ref("chats/"+currentChatId+"/messages").push({from:currentUser, cipher:enc, created:Date.now(), type:"image"});
-    toast("تم إرسال الصورة ✅");
-  }; r.readAsDataURL(f);
-};
+function loadTheme(){ const t=localStorage.getItem("wna_theme")||"light"; if(t==="dark") document.documentElement.setAttribute("data-theme","dark"); else document.documentElement.removeAttribute("data-theme"); document.getElementById("darkToggle").checked=(t==="dark"); }
+document.getElementById("themeBtn").onclick=()=>{ const isDark=document.documentElement.getAttribute("data-theme")==="dark"; if(isDark){ document.documentElement.removeAttribute("data-theme"); localStorage.setItem("wna_theme","light"); } else { document.documentElement.setAttribute("data-theme","dark"); localStorage.setItem("wna_theme","dark"); } document.getElementById("darkToggle").checked=!isDark; };
+document.getElementById("darkToggle").onchange=e=>{ if(e.target.checked){ document.documentElement.setAttribute("data-theme","dark"); localStorage.setItem("wna_theme","dark"); } else { document.documentElement.removeAttribute("data-theme"); localStorage.setItem("wna_theme","light"); } };
+document.getElementById("menuBtn").onclick=()=>{ document.querySelector('.nav-item[data-tab="settings"]').click(); };
+document.getElementById("searchBtn").onclick=()=>{ document.getElementById("chatSearch").focus(); window.scrollTo({top:0,behavior:"smooth"}); };
 
-/* قروبات Realtime */
-function openGroupUI(id, name, key){
-  currentGroupId=id; currentGroupKey=key;
-  const box=document.getElementById("groupChatBox"); box.style.display="block";
-  document.getElementById("groupInput").style.display="block"; document.getElementById("sendGroupBtn").style.display="block";
-  box.innerHTML="<p style='text-align:center;color:var(--muted)'>تم فتح قروب "+esc(name)+" 👥</p>";
-  if(groupListener) rtdb.ref("groups/"+id+"/messages").off("child_added", groupListener);
-  rtdb.ref("groups/"+id+"/messages").orderByChild("created").limitToLast(50).once("value", snap=>{
-    snap.forEach(child=>{
-      const data=child.val();
-      const div=document.createElement("div"); div.className="chat-msg chat-other"; div.textContent="جاري الفك..."; box.appendChild(div);
-      decryptText(data.cipher, key).then(txt=>{ div.textContent=data.from+": "+(txt||"🔒 مشفرة"); });
+/* تنقل سفلي */
+document.querySelectorAll(".nav-item").forEach(el=>el.onclick=()=>{
+  document.querySelectorAll(".nav-item").forEach(x=>x.classList.remove("active")); el.classList.add("active");
+  document.querySelectorAll(".tab-content").forEach(c=>c.classList.remove("active"));
+  document.getElementById("tab-"+el.dataset.tab).classList.add("active");
+  window.scrollTo({top:0,behavior:"smooth"});
+});
+document.getElementById("fabBtn").onclick=()=>{ document.querySelector('.nav-item[data-tab="contacts"]').click(); toast("اختر صديق لتبدأ محادثة"); };
+
+/* جهات الاتصال - دمج تلقائي */
+function getLocalContacts(){ try{return JSON.parse(localStorage.getItem(CONTACTS+currentUser)||"[]")}catch{return[]} }
+function saveLocalContacts(l){ localStorage.setItem(CONTACTS+currentUser, JSON.stringify(l)); }
+function renderContacts(){
+  const list=document.getElementById("contactList"); if(!list) return;
+  const search=(document.getElementById("contactSearch")?.value||"").toLowerCase();
+  const local=getLocalContacts();
+  let reg=JSON.parse(localStorage.getItem(REG)||"[]");
+  // دمج: المسجلين في Firebase + المحليين
+  let all=[...reg.map(r=>({name:r.name, phone:r.phone, user:r.user, isRegistered:true})), ...local.map(c=>({name:c.name, phone:c.number, user:c.number, isRegistered:false}))];
+  // إزالة التكرار
+  let seen=new Set(), uniq=[];
+  all.forEach(a=>{ const k=a.phone; if(!seen.has(k) && a.phone!==currentPhone){ seen.add(k); uniq.push(a); } });
+  let filtered=uniq.filter(a=> (a.name+" "+a.phone).toLowerCase().includes(search));
+  list.innerHTML="";
+  if(filtered.length===0) list.innerHTML="<p style='text-align:center;color:var(--muted);padding:12px'>لا توجد جهات بعد - ادع أصدقاءك يسجلون برقمهم</p>";
+  filtered.forEach(c=>{
+    const d=document.createElement("div"); d.className="contact-item";
+    d.innerHTML=`<div class="avatar">${esc((c.name||"?").charAt(0))}</div><div style="flex:1"><b>${esc(c.name)}</b><div style="font-size:12px;color:var(--muted)">${esc(c.phone)} ${c.isRegistered?'<span class="badge">مسجل ✅</span>':''}</div></div><button class="btn btn-green" style="width:auto;padding:8px 14px;font-size:13px">💬 محادثة</button>`;
+    d.querySelector("button").onclick=()=>openChat(c);
+    list.appendChild(d);
+  });
+  // تحديث قائمة المحادثات بنفس الأرقام
+  renderChatList();
+}
+document.getElementById("contactSearch").oninput=renderContacts;
+document.getElementById("addPhoneBtn").onclick=()=>{
+  const name=document.getElementById("contactName").value.trim(), num=document.getElementById("phoneAdd").value.trim();
+  if(!name||!num) return toast("أدخل الاسم والرقم");
+  let l=getLocalContacts(); l.push({name, number:num}); saveLocalContacts(l); renderContacts(); toast("تمت الإضافة ✅");
+};
+document.getElementById("copyInviteLinkBtn").onclick=()=>copyText(document.getElementById("inviteLinkOut").textContent);
+document.getElementById("waInviteBtn").onclick=()=>openWA(`حمل واتس نشوان الآمن 🛡️\nمراسلة مشفرة ومحادثات وقروبات\nسجل برقمك هنا:\n${document.getElementById("inviteLinkOut").textContent}`);
+
+/* قائمة المحادثات */
+function renderChatList(){
+  const list=document.getElementById("chatList"); if(!list) return;
+  const search=(document.getElementById("chatSearch")?.value||"").toLowerCase();
+  let reg=JSON.parse(localStorage.getItem(REG)||"[]");
+  let filtered=reg.filter(r=> r.phone!==currentPhone && (r.name+" "+r.phone).toLowerCase().includes(search));
+  // لو فيه محادثات من Firebase، اعرضها أولاً - هنا نعرض المسجلين كمحادثات محتملة
+  list.innerHTML="";
+  document.getElementById("totalChats").textContent=filtered.length+" محادثة";
+  if(filtered.length===0){ list.innerHTML="<p style='text-align:center;color:var(--muted);padding:14px'>لا توجد محادثات بعد.<br>ادع صديقك يسجل برقمه، بيظهر هنا.</p>"; return; }
+  filtered.slice(0,20).forEach(c=>{
+    const d=document.createElement("div"); d.className="chat-item";
+    d.innerHTML=`<div class="avatar">${esc(c.name.charAt(0))}</div><div class="info"><div class="top"><b>${esc(c.name)}</b><span>الآن</span></div><div class="last">🔒 اضغط لبدء محادثة مشفرة</div></div><span style="font-size:12px;color:#25D366">●</span>`;
+    d.onclick=()=>openChat(c);
+    list.appendChild(d);
+  });
+  // جلب المسجلين من Firebase أيضاً
+  if(rtdb) rtdb.ref("users").once("value", snap=>{
+    let fbUsers=[]; snap.forEach(ch=>{ const v=ch.val(); if(v.phone!==currentPhone) fbUsers.push(v); });
+    fbUsers.forEach(v=>{
+      if(!filtered.find(f=>f.phone===v.phone)){
+        const d=document.createElement("div"); d.className="chat-item";
+        d.innerHTML=`<div class="avatar">${esc((v.name||"?").charAt(0))}</div><div class="info"><div class="top"><b>${esc(v.name)}</b><span>جديد</span></div><div class="last">🔒 ${esc(v.phone)} - مسجل في التطبيق</div></div><span class="badge">جديد</span>`;
+        d.onclick=()=>openChat({name:v.name, phone:v.phone, user:v.user});
+        list.appendChild(d);
+      }
     });
   });
-  groupListener=(snap)=>{
-    const data=snap.val(); const div=document.createElement("div"); div.className="chat-msg "+(data.from===currentUser?"chat-me":"chat-other"); div.textContent="جاري الفك..."; box.appendChild(div); box.scrollTop=9999;
-    decryptText(data.cipher, key).then(txt=>{ div.textContent=data.from+": "+(txt||"🔒 مشفرة"); });
-  };
-  rtdb.ref("groups/"+id+"/messages").orderByChild("created").limitToLast(1).on("child_added", groupListener);
 }
-document.getElementById("createGroupBtn").onclick=async()=>{
-  if(!rtdb) return toast("Firebase غير متصل",true);
-  const name=document.getElementById("groupName").value.trim();
-  const key=document.getElementById("groupKey").value;
-  if(!name||!key) return toast("اكتب اسم القروب والمفتاح",true);
+document.getElementById("chatSearch").oninput=renderChatList;
+document.getElementById("startFirstChatBtn").onclick=()=>{ document.querySelector('.nav-item[data-tab="contacts"]').click(); };
+
+/* فتح محادثة */
+let chatListener=null;
+async function openChat(contact){
+  const friendUser=contact.user||contact.phone.replace(/\+/g,"");
+  const key=prompt(`🔒 محادثة مع ${contact.name}\n\nأدخل المفتاح المشترك بينكما (اتفقوا عليه قبل):`);
+  if(!key||key.length<4) return toast("المفتاح 4 أحرف على الأقل");
+  currentChatFriend=contact.name; currentChatKey=key;
+  const users=[currentUser, friendUser].sort();
+  currentChatId=users.join("_");
+  document.getElementById("chatTitle").textContent=contact.name;
+  document.getElementById("chatAvatar").textContent=(contact.name||"?").charAt(0);
+  document.getElementById("chatScreen").classList.add("open");
+  const box=document.getElementById("chatMessages"); box.innerHTML="<p style='text-align:center;color:var(--muted)'>🔒 محادثة مشفرة مع "+esc(contact.name)+"</p>";
+  if(chatListener && rtdb) rtdb.ref("chats/"+currentChatId+"/messages").off("child_added", chatListener);
+  if(rtdb){
+    rtdb.ref("chats/"+currentChatId+"/messages").orderByChild("created").limitToLast(50).once("value", snap=>{
+      snap.forEach(child=>renderMsg(child.val()));
+    });
+    chatListener=(snap)=>renderMsg(snap.val());
+    rtdb.ref("chats/"+currentChatId+"/messages").orderByChild("created").limitToLast(1).on("child_added", chatListener);
+  }
+  document.querySelector('.nav-item[data-tab="chats"]').click();
+}
+async function renderMsg(data){
+  const box=document.getElementById("chatMessages");
+  const div=document.createElement("div"); div.className="msg "+(data.from===currentUser?"me":"other"); div.textContent="جاري الفك..."; box.appendChild(div); box.scrollTop=9999;
+  if(data.type==="image"){
+    const img=await decryptImageData(data.cipher, currentChatKey);
+    if(img){ div.innerHTML=""; const im=document.createElement("img"); im.src=img; im.style.maxWidth="100%"; im.style.borderRadius="10px"; div.appendChild(im); }
+    else div.textContent="🔒 صورة مشفرة - المفتاح غلط";
+  } else {
+    const txt=await decryptText(data.cipher, currentChatKey);
+    div.textContent=(txt||"🔒 رسالة مشفرة - المفتاح غلط");
+  }
+  const sm=document.createElement("small"); sm.textContent=new Date(data.created).toLocaleTimeString("ar",{hour:"2-digit",minute:"2-digit"})+" • "+(data.from===currentUser?"أنت":currentChatFriend); div.appendChild(sm);
+}
+document.getElementById("backChatBtn").onclick=()=>{ document.getElementById("chatScreen").classList.remove("open"); currentChatId=null; };
+document.getElementById("sendChatBtn").onclick=async()=>{
+  if(!currentChatId) return toast("افتح محادثة أولاً");
+  const msg=document.getElementById("chatInput").value.trim(); if(!msg) return;
+  if(!useOne()) return;
+  const cipher=await encryptText(msg, currentChatKey);
+  await rtdb.ref("chats/"+currentChatId+"/messages").push({from:currentUser, cipher, created:Date.now(), type:"text"});
+  document.getElementById("chatInput").value="";
+};
+document.getElementById("chatInput").onkeypress=e=>{ if(e.key==="Enter") document.getElementById("sendChatBtn").click(); };
+document.getElementById("chatImageBtn").onclick=()=>document.getElementById("chatImageInput").click();
+document.getElementById("chatImageInput").onchange=e=>{ const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=async(ev)=>{ const enc=await encryptImageData(ev.target.result, currentChatKey); await rtdb.ref("chats/"+currentChatId+"/messages").push({from:currentUser, cipher:enc, created:Date.now(), type:"image"}); toast("تم إرسال الصورة ✅"); }; r.readAsDataURL(f); };
+document.getElementById("attachBtn").onclick=()=>document.getElementById("chatImageInput").click();
+document.getElementById("chatCallBtn").onclick=()=>toast("المكالمات قريباً - نسخة 18");
+document.getElementById("myStory").onclick=()=>toast("الحالات قريباً - نسخة 18");
+
+/* قروبات */
+function renderGroups(){
+  const el=document.getElementById("myGroupsList"); if(!el) return; el.innerHTML="<p style='font-size:13px;color:var(--muted)'>لا توجد قروبات بعد - أنشئ أول قروب</p>";
+  if(rtdb) rtdb.ref("groups").once("value", snap=>{ el.innerHTML=""; snap.forEach(ch=>{ const info=ch.child("info").val(); if(!info) return; const d=document.createElement("div"); d.className="group-item"; d.innerHTML=`<div class="avatar" style="background:#7c3aed">👥</div><div style="flex:1"><b>${esc(info.name)}</b><div style="font-size:11px;color:var(--muted)">${ch.key}</div></div><span class="badge">دخول</span>`; d.onclick=()=>{ const key=prompt("أدخل مفتاح القروب:"); if(!key) return; openGroup(ch.key, info.name, key); }; el.appendChild(d); }); if(el.innerHTML==="") el.innerHTML="<p style='font-size:13px;color:var(--muted)'>لا توجد قروبات بعد</p>"; });
+}
+function openGroup(id, name, key){
+  currentGroupId=id; currentGroupKey=key;
+  document.getElementById("chatTitle").textContent="👥 "+name;
+  document.getElementById("chatAvatar").textContent="👥";
+  document.getElementById("chatScreen").classList.add("open");
+  const box=document.getElementById("chatMessages"); box.innerHTML="<p style='text-align:center'>قروب "+esc(name)+" - مشفر</p>";
+  // استخدام نفس شاشة المحادثة للقروب - الإرسال يروح للقروب
+  currentChatId=null; // علامة أنه قروب
+  if(rtdb){
+    rtdb.ref("groups/"+id+"/messages").orderByChild("created").limitToLast(50).once("value", snap=>{ snap.forEach(ch=>{ const data=ch.val(); const div=document.createElement("div"); div.className="msg "+(data.from===currentUser?"me":"other"); div.textContent="جاري الفك..."; box.appendChild(div); decryptText(data.cipher, key).then(t=>{ div.textContent=(data.from===currentUser?"أنت: ":""+data.from+": ")+(t||"🔒 مشفرة"); }); }); });
+    rtdb.ref("groups/"+id+"/messages").orderByChild("created").limitToLast(1).on("child_added", snap=>{ const data=snap.val(); const div=document.createElement("div"); div.className="msg "+(data.from===currentUser?"me":"other"); div.textContent="جاري الفك..."; box.appendChild(div); box.scrollTop=9999; decryptText(data.cipher, key).then(t=>{ div.textContent=(data.from===currentUser?"أنت: ":""+data.from+": ")+(t||"🔒 مشفرة"); }); });
+  }
+  // تعديل زر الإرسال للقروب
+  document.getElementById("sendChatBtn").onclick=async()=>{
+    const msg=document.getElementById("chatInput").value.trim(); if(!msg) return;
+    const cipher=await encryptText(msg, currentGroupKey);
+    await rtdb.ref("groups/"+currentGroupId+"/messages").push({from:currentUser, cipher, created:Date.now()});
+    document.getElementById("chatInput").value="";
+  };
+}
+document.getElementById("createGroupQuickBtn").onclick=async()=>{
+  const name=prompt("اسم القروب:"); if(!name) return;
+  const key=prompt("مفتاح القروب (اعطيه لأصحابك):"); if(!key||key.length<4) return toast("المفتاح 4 أحرف");
   const id="GRP_"+Date.now();
-  await rtdb.ref("groups/"+id+"/info").set({name, created:Date.now(), createdBy:currentUser, members:[currentUser]});
-  toast("تم إنشاء القروب ✅ - ID: "+id+" - انسخه وارسله لأصحابك");
-  const list=document.getElementById("groupList");
-  const d=document.createElement("div"); d.className="contact-item"; d.innerHTML="<div><b>👥 "+esc(name)+"</b><div style='font-size:11px;direction:ltr'>"+id+"</div></div><button class='btn btn-success' style='padding:8px 12px;font-size:12px'>دخول</button>";
-  d.querySelector("button").onclick=()=>openGroupUI(id, name, key);
-  d.onclick=()=>{ if(event.target.tagName!=="BUTTON") copyText(id); };
-  list.appendChild(d);
-  openGroupUI(id, name, key);
+  await rtdb.ref("groups/"+id+"/info").set({name, created:Date.now(), createdBy:currentUser});
+  toast("تم إنشاء القروب ✅ ID: "+id+" - انسخه وارسله لأصحابك");
+  copyText(id); renderGroups();
 };
-document.getElementById("joinGroupBtn").onclick=async()=>{
-  const id=document.getElementById("joinGroupId").value.trim();
-  const key=document.getElementById("groupKey").value;
-  if(!id||!key) return toast("اكتب ID القروب والمفتاح",true);
+document.getElementById("joinGroupQuickBtn").onclick=async()=>{
+  const id=prompt("اكتب ID القروب GRP_...:"); if(!id) return;
+  const key=prompt("مفتاح القروب:"); if(!key) return;
   const snap=await rtdb.ref("groups/"+id+"/info").once("value");
-  if(!snap.exists()) return toast("القروب غير موجود - تأكد من ID",true);
-  const info=snap.val();
-  openGroupUI(id, info.name, key);
-  toast("دخلت قروب "+info.name+" ✅");
-};
-document.getElementById("sendGroupBtn").onclick=async()=>{
-  if(!currentGroupId) return toast("افتح القروب أولاً",true);
-  const msg=document.getElementById("groupInput").value.trim();
-  const key=document.getElementById("groupKey").value;
-  if(!msg) return toast("اكتب رسالة",true);
-  const cipher=await encryptText(msg, key);
-  await rtdb.ref("groups/"+currentGroupId+"/messages").push({from:currentUser, cipher, created:Date.now()});
-  document.getElementById("groupInput").value=""; toast("تم الإرسال للقروب ✅");
+  if(!snap.exists()) return toast("القروب غير موجود");
+  openGroup(id, snap.val().name, key);
 };
 
+/* تشفير عادي */
+document.getElementById("encryptBtn").onclick=async()=>{ const m=document.getElementById("messageInput").value.trim(), k=document.getElementById("keyInput").value; if(!m) return toast("اكتب الرسالة"); if(!k||k.length<4) return toast("المفتاح 4 أحرف"); if(!useOne()) return; const c=await encryptText(m,k); document.getElementById("encryptOutput").textContent=c; await dbAdd({user:currentUser,cipher:c,created:Date.now()}); toast("تم التشفير ✅"); };
+document.getElementById("copyEncryptBtn").onclick=()=>copyText(document.getElementById("encryptOutput").textContent);
+document.getElementById("waEncryptBtn").onclick=()=>openWA(document.getElementById("encryptOutput").textContent);
+let selImg="";
+document.getElementById("imageInput").onchange=e=>{ const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=ev=>{ selImg=ev.target.result; const p=document.getElementById("imagePreview"); p.src=selImg; p.style.display="block"; }; r.readAsDataURL(f); };
+document.getElementById("encryptImageBtn").onclick=async()=>{ if(!selImg) return toast("اختر صورة"); const k=document.getElementById("imageKey").value; if(!k||k.length<4) return toast("المفتاح 4 أحرف"); if(!useOne()) return; const enc=await encryptImageData(selImg,k); document.getElementById("imageOutput").textContent=enc; toast("تم تشفير الصورة ✅"); };
+document.getElementById("copyImageBtn").onclick=()=>copyText(document.getElementById("imageOutput").textContent);
+document.getElementById("decryptBtn").onclick=async()=>{ const c=document.getElementById("cipherInput").value.trim(), k=document.getElementById("decryptKeyInput").value; if(!c||!k) return toast("أدخل الشيفرة والمفتاح"); if(!useOne()) return; if(c.startsWith("ENC_IMG:")){ const img=await decryptImageData(c,k); if(!img) return toast("فشل الفك"); document.getElementById("decryptOutput").textContent="✅ تم فك الصورة"; const im=document.getElementById("decryptedImage"); im.src=img; im.style.display="block"; return; } const res=await decryptText(c,k); document.getElementById("decryptOutput").textContent=res||"❌ فشل الفك"; };
+document.getElementById("copyDecryptBtn").onclick=()=>copyText(document.getElementById("decryptOutput").textContent);
+
+/* إعدادات */
+document.getElementById("saveNameBtn").onclick=()=>{
+  const n=document.getElementById("editName").value.trim(); if(!n) return toast("أدخل اسم");
+  currentDisplay=n; document.getElementById("settingsName").textContent=n; document.getElementById("myAvatar").textContent=n.charAt(0);
+  let s=JSON.parse(localStorage.getItem(SESSION)); s.name=n; localStorage.setItem(SESSION, JSON.stringify(s));
+  let reg=JSON.parse(localStorage.getItem(REG)||"[]"); let f=reg.find(x=>x.user===currentUser); if(f){ f.name=n; localStorage.setItem(REG, JSON.stringify(reg)); }
+  if(rtdb) rtdb.ref("users/"+currentUser).update({name:n});
+  toast("تم حفظ الاسم ✅");
+};
+document.getElementById("savePinBtn").onclick=()=>{
+  const pin=document.getElementById("pinSetup").value.trim();
+  const sec={lockEnabled:document.getElementById("lockEnabled").checked, bioEnabled:document.getElementById("bioEnabled").checked, pin:pin||JSON.parse(localStorage.getItem(SEC)||"{}").pin};
+  localStorage.setItem(SEC, JSON.stringify(sec)); toast("تم حفظ الأمان ✅");
+};
+document.getElementById("exportBtn").onclick=()=>{ const b=new Blob([JSON.stringify(getLocalContacts(),null,2)],{type:"application/json"}); const a=document.createElement("a"); a.href=URL.createObjectURL(b); a.download="contacts.json"; a.click(); toast("تم التصدير"); };
+document.getElementById("logoutBtn").onclick=()=>{ localStorage.removeItem(SESSION); location.reload(); };
+document.getElementById("waLockedBtn").onclick=()=>openWA(`مرحباً نشوان، انتهى اشتراكي المجاني. اسمي: ${currentDisplay} - رقمي: ${currentPhone}`);
+document.getElementById("activateRenewBtn").onclick=()=>{
+  const code=document.getElementById("renewCodeInput").value.trim(); if(!code.startsWith("RENEW:")) return toast("كود غلط");
+  try{ const d=JSON.parse(b64d(code.slice(6))); let q=getQuota(); const days=d.plan==="سنوي"?365:30; q[d.u]={remaining:Infinity,totalUsed:0,plan:d.plan,unlimited:true,expiresAt:Date.now()+days*24*60*60*1000}; saveQuota(q); if(d.u===currentUser){ updatePlan(); toast("تم التجديد ✅"); } else toast("تم تجديد "+d.u); }catch{ toast("كود غلط"); }
+};
+document.getElementById("generateInviteBtn").onclick=async()=>{
+  const u=document.getElementById("inviteName").value.trim(), p=document.getElementById("invitePass").value.trim(); if(!u||!p) return toast("عبي الاسم وكلمة المرور");
+  const h=await hashPass(p); const code="INV:"+b64e(JSON.stringify({u,p:h,exp:Date.now()+86400000})); document.getElementById("inviteShortCode").style.display="block"; document.getElementById("inviteShortCode").textContent=code; copyText(code);
+  let inv=JSON.parse(localStorage.getItem(INVITES)||"[]"); inv.push({user:u,code,created:Date.now(),used:false}); localStorage.setItem(INVITES,JSON.stringify(inv)); renderAdminList();
+};
+function renderAdminList(){
+  const list=document.getElementById("userList"); if(!list) return; let inv=JSON.parse(localStorage.getItem(INVITES)||"[]"); let reg=JSON.parse(localStorage.getItem(REG)||"[]");
+  list.innerHTML="<h3 style='margin-top:12px'>المسجلين برقمهم:</h3>";
+  reg.forEach(r=>{ const d=document.createElement("div"); d.style.cssText="background:var(--input);padding:10px;border-radius:12px;margin-top:8px;font-size:13px"; d.innerHTML=`<b>${esc(r.name)}</b> - ${esc(r.phone)}<br><button class="btn btn-light" style="margin-top:6px;padding:8px" onclick="navigator.clipboard.writeText('RENEW:${b64e(JSON.stringify({u:r.user,ts:Date.now(),plan:"شهري"}))}').then(()=>alert('تم نسخ كود التجديد الشهري'))">🔄 نسخ تجديد شهري</button>`; list.appendChild(d); });
+  list.innerHTML+="<h3 style='margin-top:12px'>الدعوات:</h3>";
+  inv.forEach(i=>{ const d=document.createElement("div"); d.style.cssText="background:var(--input);padding:10px;border-radius:12px;margin-top:8px;font-size:12px;word-break:break-all"; d.textContent=i.user+" - "+i.code.slice(0,50)+"..."; list.appendChild(d); });
+}
+
+/* بدء */
 initAdmin().then(()=>{
-  const code=new URLSearchParams(location.search).get("code");
-  if(code){document.getElementById("tabBtnGuest").click();document.getElementById("inviteCodeInput").value=decodeURIComponent(code);setTimeout(()=>{if(confirm("هل تريد تفعيل دعوة الدخول؟")){processCode(decodeURIComponent(code));history.replaceState({},document.title,location.pathname)}},600)}
-  else{const s=localStorage.getItem(SESSION);if(s){const users=JSON.parse(localStorage.getItem(USERS)||"{}");const blocked=JSON.parse(localStorage.getItem(BLOCKED)||"[]");const admin=getAdmin();if(users[s]&&!blocked.includes(s)){currentUser=s;isAdmin=(admin.u&&s===admin.u);startApp()}else{localStorage.removeItem(SESSION)}}}
-  applyTheme(localStorage.getItem(THEME)||"light");
+  const s=localStorage.getItem(SESSION);
+  if(s){ try{ const obj=JSON.parse(s); if(obj.u){ currentUser=obj.u; currentPhone=obj.phone||""; currentDisplay=obj.name||obj.u; const admin=getAdmin(); isAdmin=(obj.u===admin.u); startApp(); } }catch{} }
 });
 </script>
 </body>
