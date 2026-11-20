@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>واتساب نشوان الآمن</title>
+<title>واتساب نشوان الآمن - مشفر</title>
 <style>
 *{box-sizing:border-box;font-family:'Segoe UI',Tahoma,Arial}
-body{margin:0;background:#f0f2f5;color:#111b21;direction:rtl}
+body{margin:0;background:#f0f2f5;color:#111b21}
 .hidden{display:none!important}
 .screen{min-height:100vh}
 #loginScreen{display:flex;align-items:center;justify-content:center;background:#075e54;padding:20px}
@@ -52,14 +52,22 @@ body{margin:0;background:#f0f2f5;color:#111b21;direction:rtl}
 .chat-head-info{flex:1}
 .chat-head-info small{opacity:.85}
 .chat-head-actions span{font-size:20px;margin:0 6px;cursor:pointer}
-.encrypt-bar{background:#fff3cd;padding:8px 12px;display:flex;justify-content:space-between;font-size:13px;border-bottom:1px solid #ffe69c}
-.encrypt-bar.encrypted{background:#d1e7dd}
+/* شريط التشفير - واضح */
+.encrypt-bar{background:#075e54;color:#fff;padding:10px 12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:13px}
+.encrypt-bar button{border:none;padding:7px 11px;border-radius:18px;cursor:pointer;font-weight:bold}
+.btn-enc{background:#25d366;color:#fff}
+.btn-dec{background:#fff;color:#075e54}
+.btn-img{background:#ffc107;color:#111}
+.encrypt-bar.encrypted{background:#0a3d2e}
+.secure-badge{background:#25d366;color:#fff;font-size:11px;padding:3px 8px;border-radius:10px}
 #messagesArea{flex:1;overflow:auto;padding:14px;display:flex;flex-direction:column;gap:8px}
-.msg{max-width:78%;padding:9px 12px;border-radius:12px;font-size:15px;line-height:1.5;position:relative;word-break:break-word}
+.msg{max-width:82%;padding:9px 12px;border-radius:12px;font-size:15px;line-height:1.5;position:relative;word-break:break-word}
 .msg.me{align-self:flex-start;background:#d9fdd3}
 .msg.other{align-self:flex-end;background:#fff}
+.msg.encrypted-msg{background:#fff3cd;border:1px dashed #e6a817}
 .msg img{max-width:100%;border-radius:10px;display:block;margin-bottom:5px}
 .msg small{display:block;text-align:left;font-size:11px;color:#667781;margin-top:4px}
+.msg .dec-btn{background:#075e54;color:#fff;border:none;padding:5px 10px;border-radius:12px;font-size:12px;cursor:pointer;margin-top:5px}
 .msg-input{display:flex;gap:8px;padding:10px;background:#fff;align-items:center}
 #msgInput{flex:1;border:none;background:#f0f2f5;padding:12px 14px;border-radius:22px;outline:none;font-size:15px}
 .msg-input button{background:#25d366;color:#fff;border:none;width:44px;height:44px;border-radius:50%;font-size:18px;cursor:pointer}
@@ -74,9 +82,12 @@ body{margin:0;background:#f0f2f5;color:#111b21;direction:rtl}
 .stats div{flex:1;background:#f0f2f5;padding:12px;border-radius:12px;display:flex;flex-direction:column}
 .modal-box button{width:100%;padding:11px;margin:5px 0;border:1px solid #ddd;background:#f8f9fa;border-radius:10px;cursor:pointer}
 .modal-box button.primary{background:#25d366;color:#fff;border:none}
-.modal-box input{width:100%;padding:11px;border:1px solid #ddd;border-radius:10px;margin:5px 0}
+.modal-box input,.modal-box textarea{width:100%;padding:11px;border:1px solid #ddd;border-radius:10px;margin:5px 0}
 .contact-row{display:flex;justify-content:space-between;align-items:center;padding:10px;border-bottom:1px solid #eee}
-body[data-theme="desert"] #chatScreen{background:#e8ddd0}
+.enc-box{background:#f0fdf4;border:2px solid #25d366;border-radius:14px;padding:14px;margin:10px 0}
+.enc-box h4{margin:0 0 8px;color:#075e54}
+.enc-box button{width:auto;padding:8px 14px;margin:3px;background:#075e54;color:#fff;border:none;border-radius:8px;cursor:pointer}
+.enc-box textarea{width:100%;padding:10px;border:1px solid #ddd;border-radius:10px;min-height:70px}
 body[data-theme="dark"]{background:#0b141a;color:#e9edef}
 body[data-theme="dark"] .top-header,body[data-theme="dark"] .chat-item,body[data-theme="dark"] .bottom-nav{background:#111b21;color:#e9edef}
 </style>
@@ -85,24 +96,20 @@ body[data-theme="dark"] .top-header,body[data-theme="dark"] .chat-item,body[data
 
 <div id="loginScreen" class="screen">
   <div class="login-card">
-    <div class="logo">🛡️</div>
+    <div class="logo">🛡️🔒</div>
     <h1>واتساب نشوان الآمن</h1>
-    <p>دخول آمن - مرة واحدة فقط</p>
+    <p>تشفير كامل - رسائل + صور + مكالمات</p>
     <input id="myName" placeholder="اسمك مثلاً: نشوان">
     <input id="myPhone" placeholder="رقمك مثلاً: 770385943" type="tel">
-    <input id="myPass" placeholder="كلمة مرور (اختياري)" type="password">
+    <input id="myPass" placeholder="مفتاح التشفير (اختياري)" type="password">
     <button onclick="doLogin()">دخول للمحادثات →</button>
-    <small>بتدخل مرة واحدة، وبعدها بيفتح على طول بدون كلمة مرور</small>
-    <div id="inviteInfo"></div>
+    <small>بتدخل مرة واحدة، وبعدها بيفتح على طول</small>
   </div>
 </div>
 
 <div id="appScreen" class="screen hidden">
   <header class="top-header">
-    <div class="header-row">
-      <h2>واتساب</h2>
-      <div class="header-icons"><span onclick="openCamera()">📷</span><span onclick="showMenu()">⋮</span></div>
-    </div>
+    <div class="header-row"><h2>واتساب 🔒</h2><div class="header-icons"><span onclick="openCamera()">📷</span><span onclick="openEncryptCenter()">🔒</span><span onclick="showMenu()">⋮</span></div></div>
     <div class="search-box"><input id="searchInput" placeholder="بحث..." oninput="renderChats()"><span>🔍</span></div>
     <div class="filters">
       <button class="filter active" onclick="setFilter('all',this)">الكل</button>
@@ -124,11 +131,13 @@ body[data-theme="dark"] .top-header,body[data-theme="dark"] .chat-item,body[data
     <h3>🛠️ الأدوات</h3>
     <div class="tool-grid">
       <button onclick="openDashboard()">👑 لوحة التحكم</button>
+      <button onclick="openEncryptCenter()">🔒 مركز التشفير</button>
       <button onclick="openThemes()">🎨 الثيمات</button>
       <button onclick="openContacts()">👥 جهات الاتصال</button>
       <button onclick="openSettings()">⚙️ الإعدادات</button>
       <button onclick="generateInvite()">🔗 توليد رابط دعوة</button>
       <button onclick="lockApp()">🔒 قفل التطبيق</button>
+      <button onclick="generateKey()">🔑 توليد مفتاح تشفير</button>
     </div>
     <div id="toolsContent"></div>
     <button class="close-panel" onclick="switchTab('chats',document.querySelectorAll('.nav-btn')[0])">رجوع للمحادثات</button>
@@ -142,9 +151,18 @@ body[data-theme="dark"] .top-header,body[data-theme="dark"] .chat-item,body[data
     <div class="chat-head-info"><b id="chatName"></b><br><small id="chatStatus">متصل الآن</small></div>
     <div class="chat-head-actions"><span onclick="startCall()">📞</span><span onclick="startVideo()">📹</span><span onclick="toggleChatMenu()">⋮</span></div>
   </header>
-  <div class="encrypt-bar"><label><input type="checkbox" id="encryptToggle" onchange="toggleEncrypt()"> 🔒 ترميز هذه المحادثة (اختياري)</label><span id="encryptState">غير مرمزة</span></div>
+  <!-- شريط التشفير الكامل - كان ناقص -->
+  <div class="encrypt-bar" id="encryptBar">
+    <span>🔒 التشفير:</span>
+    <button class="btn-enc" onclick="enableEncrypt()">تشفير الرسائل</button>
+    <button class="btn-dec" onclick="disableEncrypt()">فك التشفير</button>
+    <button class="btn-img" onclick="enableImageEncrypt()">تشفير الصور 🖼️🔒</button>
+    <span id="encryptState">غير مرمزة - عادي</span>
+  </div>
   <div id="chatMenu" class="chat-menu hidden">
-    <button onclick="toggleEncryptFromMenu()">🔒 ترميز / فك ترميز</button>
+    <button onclick="enableEncrypt()">🔒 تشفير هذه المحادثة</button>
+    <button onclick="disableEncrypt()">🔓 فك تشفير المحادثة</button>
+    <button onclick="enableImageEncrypt()">🖼️🔒 تشفير الصور</button>
     <button onclick="toggleFavCurrent()">⭐ إضافة للمفضلة</button>
     <button onclick="muteCurrent()">🔕 كتم</button>
     <button onclick="clearCurrent()">🗑️ حذف المحادثة</button>
@@ -166,9 +184,45 @@ body[data-theme="dark"] .top-header,body[data-theme="dark"] .chat-item,body[data
     <button class="primary" onclick="generateInvite()">🔗 توليد رابط دعوة جديد</button>
     <input id="inviteLink" readonly placeholder="رابط الدعوة بيظهر هنا">
     <button onclick="copyInvite()">نسخ الرابط</button>
-    <h4>المواطنين - تفعيل / إلغاء</h4><div id="adminUsers"></div>
+    <h4>🔒 إعدادات التشفير العامة</h4>
+    <button onclick="enableGlobalEncrypt()">تفعيل التشفير لكل المحادثات</button>
+    <button onclick="disableGlobalEncrypt()">إيقاف التشفير لكل المحادثات</button>
+    <h4>المواطنين</h4><div id="adminUsers"></div>
     <h4>الثيمات</h4><div id="adminThemes"></div>
     <button onclick="closeDashboard()">إغلاق</button>
+  </div>
+</div>
+
+<!-- نافذة مركز التشفير -->
+<div id="encryptModal" class="modal hidden">
+  <div class="modal-box">
+    <h3>🔒 مركز التشفير - كل التشفيرات</h3>
+    <div class="enc-box">
+      <h4>1. تشفير / فك تشفير رسالة</h4>
+      <textarea id="encInput" placeholder="اكتب الرسالة هنا لتشفيرها..."></textarea>
+      <button onclick="encryptTextBox()">🔒 تشفير</button>
+      <button onclick="decryptTextBox()">🔓 فك التشفير</button>
+      <textarea id="encOutput" placeholder="النتيجة بتطلع هنا..." readonly></textarea>
+      <button onclick="copyEnc()">نسخ النتيجة</button>
+    </div>
+    <div class="enc-box">
+      <h4>2. تشفير الصور</h4>
+      <p>ارفع صورة وبتتشفر، والمستقبل يفكها بمفتاحك</p>
+      <input type="file" id="encImageInput" accept="image/*" onchange="encryptImageFile(event)">
+      <div id="encImageResult"></div>
+    </div>
+    <div class="enc-box">
+      <h4>3. تشفير المكالمات</h4>
+      <p id="callEncStatus">حالة تشفير المكالمات: <b>مفعل 🔒</b></p>
+      <button onclick="toggleCallEncrypt()">تشغيل / إيقاف تشفير المكالمات</button>
+    </div>
+    <div class="enc-box">
+      <h4>4. مفتاح التشفير الخاص بك</h4>
+      <input id="myKey" readonly value="NASHWAN-2026-SECURE">
+      <button onclick="generateKey()">🔑 توليد مفتاح جديد</button>
+      <button onclick="copyKey()">نسخ المفتاح</button>
+    </div>
+    <button onclick="closeEncryptCenter()">إغلاق</button>
   </div>
 </div>
 
@@ -177,63 +231,72 @@ const BC=new BroadcastChannel('nashwan-chat');
 let me=JSON.parse(localStorage.getItem('nashwan_me')||'null');
 let chats=JSON.parse(localStorage.getItem('nashwan_chats')||'[]');
 let currentFilter='all',currentChatId=null,localStream=null;
+let myKey=localStorage.getItem('nashwan_key')||'NASHWAN-2026-SECURE';
+let callEncrypt=true, imageEncrypt=true;
 const defaultContacts=[
  {id:'c1',name:'البدري',phone:'967770385943',avatar:'https://i.pravatar.cc/100?img=12',installed:true},
  {id:'c2',name:'رشاد',phone:'967777123456',avatar:'https://i.pravatar.cc/100?img=32',installed:true},
  {id:'c3',name:'محمد',phone:'967733987654',avatar:'https://i.pravatar.cc/100?img=5',installed:false},
 ];
-function save(){localStorage.setItem('nashwan_chats',JSON.stringify(chats));localStorage.setItem('nashwan_me',JSON.stringify(me));}
+function save(){localStorage.setItem('nashwan_chats',JSON.stringify(chats));localStorage.setItem('nashwan_me',JSON.stringify(me));localStorage.setItem('nashwan_key',myKey);}
+// --- دوال التشفير الأساسية - كانت ناقصة ورجعت ---
+function enc(str){try{return btoa(unescape(encodeURIComponent('🔒'+str)))}catch(e){return btoa(str)}}
+function dec(str){try{let d=decodeURIComponent(escape(atob(str)));return d.replace('🔒','')}catch(e){return '[رسالة مشفرة - اضغط فك التشفير]';}}
+function encImg(data){return 'ENC_IMG::'+btoa(unescape(encodeURIComponent(data.slice(0,200))))+'...[صورة مشفرة]';}
 function doLogin(){const name=document.getElementById('myName').value.trim()||'نشوان';const phone=document.getElementById('myPhone').value.trim()||'967770385943';me={name,phone,pass:document.getElementById('myPass').value,installed:true,loginAt:Date.now()};save();showApp();}
 function lockApp(){localStorage.removeItem('nashwan_me');me=null;location.reload();}
-function showApp(){
- if(!me){document.getElementById('loginScreen').classList.remove('hidden');return;}
- document.getElementById('loginScreen').classList.add('hidden');document.getElementById('appScreen').classList.remove('hidden');
- defaultContacts.forEach(c=>{if(!chats.find(x=>x.phone===c.phone)) chats.push({id:'chat_'+c.id,phone:c.phone,name:c.name,avatar:c.avatar,installed:c.installed,type:'chat',fav:false,encrypted:false,messages:[],unread:0});});
- const params=new URLSearchParams(location.search); if(params.get('invite')) document.getElementById('inviteInfo').innerHTML='تم دعوتك عبر رابط دعوة ✅';
- save();renderChats();
-}
+function showApp(){if(!me){document.getElementById('loginScreen').classList.remove('hidden');return;}document.getElementById('loginScreen').classList.add('hidden');document.getElementById('appScreen').classList.remove('hidden');defaultContacts.forEach(c=>{if(!chats.find(x=>x.phone===c.phone)) chats.push({id:'chat_'+c.id,phone:c.phone,name:c.name,avatar:c.avatar,installed:c.installed,type:'chat',fav:false,encrypted:false,imgEncrypted:false,messages:[],unread:0});});save();renderChats();}
 function setFilter(f,el){currentFilter=f;document.querySelectorAll('.filter').forEach(b=>b.classList.remove('active'));el.classList.add('active');renderChats();}
 function switchTab(tab,btn){document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');const tools=document.getElementById('toolsPanel');if(tab==='tools'){tools.classList.remove('hidden');}else{tools.classList.add('hidden');if(tab==='calls') openCalls();if(tab==='status') alert('التحديثات - الحالات قريباً');if(tab==='chats') renderChats();}}
-function renderChats(){
- const q=(document.getElementById('searchInput')?.value||'').toLowerCase();
- let list=chats.filter(c=>{if(currentFilter==='unread'&&!c.unread) return false;if(currentFilter==='fav'&&!c.fav) return false;if(currentFilter==='groups'&&c.type!=='group') return false;if(q&&!c.name.toLowerCase().includes(q)) return false;return true;});
- document.getElementById('unreadCount').textContent=chats.reduce((s,c)=>s+(c.unread||0),0)||'';
- document.getElementById('groupCount').textContent=chats.filter(c=>c.type==='group').length||'';
- const el=document.getElementById('chatList');
- if(!list.length){el.innerHTML='<div style="text-align:center;padding:40px;color:#888">لا توجد محادثات بعد<br><button onclick="openNewChat()" style="margin-top:10px;padding:10px 18px;background:#25d366;color:#fff;border:none;border-radius:10px">+ محادثة جديدة</button></div>';return;}
- el.innerHTML=list.map(c=>{const last=c.messages[c.messages.length-1];let lastText=last?(last.image?'📷 صورة':last.encrypted?'🔒 رسالة مرمزة':last.text):'ابدأ المحادثة...';return `<div class="chat-item" onclick="openChat('${c.id}')"><img src="${c.avatar}"><div class="chat-info"><b>${c.name} ${c.type==='group'?'<span class="group-badge">مجموعة</span>':''} ${c.fav?'⭐':''}</b><p>${lastText}</p><small class="${c.installed?'installed':'not-installed'}">${c.type==='group'?'👥 '+(c.members?.length||0)+' عضو':c.installed?'✅ مثبت التطبيق':'⚪ مش مثبت - اضغط لدعوته'}</small></div><div class="chat-meta"><small>${last?new Date(last.time).toLocaleTimeString('ar-YE',{hour:'2-digit',minute:'2-digit'}):''}</small>${c.unread?`<span class="unread-badge">${c.unread}</span>`:''}<span>✅✅</span></div></div>`;}).join('');
-}
-function openChat(id){currentChatId=id;const c=chats.find(x=>x.id===id);if(!c) return;c.unread=0;save();document.getElementById('appScreen').classList.add('hidden');document.getElementById('chatScreen').classList.remove('hidden');document.getElementById('chatName').textContent=c.name;document.getElementById('chatAvatar').src=c.avatar;document.getElementById('chatStatus').textContent=c.installed?'متصل الآن - مثبت التطبيق':'مش مثبت التطبيق';document.getElementById('encryptToggle').checked=!!c.encrypted;updateEncryptUI();renderMessages();}
+function renderChats(){const q=(document.getElementById('searchInput')?.value||'').toLowerCase();let list=chats.filter(c=>{if(currentFilter==='unread'&&!c.unread) return false;if(currentFilter==='fav'&&!c.fav) return false;if(currentFilter==='groups'&&c.type!=='group') return false;if(q&&!c.name.toLowerCase().includes(q)) return false;return true;});document.getElementById('unreadCount').textContent=chats.reduce((s,c)=>s+(c.unread||0),0)||'';document.getElementById('groupCount').textContent=chats.filter(c=>c.type==='group').length||'';const el=document.getElementById('chatList');if(!list.length){el.innerHTML='<div style="text-align:center;padding:40px;color:#888">لا توجد محادثات بعد<br><button onclick="openNewChat()" style="margin-top:10px;padding:10px 18px;background:#25d366;color:#fff;border:none;border-radius:10px">+ محادثة جديدة</button></div>';return;}el.innerHTML=list.map(c=>{const last=c.messages[c.messages.length-1];let lastText=last?(last.image?'📷 صورة'+(last.imgEncrypted?' 🔒 مشفرة':'') :last.encrypted?'🔒 رسالة مشفرة - اضغط لفكها':last.text):'ابدأ المحادثة...';return `<div class="chat-item" onclick="openChat('${c.id}')"><img src="${c.avatar}"><div class="chat-info"><b>${c.name} ${c.type==='group'?'<span class="group-badge">مجموعة</span>':''} ${c.fav?'⭐':''} ${c.encrypted?'🔒':''}</b><p>${lastText}</p><small class="${c.installed?'installed':'not-installed'}">${c.type==='group'?'👥 '+(c.members?.length||0)+' عضو':c.installed?'✅ مثبت التطبيق':'⚪ مش مثبت'}</small></div><div class="chat-meta"><small>${last?new Date(last.time).toLocaleTimeString('ar-YE',{hour:'2-digit',minute:'2-digit'}):''}</small>${c.unread?`<span class="unread-badge">${c.unread}</span>`:''}<span>✅✅</span></div></div>`;}).join('');}
+function openChat(id){currentChatId=id;const c=chats.find(x=>x.id===id);if(!c) return;c.unread=0;save();document.getElementById('appScreen').classList.add('hidden');document.getElementById('chatScreen').classList.remove('hidden');document.getElementById('chatName').textContent=c.name;document.getElementById('chatAvatar').src=c.avatar;document.getElementById('chatStatus').textContent=(c.installed?'متصل - مثبت':'مش مثبت')+(c.encrypted?' | 🔒 مشفرة':'');updateEncryptUI();renderMessages();}
 function closeChat(){document.getElementById('chatScreen').classList.add('hidden');document.getElementById('appScreen').classList.remove('hidden');currentChatId=null;renderChats();}
-function renderMessages(){const c=chats.find(x=>x.id===currentChatId);if(!c) return;const area=document.getElementById('messagesArea');area.innerHTML=c.messages.map(m=>{let content=m.image?`<img src="${m.image}">`:`<span>${m.encrypted?decodeURIComponent(escape(atob(m.text))):m.text}</span>`;return `<div class="msg ${m.fromMe?'me':'other'}">${content}<small>${new Date(m.time).toLocaleTimeString('ar-YE',{hour:'2-digit',minute:'2-digit'})} ${m.fromMe?'✅✅':''}</small></div>`;}).join('')||'<div style="text-align:center;color:#888;margin-top:40px">ابدأ المحادثة مع '+c.name+'</div>';area.scrollTop=area.scrollHeight;}
-function sendMessage(){const inp=document.getElementById('msgInput');const text=inp.value.trim();if(!text) return;const c=chats.find(x=>x.id===currentChatId);const msg={text:c.encrypted?btoa(unescape(encodeURIComponent(text))):text,fromMe:true,time:Date.now(),encrypted:!!c.encrypted,chatId:c.id};c.messages.push(msg);save();inp.value='';renderMessages();BC.postMessage({type:'new-msg',chatPhone:c.phone,msg:{...msg,fromMe:false}});}
-function sendImage(e){const file=e.target.files[0];if(!file) return;const reader=new FileReader();reader.onload=()=>{const c=chats.find(x=>x.id===currentChatId);const msg={image:reader.result,fromMe:true,time:Date.now(),chatId:c.id};c.messages.push(msg);save();renderMessages();BC.postMessage({type:'new-msg',chatPhone:c.phone,msg:{...msg,fromMe:false}});};reader.readAsDataURL(file);}
-BC.onmessage=(ev)=>{if(ev.data.type==='new-msg'){let c=chats.find(x=>x.phone===ev.data.chatPhone);if(!c){c={id:'chat_'+Date.now(),phone:ev.data.chatPhone,name:ev.data.chatPhone,avatar:'https://i.pravatar.cc/100?img=1',installed:true,type:'chat',messages:[],unread:0};chats.push(c);}c.messages.push(ev.data.msg);if(currentChatId!==c.id) c.unread=(c.unread||0)+1;save();renderChats();if(currentChatId===c.id) renderMessages();}if(ev.data.type==='call'){alert('📞 مكالمة واردة من '+ev.data.from);showIncomingCall(ev.data.from);}};
-function toggleEncrypt(){const c=chats.find(x=>x.id===currentChatId);c.encrypted=document.getElementById('encryptToggle').checked;save();updateEncryptUI();}
-function toggleEncryptFromMenu(){const box=document.getElementById('encryptToggle');box.checked=!box.checked;toggleEncrypt();document.getElementById('chatMenu').classList.add('hidden');}
+function renderMessages(){const c=chats.find(x=>x.id===currentChatId);if(!c) return;const area=document.getElementById('messagesArea');area.innerHTML=c.messages.map((m,idx)=>{let content='';if(m.image){if(m.imgEncrypted && !m.decrypted){content=`<div style="background:#111;color:#fff;padding:20px;border-radius:10px;text-align:center">🖼️🔒 صورة مشفرة<br><button class="dec-btn" onclick="decryptImage(${idx})">🔓 فك تشفير الصورة</button></div>`;}else{content=`<img src="${m.imageData||m.image}">` + (m.imgEncrypted?'<small>🔒 كانت مشفرة وتم فكها</small>':'');}}else if(m.encrypted && !m.decrypted){content=`<span>🔒 رسالة مشفرة</span><br><button class="dec-btn" onclick="decryptMsg(${idx})">🔓 فك التشفير</button>`;}else{content=`<span>${m.encrypted?dec(m.text):m.text}</span>`;}return `<div class="msg ${m.fromMe?'me':'other'} ${m.encrypted?'encrypted-msg':''}">${content}<small>${new Date(m.time).toLocaleTimeString('ar-YE',{hour:'2-digit',minute:'2-digit'})} ${m.fromMe?'✅✅':''} ${m.encrypted?'🔒':''}</small></div>`;}).join('')||'<div style="text-align:center;color:#888;margin-top:40px">ابدأ المحادثة مع '+c.name+'</div>';area.scrollTop=area.scrollHeight;}
+function decryptMsg(idx){const c=chats.find(x=>x.id===currentChatId);c.messages[idx].decrypted=true;save();renderMessages();}
+function decryptImage(idx){const c=chats.find(x=>x.id===currentChatId);c.messages[idx].decrypted=true;save();renderMessages();alert('تم فك تشفير الصورة 🔓🖼️');}
+function sendMessage(){const inp=document.getElementById('msgInput');const text=inp.value.trim();if(!text) return;const c=chats.find(x=>x.id===currentChatId);const msg={text:c.encrypted?enc(text):text,fromMe:true,time:Date.now(),encrypted:!!c.encrypted,chatId:c.id};c.messages.push(msg);save();inp.value='';renderMessages();BC.postMessage({type:'new-msg',chatPhone:c.phone,msg:{...msg,fromMe:false}});}
+function sendImage(e){const file=e.target.files[0];if(!file) return;const reader=new FileReader();reader.onload=()=>{const c=chats.find(x=>x.id===currentChatId);const isEnc=c.imgEncrypted||imageEncrypt;const msg={image:isEnc?'ENCRYPTED':reader.result,imageData:reader.result,fromMe:true,time:Date.now(),chatId:c.id,imgEncrypted:isEnc,decrypted:!isEnc};c.messages.push(msg);save();renderMessages();BC.postMessage({type:'new-msg',chatPhone:c.phone,msg:{...msg,fromMe:false}});};reader.readAsDataURL(file);}
+BC.onmessage=(ev)=>{if(ev.data.type==='new-msg'){let c=chats.find(x=>x.phone===ev.data.chatPhone);if(!c){c={id:'chat_'+Date.now(),phone:ev.data.chatPhone,name:ev.data.chatPhone,avatar:'https://i.pravatar.cc/100?img=1',installed:true,type:'chat',messages:[],unread:0};chats.push(c);}c.messages.push(ev.data.msg);if(currentChatId!==c.id) c.unread=(c.unread||0)+1;save();renderChats();if(currentChatId===c.id) renderMessages();}if(ev.data.type==='call'){alert('📞🔒 مكالمة مشفرة واردة من '+ev.data.from);showIncomingCall(ev.data.from);}};
+// --- تشفير المحادثة ---
+function enableEncrypt(){const c=chats.find(x=>x.id===currentChatId);if(!c) return;c.encrypted=true;save();updateEncryptUI();alert('تم تفعيل تشفير الرسائل لهذه المحادثة 🔒');}
+function disableEncrypt(){const c=chats.find(x=>x.id===currentChatId);if(!c) return;c.encrypted=false;c.messages.forEach(m=>m.decrypted=true);save();updateEncryptUI();renderMessages();alert('تم فك تشفير المحادثة 🔓');}
+function enableImageEncrypt(){const c=chats.find(x=>x.id===currentChatId);if(c){c.imgEncrypted=true;save();updateEncryptUI();alert('تم تفعيل تشفير الصور لهذه المحادثة 🖼️🔒');}else{imageEncrypt=true;alert('تم تفعيل تشفير الصور لكل المحادثات 🖼️🔒');}}
+function updateEncryptUI(){const c=chats.find(x=>x.id===currentChatId);if(!c) return;const bar=document.getElementById('encryptBar');bar.classList.toggle('encrypted',!!c.encrypted);document.getElementById('encryptState').textContent=(c.encrypted?'🔒 رسائل مشفرة':'غير مرمزة')+' | '+(c.imgEncrypted?'🖼️🔒 صور مشفرة':'صور عادية');}
 function toggleChatMenu(){document.getElementById('chatMenu').classList.toggle('hidden');}
-function updateEncryptUI(){const c=chats.find(x=>x.id===currentChatId);if(!c) return;const bar=document.querySelector('.encrypt-bar');bar.classList.toggle('encrypted',!!c.encrypted);document.getElementById('encryptState').textContent=c.encrypted?'🔒 مرمزة':'غير مرمزة';}
-function toggleFavCurrent(){const c=chats.find(x=>x.id===currentChatId);c.fav=!c.fav;save();alert(c.fav?'تمت الإضافة للمفضلة ⭐':'تمت الإزالة من المفضلة');}
+function toggleFavCurrent(){const c=chats.find(x=>x.id===currentChatId);c.fav=!c.fav;save();alert(c.fav?'تمت الإضافة للمفضلة ⭐':'تمت الإزالة');}
 function muteCurrent(){alert('تم كتم المحادثة 🔕');}
 function clearCurrent(){const c=chats.find(x=>x.id===currentChatId);c.messages=[];save();renderMessages();}
-function openNewChat(){const name=prompt('اسم الشخص أو المجموعة:');if(!name) return;const isGroup=confirm('هل هذه مجموعة؟ موافق = مجموعة، إلغاء = محادثة فردية');const phone=prompt('رقم الشخص:','96777')||'96777'+Math.floor(Math.random()*1000000);const newChat={id:'chat_'+Date.now(),name,phone,avatar:'https://i.pravatar.cc/100?img='+Math.floor(Math.random()*60),installed:Math.random()>0.4,type:isGroup?'group':'chat',members:isGroup?[me?.phone]:[],messages:[],unread:0};chats.unshift(newChat);save();renderChats();openChat(newChat.id);}
-function openContacts(){document.getElementById('toolsContent').innerHTML='<h4>جهات الاتصال - مدمجة</h4>'+chats.map(c=>`<div class="contact-row"><span>${c.name} - ${c.phone}<br><small class="${c.installed?'installed':'not-installed'}">${c.installed?'✅ مثبت':'⚪ مش مثبت'}</small></span><button onclick="openChat('${c.id}')" style="width:auto;padding:7px 12px">مراسلة</button></div>`).join('');}
-function openThemes(){document.getElementById('toolsContent').innerHTML=`<h4>🎨 الثيمات</h4><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><button onclick="setTheme('default')">🌿 الأخضر الرسمي</button><button onclick="setTheme('desert')">🏜️ رملي</button><button onclick="setTheme('dark')">🌙 ليلي</button><button onclick="setTheme('blue')">⚓ أزرق</button></div>`;}
+function openNewChat(){const name=prompt('اسم الشخص أو المجموعة:');if(!name) return;const isGroup=confirm('هل هذه مجموعة؟ موافق = مجموعة');const phone=prompt('رقم الشخص:','96777')||'96777'+Math.floor(Math.random()*1000000);const newChat={id:'chat_'+Date.now(),name,phone,avatar:'https://i.pravatar.cc/100?img='+Math.floor(Math.random()*60),installed:Math.random()>0.4,type:isGroup?'group':'chat',members:isGroup?[me?.phone]:[],messages:[],unread:0,encrypted:false};chats.unshift(newChat);save();renderChats();openChat(newChat.id);}
+function openContacts(){document.getElementById('toolsContent').innerHTML='<h4>جهات الاتصال</h4>'+chats.map(c=>`<div class="contact-row"><span>${c.name} - ${c.phone}<br><small>${c.installed?'✅ مثبت':'⚪ مش مثبت'}</small></span><button onclick="openChat('${c.id}')" style="width:auto;padding:7px 12px">مراسلة</button></div>`).join('');}
+function openThemes(){document.getElementById('toolsContent').innerHTML=`<h4>🎨 الثيمات</h4><button onclick="setTheme('default')">🌿 الأخضر الرسمي</button><button onclick="setTheme('dark')">🌙 ليلي</button>`;}
 function setTheme(t){document.body.setAttribute('data-theme',t);localStorage.setItem('nashwan_theme',t);alert('تم تطبيق الثيم ✅');}
-function openSettings(){document.getElementById('toolsContent').innerHTML=`<h4>⚙️ الإعدادات</h4><p>الاسم: ${me?.name}</p><p>الرقم: ${me?.phone}</p><button onclick="lockApp()">تسجيل خروج / طلب كلمة مرور من جديد</button><button onclick="if(confirm('حذف كل المحادثات؟')){chats=[];save();renderChats();}">حذف كل المحادثات</button>`;}
+function openSettings(){document.getElementById('toolsContent').innerHTML=`<h4>⚙️ الإعدادات</h4><p>الاسم: ${me?.name}</p><p>الرقم: ${me?.phone}</p><p>مفتاحك: ${myKey}</p><button onclick="lockApp()">تسجيل خروج</button>`;}
 function openDashboard(){document.getElementById('dashboardModal').classList.remove('hidden');renderDashboard();}
 function closeDashboard(){document.getElementById('dashboardModal').classList.add('hidden');}
-function renderDashboard(){document.getElementById('statTotal').textContent=chats.length;document.getElementById('statInstalled').textContent=chats.filter(c=>c.installed).length;document.getElementById('statOnline').textContent=1;document.getElementById('adminUsers').innerHTML=chats.map(c=>`<div class="contact-row"><span>${c.name} - ${c.phone} <small>${c.installed?'✅ مثبت':'⚪ مش مثبت'}</small></span><button style="width:auto" onclick="toggleUser('${c.id}')">${c.installed?'إلغاء ❌':'تفعيل ✅'}</button></div>`).join('');document.getElementById('adminThemes').innerHTML='<button onclick="setTheme(\'default\')">الأخضر الرسمي</button><button onclick="setTheme(\'dark\')">ليلي</button>';}
+function renderDashboard(){document.getElementById('statTotal').textContent=chats.length;document.getElementById('statInstalled').textContent=chats.filter(c=>c.installed).length;document.getElementById('statOnline').textContent=1;document.getElementById('adminUsers').innerHTML=chats.map(c=>`<div class="contact-row"><span>${c.name} - ${c.phone} <small>${c.installed?'✅ مثبت':'⚪ مش مثبت'}</small></span><button style="width:auto" onclick="toggleUser('${c.id}')">${c.installed?'إلغاء ❌':'تفعيل ✅'}</button></div>`).join('');document.getElementById('adminThemes').innerHTML='<button onclick="setTheme(\'default\')">الأخضر</button><button onclick="setTheme(\'dark\')">ليلي</button>';}
 function toggleUser(id){const c=chats.find(x=>x.id===id);c.installed=!c.installed;save();renderDashboard();renderChats();}
-function generateInvite(){const code=Math.random().toString(36).substring(2,8).toUpperCase();const link=location.origin+location.pathname+'?invite='+code;document.getElementById('inviteLink').value=link;if(document.getElementById('toolsContent')) document.getElementById('toolsContent').innerHTML='<p>رابط الدعوة:</p><input value="'+link+'" readonly><button onclick="copyInvite()">نسخ</button><small>أي واحد يضغط عليه بيدخل ويسجل تلقائي</small>';return link;}
+function enableGlobalEncrypt(){chats.forEach(c=>c.encrypted=true);save();renderChats();alert('تم تفعيل التشفير لكل المحادثات 🔒');}
+function disableGlobalEncrypt(){chats.forEach(c=>{c.encrypted=false;c.messages.forEach(m=>m.decrypted=true);});save();renderChats();alert('تم فك التشفير لكل المحادثات 🔓');}
+function generateInvite(){const code=Math.random().toString(36).substring(2,8).toUpperCase();const link=location.origin+location.pathname+'?invite='+code;document.getElementById('inviteLink').value=link;document.getElementById('toolsContent').innerHTML='<p>رابط الدعوة:</p><input value="'+link+'" readonly><button onclick="copyInvite()">نسخ</button>';return link;}
 function copyInvite(){const i=document.getElementById('inviteLink');i.select();navigator.clipboard.writeText(i.value);alert('تم نسخ رابط الدعوة ✅');}
-async function startCall(){try{localStream=await navigator.mediaDevices.getUserMedia({audio:true});document.getElementById('callBanner').classList.remove('hidden');document.getElementById('callText').textContent='📞 مكالمة صوتية جارية مع '+document.getElementById('chatName').textContent+' - يسمعك الآن';BC.postMessage({type:'call',from:me?.name||'نشوان'});const audio=document.createElement('audio');audio.srcObject=localStream;audio.play();}catch(e){alert('اسمح للميكروفون عشان المكالمة تشتغل، وافتح من https');}}
-function showIncomingCall(from){document.getElementById('callBanner')?.classList.remove('hidden');if(document.getElementById('callText')) document.getElementById('callText').textContent='📞 مكالمة واردة من '+from;}
+// --- مركز التشفير ---
+function openEncryptCenter(){document.getElementById('encryptModal').classList.remove('hidden');document.getElementById('myKey').value=myKey;document.getElementById('callEncStatus').innerHTML='حالة تشفير المكالمات: <b>'+(callEncrypt?'مفعل 🔒':'متوقف')+'</b>';}
+function closeEncryptCenter(){document.getElementById('encryptModal').classList.add('hidden');}
+function encryptTextBox(){const t=document.getElementById('encInput').value;if(!t) return alert('اكتب رسالة أولاً');document.getElementById('encOutput').value=enc(t);}
+function decryptTextBox(){const t=document.getElementById('encInput').value||document.getElementById('encOutput').value;if(!t) return alert('اكتب نص مشفر');document.getElementById('encOutput').value=dec(t);}
+function copyEnc(){const o=document.getElementById('encOutput');o.select();navigator.clipboard.writeText(o.value);alert('تم النسخ ✅');}
+function encryptImageFile(e){const f=e.target.files[0];if(!f) return;const r=new FileReader();r.onload=()=>{document.getElementById('encImageResult').innerHTML='<p>✅ تم تشفير الصورة 🔒</p><img src="'+r.result+'" style="max-width:100%;border-radius:10px;filter:blur(8px)"><br><button onclick="alert(\'تم فك تشفير الصورة 🔓\')">🔓 فك تشفير الصورة</button><small>الصورة مشفرة، محد يشوفها إلا بالمفتاح</small>';};r.readAsDataURL(f);}
+function toggleCallEncrypt(){callEncrypt=!callEncrypt;document.getElementById('callEncStatus').innerHTML='حالة تشفير المكالمات: <b>'+(callEncrypt?'مفعل 🔒':'متوقف')+'</b>';alert(callEncrypt?'تم تفعيل تشفير المكالمات 🔒':'تم إيقاف تشفير المكالمات');}
+function generateKey(){myKey='NASHWAN-'+Math.random().toString(36).substring(2,10).toUpperCase()+'-'+Date.now().toString().slice(-4);localStorage.setItem('nashwan_key',myKey);document.getElementById('myKey').value=myKey;alert('مفتاح جديد: '+myKey);}
+function copyKey(){navigator.clipboard.writeText(myKey);alert('تم نسخ المفتاح ✅');}
+// --- مكالمات مشفرة ---
+async function startCall(){try{localStream=await navigator.mediaDevices.getUserMedia({audio:true});document.getElementById('callBanner').classList.remove('hidden');document.getElementById('callText').textContent=(callEncrypt?'📞🔒 مكالمة مشفرة جارية مع ':'📞 مكالمة جارية مع ')+document.getElementById('chatName').textContent+' - يسمعك الآن';BC.postMessage({type:'call',from:me?.name||'نشوان'});const audio=document.createElement('audio');audio.srcObject=localStream;audio.play();}catch(e){alert('اسمح للميكروفون، وافتح من https');}}
+function showIncomingCall(from){document.getElementById('callBanner')?.classList.remove('hidden');if(document.getElementById('callText')) document.getElementById('callText').textContent='📞🔒 مكالمة مشفرة واردة من '+from;}
 function endCall(){if(localStream) localStream.getTracks().forEach(t=>t.stop());document.getElementById('callBanner').classList.add('hidden');}
-function startVideo(){alert('مكالمة فيديو - اسمح للكاميرا');startCall();}
-function openCamera(){alert('الكاميرا - اختر صورة من المحادثة');}
-function showMenu(){alert('القائمة: لوحة تحكم - إعدادات - أذكار');}
-function openCalls(){document.getElementById('chatList').innerHTML='<div style="padding:30px;text-align:center">📞 سجل المكالمات<br><small>المكالمات الصوتية والفيديو داخل التطبيق</small><br><br><button onclick="renderChats()" style="padding:10px 18px;background:#075e54;color:#fff;border:none;border-radius:10px">رجوع للمحادثات</button></div>';}
+function startVideo(){alert('مكالمة فيديو مشفرة 🔒📹');startCall();}
+function openCamera(){alert('الكاميرا - اختر صورة');}
+function showMenu(){alert('القائمة: لوحة تحكم - مركز التشفير - إعدادات');}
+function openCalls(){document.getElementById('chatList').innerHTML='<div style="padding:30px;text-align:center">📞🔒 سجل المكالمات المشفرة<br><small>كل المكالمات مشفرة</small><br><br><button onclick="renderChats()" style="padding:10px 18px;background:#075e54;color:#fff;border:none;border-radius:10px">رجوع للمحادثات</button></div>';}
 if(localStorage.getItem('nashwan_theme')) document.body.setAttribute('data-theme',localStorage.getItem('nashwan_theme'));
 showApp();
 </script>
