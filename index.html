@@ -9,32 +9,50 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Segoe UI',Tahoma,sans-serif;min-height:100dvh;padding-bottom:80px;background:var(--bg);color:var(--text)}
-:root{--bg:#E7EFEA;--card:#fff;--text:#111b21;--muted:#667781;--accent:#075E54;--border:#e9edef;--input:#f0f2f5;--bubble-me:#D9FDD3;--bubble-other:#fff;--header:#075E54}
-body[data-theme="ice"]{--bg:#EAF6FF;--card:#fff;--text:#1a2e35;--muted:#5a7a85;--accent:#5A7D2A;--border:#D6EBD6;--input:#F0F7E6;--bubble-me:#D9EFD0;--bubble-other:#fff;--header:linear-gradient(135deg,#B8E0F0,#5A7D2A)}
-body[data-theme="maroon"]{--bg:#FFF5F5;--card:#fff;--text:#3B0A0A;--muted:#8A5A5A;--accent:#7B1E2B;--border:#F5D6D6;--input:#FFF0F0;--bubble-me:#FADADD;--bubble-other:#fff;--header:linear-gradient(135deg,#7B1E2B,#A8323F)}
-body[data-theme="army"]{--bg:#F2F3E9;--card:#fff;--text:#2B2D1E;--muted:#6B6E5A;--accent:#4B5320;--border:#DDE0C8;--input:#F0F1E2;--bubble-me:#DDE6B5;--bubble-other:#fff;--header:linear-gradient(135deg,#4B5320,#6B7A2A)}
-body[data-theme="gold"]{--bg:#FFFBEA;--card:#fffdf5;--text:#2A2200;--muted:#8A7A2A;--accent:#C9A227;--border:#F5E6A8;--input:#FFF8D6;--bubble-me:#FFEFA0;--bubble-other:#fff;--header:linear-gradient(135deg,#111,#C9A227,#F5D67B)}
+body{font-family:'Segoe UI',Tahoma,sans-serif;min-height:100dvh;padding-bottom:80px;background:var(--bg);color:var(--text);transition:.4s;overflow-x:hidden}
+body::before{content:"🔐 🔒 🛡️ 💚 🔑";position:fixed;top:0;left:0;right:0;bottom:0;font-size:120px;opacity:.04;pointer-events:none;z-index:0;white-space:pre-wrap;word-break:break-all;line-height:1.2;animation:floatCodes 18s linear infinite}
+@keyframes floatCodes{0%{transform:translateY(0)}100%{transform:translateY(-80px)}}
+/* ===== 5 ثيمات تشفير متحركة ===== */
+:root{--bg:#0B141A;--card:#111B21;--text:#E9EDEF;--muted:#8696A0;--accent:#00A884;--border:#222D34;--input:#202C33;--bubble-me:#005C4B;--bubble-other:#202C33;--header:#075E54}
+/* 1 - ماتريكس */
+body[data-theme="matrix"]{--bg:#020A02;--card:#0A1A0A;--text:#C6FFC6;--muted:#6FBF6F;--accent:#00FF41;--border:#0F3D0F;--input:#0D240D;--bubble-me:#003B00;--bubble-other:#0D240D;--header:linear-gradient(135deg,#001A00,#00FF41,#001A00);background-image:linear-gradient(rgba(0,255,65,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,65,.06) 1px,transparent 1px);background-size:22px 22px;animation:matrixMove 3s linear infinite}
+@keyframes matrixMove{0%{background-position:0 0}100%{background-position:22px 22px}}
+/* 2 - نيون سايبر */
+body[data-theme="neon"]{--bg:#0A0A1F;--card:#12122E;--text:#E6E6FF;--muted:#9A9ACF;--accent:#A855F7;--border:#2A2A5A;--input:#1A1A3A;--bubble-me:#4C1D95;--bubble-other:#1A1A3A;--header:linear-gradient(135deg,#7C3AED,#06B6D4,#EC4899);background-size:200% 200%;animation:neonGlow 5s ease infinite}
+@keyframes neonGlow{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+body[data-theme="neon"] .card{box-shadow:0 0 22px rgba(168,85,247,.25);border:1px solid #A855F7}
+/* 3 - قفل ثلجي */
+body[data-theme="ice"]{--bg:#EAF6FF;--card:#fff;--text:#0F2A3A;--muted:#5A7A8A;--accent:#0288D1;--border:#C8E6F5;--input:#F0F9FF;--bubble-me:#B3E5FC;--bubble-other:#fff;--header:linear-gradient(135deg,#0288D1,#4FC3F7,#B3E5FC);animation:iceShine 6s ease-in-out infinite}
+@keyframes iceShine{0%,100%{background-color:#EAF6FF}50%{background-color:#D0EEFF}}
+body[data-theme="ice"] .card{box-shadow:0 4px 20px rgba(2,136,209,.12)}
+/* 4 - خزنة ذهبية */
+body[data-theme="gold"]{--bg:#FFFBEA;--card:#FFFEF5;--text:#2A2200;--muted:#8A7A2A;--accent:#C9A227;--border:#F5E6A8;--input:#FFF8D6;--bubble-me:#FFEFA0;--bubble-other:#fff;--header:linear-gradient(135deg,#111,#C9A227,#F5D67B,#C9A227);background-size:300% 300%;animation:goldMove 4s linear infinite}
+@keyframes goldMove{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+body[data-theme="gold"] .card{border:1px solid #C9A227;box-shadow:0 4px 20px rgba(201,162,39,.2)}
+/* 5 - محيط عميق */
+body[data-theme="ocean"]{--bg:#02111F;--card:#0A2438;--text:#D6F0FF;--muted:#7AB8D6;--accent:#00BCD4;--border:#0F3A52;--input:#0E2E44;--bubble-me:#006064;--bubble-other:#0E2E44;--header:linear-gradient(135deg,#02111F,#006064,#00BCD4);animation:oceanWave 7s ease-in-out infinite}
+@keyframes oceanWave{0%,100%{background-color:#02111F}50%{background-color:#04263F}}
 input,textarea,select{width:100%;padding:12px;border-radius:14px;border:1px solid #d1d7db;background:var(--card);color:var(--text);font-size:14px;outline:none}
 textarea{min-height:80px;line-height:1.8}
 label{display:block;font-size:12px;color:var(--muted);margin:12px 0 5px;font-weight:800}
-.btn{padding:12px;border-radius:28px;border:none;cursor:pointer;font-size:13px;font-weight:800;display:flex;justify-content:center;gap:6px;width:100%}
+.btn{padding:12px;border-radius:28px;border:none;cursor:pointer;font-size:13px;font-weight:800;display:flex;justify-content:center;gap:6px;width:100%;transition:.2s}
+.btn:active{transform:scale(.97)}
 .btn-green{background:linear-gradient(135deg,var(--accent),#00a884);color:#fff}
 .btn-light{background:var(--input);color:var(--text)}
 .btn-gold{background:linear-gradient(135deg,#C9A227,#F5D67B);color:#111}
 .btn-red{background:#ea0038;color:#fff}
 .btn-purple{background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff}
-.auth-screen{position:fixed;inset:0;background:linear-gradient(180deg,#075E54 0%,#00a884 45%,#fff 45%);z-index:2000;overflow-y:auto}
-.auth-card{background:#fff;border-radius:28px 28px 0 0;padding:22px 18px;max-width:460px;margin:80px auto 0}
+.auth-screen{position:fixed;inset:0;background:linear-gradient(180deg,#020A02 0%,#00FF41 25%,#075E54 50%,#fff 50%);z-index:2000;overflow-y:auto}
+.auth-card{background:#fff;border-radius:28px 28px 0 0;padding:22px 18px;max-width:460px;margin:80px auto 0;box-shadow:0 -10px 40px rgba(0,0,0,.2)}
 .auth-card h1{font-size:24px;color:#075E54;text-align:center}
 .auth-card p{text-align:center;font-size:12px;color:#667781;line-height:1.8;margin-top:6px}
 .otp-input{font-size:26px!important;text-align:center!important;letter-spacing:8px!important;font-weight:900}
-.header{position:sticky;top:0;z-index:100;background:var(--header);color:#fff;padding:8px 12px;display:flex;align-items:center;gap:8px}
+.header{position:sticky;top:0;z-index:100;background:var(--header);color:#fff;padding:8px 12px;display:flex;align-items:center;gap:8px;box-shadow:0 2px 15px rgba(0,0,0,.2)}
 .header h1{font-size:15px;font-weight:900;flex:1;line-height:1.3;text-align:center}
 .header h1 span{font-size:9px;background:#25D366;padding:2px 7px;border-radius:20px;display:inline-block;margin-top:2px}
 .icon-btn{width:38px;height:38px;border-radius:50%;border:none;background:rgba(255,255,255,.18);color:#fff;font-size:17px;cursor:pointer;flex-shrink:0}
 .avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#25D366);color:#fff;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:900;flex-shrink:0}
-.app{max-width:620px;margin:0 auto}
+.app{max-width:620px;margin:0 auto;position:relative;z-index:1}
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:.3s;z-index:200}
 .overlay.show{opacity:1;pointer-events:auto}
 .sidebar{position:fixed;top:0;right:0;bottom:0;width:300px;max-width:88vw;background:var(--card);z-index:201;transform:translateX(100%);transition:.35s;display:flex;flex-direction:column;overflow-y:auto}
@@ -45,7 +63,7 @@ label{display:block;font-size:12px;color:var(--muted);margin:12px 0 5px;font-wei
 .side-item .ic{width:36px;height:36px;border-radius:11px;background:var(--input);display:flex;align-items:center;justify-content:center;font-size:17px}
 .side-label{padding:12px 16px 5px;font-size:11px;color:var(--muted);font-weight:800}
 .side-quote{margin:12px;background:linear-gradient(135deg,#FFF8E1,#FFF3C4);border:1px solid #F5D67B;border-radius:16px;padding:12px;text-align:center;font-size:12px;line-height:1.9;color:#5D4037}
-.card{background:var(--card);border-radius:18px;padding:14px;margin:10px 12px;border:1px solid var(--border)}
+.card{background:var(--card);border-radius:18px;padding:14px;margin:10px 12px;border:1px solid var(--border);position:relative;z-index:1}
 .card h2{font-size:14px}.card p{font-size:12px;color:var(--muted);line-height:1.8}
 .code-out{padding:12px;border-radius:12px;background:var(--input);border:1px solid var(--accent);font-family:monospace;font-size:12px;word-break:break-all;white-space:pre-wrap;margin-top:10px;color:var(--accent);direction:ltr;text-align:left}
 .btn-row{display:flex;gap:7px;margin-top:10px}.btn-row .btn{flex:1}
@@ -93,11 +111,12 @@ label{display:block;font-size:12px;color:var(--muted);margin:12px 0 5px;font-wei
 .admin-hero{background:linear-gradient(135deg,#111,#C9A227,#F5D67B);color:#fff;border-radius:18px;padding:16px;margin:10px 12px;text-align:center}
 .admin-card{background:var(--card);border:2px solid #C9A227;border-radius:16px;padding:12px;margin:10px 12px}
 .theme-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
-.theme-btn{padding:14px;border-radius:14px;cursor:pointer;text-align:center;font-weight:800;font-size:12px}
-.theme-btn.ice{background:linear-gradient(135deg,#B8E0F0,#5A7D2A);color:#fff}
-.theme-btn.maroon{background:linear-gradient(135deg,#7B1E2B,#A8323F);color:#fff}
-.theme-btn.army{background:linear-gradient(135deg,#4B5320,#6B7A2A);color:#fff}
+.theme-btn{padding:14px;border-radius:14px;cursor:pointer;text-align:center;font-weight:800;font-size:12px;border:2px solid transparent}
+.theme-btn.matrix{background:linear-gradient(135deg,#001A00,#00FF41);color:#fff}
+.theme-btn.neon{background:linear-gradient(135deg,#7C3AED,#06B6D4);color:#fff}
+.theme-btn.ice{background:linear-gradient(135deg,#0288D1,#B3E5FC);color:#fff}
 .theme-btn.gold{background:linear-gradient(135deg,#111,#C9A227);color:#F5D67B}
+.theme-btn.ocean{background:linear-gradient(135deg,#02111F,#00BCD4);color:#fff}
 .calc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:10px}
 .calc-btn{padding:14px;border-radius:12px;border:none;background:var(--input);font-size:16px;font-weight:800;cursor:pointer}
 .calc-btn.eq{background:var(--accent);color:#fff}
@@ -106,9 +125,9 @@ label{display:block;font-size:12px;color:var(--muted);margin:12px 0 5px;font-wei
 .prayer-row{display:flex;justify-content:space-between;background:var(--input);padding:10px 12px;border-radius:12px;margin-top:7px;font-size:13px;font-weight:700}
 </style>
 </head>
-<body data-theme="ice">
-<div class="auth-screen" id="authScreen">
-<div style="text-align:center;padding:24px 18px 0;color:#fff"><div style="font-size:50px">🛡️</div><h1 style="font-size:26px;font-weight:900">واتساب نشوان الآمن</h1><p style="font-size:12px;opacity:.9">خصوصيتك أمانة • رسائلك لا يقرأها أحد</p></div>
+<body data-theme="matrix">
+  <div class="auth-screen" id="authScreen">
+<div style="text-align:center;padding:24px 18px 0;color:#fff"><div style="font-size:50px">🛡️</div><h1 style="font-size:26px;font-weight:900">واتساب نشوان الآمن</h1><p style="font-size:12px;opacity:.9">خصوصيتك أمانة • رسائلك لا يقرأها أحد</p><p style="font-size:11px;opacity:.8;margin-top:4px">🔐 ماتريكس • 💜 نيون • ❄️ ثلجي • 🏆 ذهبي • 🌊 محيط</p></div>
 <div class="auth-card" id="stepPhone"><h1>أهلاً بك 👋</h1><p>سجل برقمك مثل واتساب، وادخل عالماً آمناً.</p><label>الدولة</label><div style="display:flex;gap:7px"><select id="countryCode" style="width:105px"><option value="+967">🇾🇪 +967</option><option value="+966">🇸🇦 +966</option><option value="+20">🇪🇬 +20</option><option value="+962">🇯🇴 +962</option><option value="+971">🇦🇪 +971</option></select><input id="phoneInput" type="tel" placeholder="771713275" inputmode="numeric"></div><label>اسمك</label><input id="displayName" placeholder="مثال: نشوان البدري"><label>كلمة مرور حسابك</label><input id="regPass" type="password" placeholder="••••••"><button class="btn btn-green" id="sendOtpBtn" style="margin-top:16px">التالي ➜ إرسال رمز التأكيد</button><p style="font-size:11px;margin-top:10px">﴿ وَقُل رَّبِّ أَدْخِلْنِي مُدْخَلَ صِدْقٍ ﴾</p><button class="btn btn-light" id="goAdminBtn" style="margin-top:8px">👑 أنا المدير - دخول مباشر</button></div>
 <div class="auth-card" id="stepOtp" style="display:none"><h1>رمز التأكيد 🔑</h1><p>أرسلنا رمزاً إلى <b id="otpPhoneShow"></b></p><label>أدخل الرمز</label><input id="otpInput" class="otp-input" inputmode="numeric" maxlength="6" placeholder="••••••"><button class="btn btn-green" id="verifyOtpBtn" style="margin-top:14px">تأكيد ودخول ✅</button><button class="btn btn-light" id="resendOtpBtn" style="margin-top:8px">إعادة إرسال 🔄</button><button class="btn btn-light" id="backPhoneBtn" style="margin-top:8px">⬅ تغيير الرقم</button><div id="demoOtpBox" style="display:none;background:#e7fce3;border:1px dashed #00a884;border-radius:14px;padding:10px;text-align:center;margin-top:10px"><b id="demoOtpText" style="font-size:24px;letter-spacing:8px;color:#075E54"></b><p style="font-size:11px">كود تجريبي</p></div><button class="btn btn-light" id="waOtpBtn" style="margin-top:10px;background:#25D366;color:#fff">💬 اطلب الكود من واتساب المدير</button></div>
 <div class="auth-card" id="stepAdmin" style="display:none"><h1>👑 دخول المدير</h1><label>اسم المدير</label><input id="adminUser" placeholder="اسم المدير"><label>كلمة مرور المدير</label><input id="adminPass" type="password" placeholder="•••••••"><button class="btn btn-green" id="adminLoginBtn" style="margin-top:14px">دخول المدير 👑</button><button class="btn btn-light" id="backFromAdmin" style="margin-top:8px">⬅ رجوع</button></div>
@@ -146,7 +165,7 @@ label{display:block;font-size:12px;color:var(--muted);margin:12px 0 5px;font-wei
 <div class="side-item" data-side="about"><span class="ic">💚</span>عنا - من نحن</div>
 <div class="side-item" id="logoutSide" style="color:#ea0038"><span class="ic" style="background:#FCE4EC">🚪</span>خروج</div>
 <div class="side-quote">“ الأمان ليس ميزة،<br>بل حق لكل إنسان ”<br><b>— نشوان البدري</b><br><span style="font-size:11px">﴿ وَتَوَكَّلْ عَلَى اللَّهِ ۚ وَكَفَىٰ بِاللَّهِ وَكِيلًا ﴾</span></div>
-<div style="text-align:center;font-size:10px;color:var(--muted);padding:0 0 14px">واتساب نشوان الآمن • v20.0<br>صُمم بحب في اليمن 🇾🇪</div>
+<div style="text-align:center;font-size:10px;color:var(--muted);padding:0 0 14px">واتساب نشوان الآمن • v21.0 - ثيمات التشفير 🔐<br>صُمم بحب في اليمن 🇾🇪</div>
 </aside>
 
 <div class="app" id="mainApp" style="display:none">
@@ -154,7 +173,7 @@ label{display:block;font-size:12px;color:var(--muted);margin:12px 0 5px;font-wei
 <div id="adminDashboard" style="display:none">
 <div class="admin-hero"><div style="font-size:42px">👑</div><h2 style="font-size:16px">أهلاً بك يا مدير - نشوان</h2><p style="font-size:11px;opacity:.9">لوحة التحكم الكاملة</p></div>
 <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:10px 12px"><div class="card" style="margin:0;text-align:center"><b style="font-size:20px" id="statUsers">0</b><p>مستخدم</p></div><div class="card" style="margin:0;text-align:center"><b style="font-size:20px;color:#C9A227" id="statPaid">0</b><p>مدفوع</p></div><div class="card" style="margin:0;text-align:center"><b style="font-size:20px;color:#25D366" id="statOnline">1</b><p>متصل</p></div></div>
-<div class="admin-card"><h3 style="font-size:13px">🎨 الثيمات</h3><div class="theme-grid"><div class="theme-btn ice" onclick="setTheme('ice')">❄️ ثلجي + زيتوني</div><div class="theme-btn maroon" onclick="setTheme('maroon')">🍷 عنابي + أبيض</div><div class="theme-btn army" onclick="setTheme('army')">🪖 حربي + أبيض</div><div class="theme-btn gold" onclick="setTheme('gold')">✨ ذهبي فظيع</div></div></div>
+<div class="admin-card"><h3 style="font-size:13px">🎨 5 ثيمات التشفير - متحركة ✨</h3><p style="font-size:11px;color:var(--muted)">اضغط على أي ثيم وبيتغير التطبيق كله فوراً</p><div class="theme-grid"><div class="theme-btn matrix" onclick="setTheme('matrix')">🟢 ماتريكس<br><span style="font-size:10px;opacity:.8">أكواد الهكر</span></div><div class="theme-btn neon" onclick="setTheme('neon')">💜 نيون سايبر<br><span style="font-size:10px;opacity:.8">يلمع ويتحرك</span></div><div class="theme-btn ice" onclick="setTheme('ice')">❄️ قفل ثلجي<br><span style="font-size:10px;opacity:.8">ثلج نقي</span></div><div class="theme-btn gold" onclick="setTheme('gold')">🏆 خزنة ذهبية<br><span style="font-size:10px;opacity:.8">ذهب يلمع</span></div><div class="theme-btn ocean" onclick="setTheme('ocean')">🌊 محيط عميق<br><span style="font-size:10px;opacity:.8">موجات هادئة</span></div><div class="theme-btn" style="background:linear-gradient(135deg,#075E54,#00a884);color:#fff" onclick="setTheme('matrix')">🎲 عشوائي</div></div></div>
 <div class="admin-card"><h3 style="font-size:13px">👥 المشتركين - تفعيل / إلغاء</h3><div id="adminUsersList"></div></div>
 <div class="admin-card"><h3 style="font-size:13px">👑 توليد دعوة مستخدم جديد</h3><label>اسم مستخدم جديد</label><input id="inviteName" placeholder="اسم المستخدم"><label>كلمة مرور له</label><input id="invitePass" type="password" placeholder="••••••"><div class="btn-row"><button class="btn btn-green" id="generateInviteBtn">توليد دعوة</button></div><div class="code-out" id="inviteShortCode" style="display:none"></div></div>
 <div class="admin-card" style="border-color:#ea0038"><h3 style="font-size:13px">🔐 تغيير بيانات المدير</h3><label>اسم المدير الجديد</label><input id="newAdminUser" placeholder="اسم المدير الجديد"><label>كلمة مرور المدير الجديدة</label><input id="newAdminPass" type="password" placeholder="••••••"><div class="btn-row"><button class="btn btn-green" id="changeAdminBtn">💾 حفظ بيانات المدير الجديدة</button></div><p style="font-size:11px;color:var(--muted)">* بعد التغيير بتخرج وتدخل بالجديد</p></div>
@@ -228,11 +247,11 @@ label{display:block;font-size:12px;color:var(--muted);margin:12px 0 5px;font-wei
 </div>
 
 <div class="tab-content" id="tab-settings">
-<div class="card"><h2>⚙️ الإعدادات</h2><div style="display:flex;gap:10px;align-items:center"><div class="avatar" id="settingsAvatar" style="width:56px;height:56px;font-size:22px">N</div><div><b id="settingsName" style="font-size:13px">مستخدم</b><div style="font-size:11px;color:var(--muted)" id="settingsPhone">+967...</div><div style="font-size:11px;color:#25D366">● متصل الآن</div></div></div><label>تغيير اسمي</label><input id="editName"><div class="btn-row"><button class="btn btn-green" id="saveNameBtn">حفظ الاسم</button></div><label>🎨 اختر ثيمك</label><div class="theme-grid"><div class="theme-btn ice" onclick="setTheme('ice')">❄️ ثلجي + زيتوني</div><div class="theme-btn maroon" onclick="setTheme('maroon')">🍷 عنابي + أبيض</div><div class="theme-btn army" onclick="setTheme('army')">🪖 حربي + أبيض</div><div class="theme-btn gold" onclick="setTheme('gold')">✨ ذهبي فظيع</div></div><div class="switch-row"><span>🔒 قفل بـ PIN</span><input type="checkbox" id="lockEnabled"></div><label>PIN</label><input id="pinSetup" type="password" inputmode="numeric" maxlength="6" placeholder="••••"><div class="switch-row"><span>👆 بصمة</span><input type="checkbox" id="bioEnabled"></div><div class="btn-row"><button class="btn btn-green" id="savePinBtn">حفظ الأمان</button></div><label>💳 اشتراكي</label><div style="background:#e7fce3;border-radius:12px;padding:10px;font-size:12px;line-height:1.8" id="myPlanBox">مجاني</div><div class="btn-row"><button class="btn btn-light" id="exportBtn">📤 تصدير</button><button class="btn btn-light" id="logoutBtn" style="background:#ea0038;color:#fff">🚪 خروج</button></div><div id="adminPanel" style="display:none;margin-top:12px;border-top:1px solid var(--border);padding-top:12px"><h2>👑 لوحة المدير</h2><div id="userList"></div></div></div>
+<div class="card"><h2>⚙️ الإعدادات</h2><div style="display:flex;gap:10px;align-items:center"><div class="avatar" id="settingsAvatar" style="width:56px;height:56px;font-size:22px">N</div><div><b id="settingsName" style="font-size:13px">مستخدم</b><div style="font-size:11px;color:var(--muted)" id="settingsPhone">+967...</div><div style="font-size:11px;color:#25D366">● متصل الآن</div></div></div><label>تغيير اسمي</label><input id="editName"><div class="btn-row"><button class="btn btn-green" id="saveNameBtn">حفظ الاسم</button></div><label>🎨 اختر ثيمك - 5 ثيمات تشفير متحركة</label><div class="theme-grid"><div class="theme-btn matrix" onclick="setTheme('matrix')">🟢 ماتريكس</div><div class="theme-btn neon" onclick="setTheme('neon')">💜 نيون سايبر</div><div class="theme-btn ice" onclick="setTheme('ice')">❄️ قفل ثلجي</div><div class="theme-btn gold" onclick="setTheme('gold')">🏆 خزنة ذهبية</div><div class="theme-btn ocean" onclick="setTheme('ocean')">🌊 محيط عميق</div><div class="theme-btn" style="background:linear-gradient(135deg,#075E54,#00a884);color:#fff" onclick="setTheme('matrix')">🎲 عشوائي</div></div><div class="switch-row"><span>🔒 قفل بـ PIN</span><input type="checkbox" id="lockEnabled"></div><label>PIN</label><input id="pinSetup" type="password" inputmode="numeric" maxlength="6" placeholder="••••"><div class="switch-row"><span>👆 بصمة</span><input type="checkbox" id="bioEnabled"></div><div class="btn-row"><button class="btn btn-green" id="savePinBtn">حفظ الأمان</button></div><label>💳 اشتراكي</label><div style="background:#e7fce3;border-radius:12px;padding:10px;font-size:12px;line-height:1.8" id="myPlanBox">مجاني</div><div class="btn-row"><button class="btn btn-light" id="exportBtn">📤 تصدير</button><button class="btn btn-light" id="logoutBtn" style="background:#ea0038;color:#fff">🚪 خروج</button></div><div id="adminPanel" style="display:none;margin-top:12px;border-top:1px solid var(--border);padding-top:12px"><h2>👑 لوحة المدير</h2><div id="userList"></div></div></div>
 </div>
 
 <div class="tab-content" id="tab-guide">
-<div class="card"><h2>📖 تعليمات الاستخدام</h2><div style="line-height:2;font-size:13px"><b>1️⃣ التسجيل:</b> أدخل رقمك واسمك.<br><b>2️⃣ محادثة:</b> اختر صديق، ادخل المفتاح، وارسل.<br><b>3️⃣ مجموعة:</b> القائمة > إنشاء مجموعة.<br><b>4️⃣ بث:</b> القائمة > رسالة جماعية.<br><b>5️⃣ مكالمة:</b> داخل المحادثة 📞 أو 📹.<br><b>6️⃣ أذكار وقرآن:</b> من القائمة الجانبية.</div></div>
+<div class="card"><h2>📖 تعليمات الاستخدام</h2><div style="line-height:2;font-size:13px"><b>1️⃣ التسجيل:</b> أدخل رقمك واسمك.<br><b>2️⃣ محادثة:</b> اختر صديق، ادخل المفتاح، وارسل.<br><b>3️⃣ مجموعة:</b> القائمة > إنشاء مجموعة.<br><b>4️⃣ بث:</b> القائمة > رسالة جماعية.<br><b>5️⃣ مكالمة:</b> داخل المحادثة 📞 أو 📹.<br><b>6️⃣ ثيمات:</b> زر 🎨 في الأعلى يبدل بين 5 ثيمات تشفير متحركة.<br><b>7️⃣ أذكار وقرآن:</b> من القائمة الجانبية.</div></div>
 </div>
 
 <div class="tab-content" id="tab-about">
@@ -252,24 +271,26 @@ label{display:block;font-size:12px;color:var(--muted);margin:12px 0 5px;font-wei
 
 <div class="bottom-nav" id="bottomNav" style="display:none"><div class="nav-item active" data-tab="chats"><span class="ic">💬</span>محادثات</div><div class="nav-item" data-tab="calls"><span class="ic">📞</span>مكالمات</div><div class="nav-item" data-tab="encrypt"><span class="ic">✍️</span>تشفير</div><div class="nav-item" data-tab="azkar"><span class="ic">🤲</span>أذكار</div><div class="nav-item" data-tab="settings"><span class="ic">⚙️</span>إعدادات</div></div>
 <button class="fab" id="fabBtn" style="display:none">+</button><div class="toast" id="toast"></div>
-  
-  <script>
+<script>
 const firebaseConfig={apiKey:"AIzaSyBvH0siWoOLreCbBeKrTVpkB4uy6RJbyBQ",authDomain:"chatstruct.firebaseapp.com",databaseURL:"https://chatstruct-default-rtdb.europe-west1.firebasedatabase.app",projectId:"chatstruct",storageBucket:"chatstruct.firebasestorage.app",messagingSenderId:"1058907485659",appId:"1:1058907485659:web:4b26228c6a74f4c2f223fe"};
 let rtdb=null;try{firebase.initializeApp(firebaseConfig);rtdb=firebase.database();firebase.auth().signInAnonymously().catch(()=>{})}catch(e){}
-const USERS="wna_users_v20",SESSION="wna_session_v20",CONTACTS="wna_contacts_v20_",QUOTA="wna_quota_v20",SEC="wna_sec_v20",ADMIN_KEY="wna_admin_v20",INVITES="wna_invites_v20",REG="wna_registered_v20",CALLS="wna_calls_v20",TASKS="wna_tasks_v20";
+const USERS="wna_users_v21",SESSION="wna_session_v21",CONTACTS="wna_contacts_v21_",QUOTA="wna_quota_v21",SEC="wna_sec_v21",ADMIN_KEY="wna_admin_v21",INVITES="wna_invites_v21",REG="wna_registered_v21",CALLS="wna_calls_v21",TASKS="wna_tasks_v21";
 let currentUser=null,currentPhone="",currentDisplay="",isAdmin=false,currentChatId=null,currentChatKey="",currentChatFriend="",currentGroupId=null,currentGroupKey="",isGroupChat=false;
 const OWNER_WA="967771713275",FREE_LIMIT=15;
 function toast(m){const t=document.getElementById("toast");t.textContent=m;t.className="toast show";setTimeout(()=>t.className="toast",3000)}
 function esc(s){return String(s).replace(/[&<>\"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
 function b64e(s){return btoa(unescape(encodeURIComponent(s))).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"")}
 function b64d(s){s=s.replace(/-/g,"+").replace(/_/g,"/");while(s.length%4)s+="=";return decodeURIComponent(escape(atob(s)))}
-async function hashPass(p){const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode("NASHWAN_SALT_V20_"+p));return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,"0")).join("")}
+async function hashPass(p){const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode("NASHWAN_SALT_V21_"+p));return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,"0")).join("")}
 async function copyText(t){try{await navigator.clipboard.writeText(t);toast("✅ تم النسخ")}catch{const ta=document.createElement("textarea");ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand("copy");ta.remove();toast("✅ تم النسخ")}}
 function openWA(msg){window.open("https://wa.me/"+OWNER_WA+"?text="+encodeURIComponent(msg),"_blank")}
-function setTheme(n){document.body.setAttribute("data-theme",n);localStorage.setItem("wna_theme_v20",n);toast("تم تغيير الثيم ✅")}
-function loadTheme(){document.body.setAttribute("data-theme",localStorage.getItem("wna_theme_v20")||"ice")}
+// ===== 5 ثيمات تشفير متحركة =====
+const THEMES=["matrix","neon","ice","gold","ocean"];
+const THEME_NAMES={matrix:"🟢 ماتريكس التشفير",neon:"💜 نيون سايبر",ice:"❄️ قفل ثلجي",gold:"🏆 خزنة ذهبية",ocean:"🌊 محيط عميق"};
+function setTheme(n){if(n==="random"){n=THEMES[Math.floor(Math.random()*THEMES.length)]}document.body.setAttribute("data-theme",n);localStorage.setItem("wna_theme_v21",n);toast(THEME_NAMES[n]+" ✅")}
+function loadTheme(){document.body.setAttribute("data-theme",localStorage.getItem("wna_theme_v21")||"matrix")}
 loadTheme();
-document.getElementById("themeBtn").onclick=()=>{const th=["ice","maroon","army","gold"];let cur=localStorage.getItem("wna_theme_v20")||"ice";setTheme(th[(th.indexOf(cur)+1)%th.length])};
+document.getElementById("themeBtn").onclick=()=>{const cur=localStorage.getItem("wna_theme_v21")||"matrix";const next=THEMES[(THEMES.indexOf(cur)+1)%THEMES.length];setTheme(next)};
 let calcVal="0";function calcAdd(v){if(calcVal==="0"&&!"+-*/.".includes(v))calcVal=v;else calcVal+=v;document.getElementById("calcDisplay").value=calcVal}function calcClear(){calcVal="0";document.getElementById("calcDisplay").value="0"}function calcBack(){calcVal=calcVal.slice(0,-1)||"0";document.getElementById("calcDisplay").value=calcVal}function calcEqual(){try{calcVal=String(eval(calcVal));document.getElementById("calcDisplay").value=calcVal}catch{toast("خطأ")}}
 function renderTasks(){const el=document.getElementById("taskList");if(!el)return;let list=JSON.parse(localStorage.getItem(TASKS+currentUser)||"[]");el.innerHTML="";if(!list.length)el.innerHTML="<p style='font-size:12px;color:var(--muted)'>لا توجد مهام</p>";list.forEach((t,i)=>{const d=document.createElement("div");d.className="task-item"+(t.done?" done":"");d.innerHTML=`<input type="checkbox" ${t.done?"checked":""} style="width:20px"><span style="flex:1">${esc(t.text)} - ⏰ ${t.time||""}</span><button style="border:none;background:none;cursor:pointer">🗑️</button>`;d.querySelector("input").onchange=()=>{list[i].done=!list[i].done;localStorage.setItem(TASKS+currentUser,JSON.stringify(list));renderTasks()};d.querySelector("button").onclick=()=>{list.splice(i,1);localStorage.setItem(TASKS+currentUser,JSON.stringify(list));renderTasks()};el.appendChild(d)})}
 document.getElementById("addTaskBtn").onclick=()=>{const txt=document.getElementById("taskText").value.trim(),time=document.getElementById("taskTime").value;if(!txt)return toast("اكتب المهمة");let list=JSON.parse(localStorage.getItem(TASKS+currentUser)||"[]");list.push({text:txt,time,done:false});localStorage.setItem(TASKS+currentUser,JSON.stringify(list));document.getElementById("taskText").value="";renderTasks();toast("✅ تم إضافة المهمة")};
