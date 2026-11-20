@@ -1,10 +1,18 @@
-const CACHE = "wna-v19";
-self.addEventListener("install", e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(["/", "/index.html"])));
+const CACHE = 'nashwan-v22';
+self.addEventListener('install', e => {
   self.skipWaiting();
+  e.waitUntil(caches.open(CACHE).then(c => c.addAll(['/','/manifest.json'])));
 });
-self.addEventListener("fetch", e => {
+self.addEventListener('activate', e => {
+  e.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))));
+});
+self.addEventListener('fetch', e => {
+  if (e.request.method !== 'GET') return;
   e.respondWith(
-    caches.match(e.request).then(res => res || fetch(e.request).catch(() => caches.match("/index.html")))
+    fetch(e.request).then(res => {
+      const copy = res.clone();
+      caches.open(CACHE).then(c => c.put(e.request, copy));
+      return res;
+    }).catch(() => caches.match(e.request))
   );
 });
