@@ -7,6 +7,14 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#1B5E20">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="نشوان الآمن">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<link rel="icon" href="/icon-192.png">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Segoe UI',Tahoma,sans-serif;min-height:100dvh;padding-bottom:80px;background:var(--bg);color:var(--text);transition:.3s}
@@ -365,6 +373,12 @@ document.getElementById("exportBtn").onclick=()=>{const b=new Blob([JSON.stringi
 document.getElementById("waLockedBtn").onclick=()=>openWA(`مرحباً نشوان، انتهى اشتراكي. اسمي: ${currentDisplay} - رقمي: ${currentPhone}`);document.getElementById("activateRenewBtn").onclick=()=>{const code=document.getElementById("renewCodeInput").value.trim();if(!code.startsWith("RENEW:"))return toast("كود غلط");try{const d=JSON.parse(b64d(code.slice(6)));let q=getQuota();const days=d.plan==="سنوي"?365:30;q[d.u]={remaining:Infinity,totalUsed:0,plan:d.plan,unlimited:true,expiresAt:Date.now()+days*24*60*60*1000};saveQuota(q);if(d.u===currentUser){updatePlan();toast("تم التجديد ✅")}else toast("تم تجديد "+d.u)}catch{toast("كود غلط")}};
 document.getElementById("generateInviteBtn").onclick=async()=>{const u=document.getElementById("inviteName").value.trim(),p=document.getElementById("invitePass").value.trim();if(!u||!p)return toast("عبي الاسم وكلمة المرور");const h=await hashPass(p);const code="INV:"+b64e(JSON.stringify({u,p:h,exp:Date.now()+86400000}));document.getElementById("inviteShortCode").style.display="block";document.getElementById("inviteShortCode").textContent=code;copyText(code);let inv=JSON.parse(localStorage.getItem(INVITES)||"[]");inv.push({user:u,code,created:Date.now(),used:false});localStorage.setItem(INVITES,JSON.stringify(inv));renderAdminList()};
 initAdmin().then(()=>{const s=localStorage.getItem(SESSION);if(s){try{const obj=JSON.parse(s);if(obj.u){currentUser=obj.u;currentPhone=obj.phone||"";currentDisplay=obj.name||obj.u;const admin=getAdmin();isAdmin=(obj.u===admin.u);startApp();renderCallHistory();renderDuas()}}catch{}}});
+  // تحويل لتطبيق PWA آمن
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(()=>{});
+  });
+}
 </script>
 </body>
 </html>
