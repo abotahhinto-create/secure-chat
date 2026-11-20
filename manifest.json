@@ -1,32 +1,12 @@
 {
-  "name": "الرسائل المشفرة - نشوان البدري",
-  "short_name": "رسائل مشفرة",
-  "description": "برنامج تشفير وفك تشفير رسائل - يعمل بدون انترنت - AES-GCM",
-  "lang": "ar",
-  "dir": "rtl",
-  "start_url": "./index.html",
+  "name": "واتساب نشوان الآمن",
+  "short_name": "واتس نشوان",
+  "start_url": "/",
   "display": "standalone",
-  "orientation": "portrait",
-  "background_color": "#ffffff",
-  "theme_color": "#ffffff",
+  "background_color": "#075E54",
+  "theme_color": "#075E54",
+  "description": "واتساب نشوان الآمن - محادثات مشفرة",
   "icons": [
-    {
-      "src": "icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
-    }
+    { "src": "https://cdn-icons-png.flaticon.com/512/733/733585.png", "sizes": "512x512", "type": "image/png" }
   ]
 }
