@@ -17,12 +17,11 @@ body{margin:0;background:#0b141a;color:#fff;display:flex;justify-content:center;
 .card{background:#202c33;border-radius:14px;padding:18px;margin-bottom:14px}
 .card h3{margin:0 0 6px;color:#00a884}.card p{font-size:13px;color:#aebac1;line-height:1.7;margin:0}
 input{width:100%;padding:14px;border-radius:10px;border:none;background:#2a3942;color:#fff;font-size:16px;outline:none;margin-top:10px}
-input::placeholder{color:#8696a0}
 button{width:100%;padding:14px;border:none;border-radius:10px;background:#00a884;color:#fff;font-size:16px;font-weight:bold;cursor:pointer;margin-top:12px}
 button.sec{background:#2a3942}button.red{background:#e74c3c}button.small{padding:9px;font-size:13px;width:auto;margin:5px 0 0 5px}
-#حالة{text-align:center;color:#ffd166;margin-top:12px;font-size:14px;min-height:20px}
-#صندوق_الرمز{display:none;background:#0e2a24;border:1px solid #00a884;border-radius:12px;padding:16px;margin-top:14px}
-#صندوق_الرمز h4{margin:0 0 4px;color:#00a884}#صندوق_الرمز p{font-size:12px;color:#aebac1}
+#status{text-align:center;color:#ffd166;margin-top:12px;font-size:14px;min-height:20px}
+#codeBox{display:none;background:#0e2a24;border:1px solid #00a884;border-radius:12px;padding:16px;margin-top:14px}
+#codeBox h4{margin:0 0 4px;color:#00a884}#codeBox p{font-size:12px;color:#aebac1}
 .admin-link{text-align:center;color:#8696a0;font-size:12px;margin-top:18px;cursor:pointer;text-decoration:underline}
 .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);align-items:center;justify-content:center;padding:20px;z-index:99}
 .modal.open{display:flex}.modal-in{background:#202c33;width:100%;max-width:380px;border-radius:16px;padding:20px}
@@ -32,7 +31,7 @@ button.sec{background:#2a3942}button.red{background:#e74c3c}button.small{padding
 .item b{font-size:15px}.badge{display:inline-block;padding:3px 8px;border-radius:20px;font-size:11px;background:#333}
 .messages{flex:1;padding:15px;overflow-y:auto}.msg{background:#005c4b;padding:9px 12px;border-radius:10px;margin-bottom:8px;width:fit-content;max-width:85%}.msg.me{margin-left:auto;background:#202c33}
 .bar{display:flex;gap:8px;padding:10px;background:#202c33}.bar input{flex:1;margin:0}.bar button{width:60px;margin:0}
-#شاشة_المدير,#شاشة_الدردشة{display:none;flex-direction:column;flex:1}
+#adminScreen,#chatScreen{display:none;flex-direction:column;flex:1}
 .row{display:flex;gap:8px}.row button{flex:1}
 </style>
 </head>
@@ -40,155 +39,174 @@ button.sec{background:#2a3942}button.red{background:#e74c3c}button.small{padding
 <div class="app">
 <div class="head"><div class="logo">💬</div><div><h2>واتساب الأمن</h2><p>دردشة خاصة • آمنة ومشفرة</p></div></div>
 
-<!-- دخول المستخدم -->
-<div id="شاشة_الدخول" class="box">
+<div id="loginScreen" class="box">
 <div class="card"><h3>تسجيل الدخول</h3><p>أدخل رقم هاتفك لطلب الدخول. بعد موافقة الإدارة، أدخل رمز التأكيد للدخول.</p></div>
-<input id="الهاتف" type="tel" placeholder="رقم الهاتف - مثال 77xxxxxxx">
-<button onclick="طلب_دخول()">طلب الدخول</button>
-<div id="حالة"></div>
-
-<div id="صندوق_الرمز">
+<input id="phoneInput" type="tel" placeholder="رقم الهاتف - مثال 77xxxxxxx">
+<button type="button" onclick="requestLogin()">طلب الدخول</button>
+<div id="status"></div>
+<div id="codeBox">
 <h4>✅ تمت الموافقة</h4><p>أدخل رمز التأكيد الذي وصلك من الإدارة</p>
-<input id="ادخال_الرمز" type="tel" placeholder="رمز التأكيد - 6 أرقام">
-<button onclick="تأكيد_الرمز()">تأكيد ودخول الدردشة</button>
+<input id="codeInput" type="tel" placeholder="رمز التأكيد - 6 أرقام">
+<button type="button" onclick="confirmCode()">تأكيد ودخول الدردشة</button>
 </div>
-<div class="admin-link" onclick="فتح_مدير()">دخول المدير</div>
+<div class="admin-link" onclick="openAdmin()">دخول المدير</div>
 </div>
 
-<!-- لوحة المدير -->
-<div id="شاشة_المدير" class="box">
+<div id="adminScreen" class="box">
 <div class="card"><h3>👑 لوحة التحكم</h3><p>إدارة المستخدمين والطلبات</p>
-<div class="tabs"><button id="تبويب_طلبات" class="active" onclick="تبويب('طلبات')">الطلبات</button><button id="تبويب_مستخدمين" onclick="تبويب('مستخدمين')">المستخدمون</button><button id="تبويب_اعدادات" onclick="تبويب('اعدادات')">الإعدادات</button></div>
-<div id="قسم_طلبات"><div id="قائمة_الطلبات">لا توجد طلبات</div></div>
-<div id="قسم_مستخدمين" style="display:none"><div id="قائمة_المستخدمين">لا يوجد مستخدمون</div></div>
-<div id="قسم_اعدادات" style="display:none">
+<div class="tabs"><button id="tabReq" class="active" onclick="showTab('req')">الطلبات</button><button id="tabUsers" onclick="showTab('users')">المستخدمون</button><button id="tabSet" onclick="showTab('set')">الإعدادات</button></div>
+<div id="secReq"><div id="reqList">لا توجد طلبات</div></div>
+<div id="secUsers" style="display:none"><div id="userList">لا يوجد مستخدمون</div></div>
+<div id="secSet" style="display:none">
 <p style="color:#aebac1;font-size:13px">تغيير بيانات دخول المدير</p>
-<input id="اسم_جديد" placeholder="اسم مستخدم جديد">
-<input id="كلمة_جديدة" type="password" placeholder="كلمة مرور جديدة">
-<input id="تأكيد_جديدة" type="password" placeholder="تأكيد كلمة المرور">
-<button onclick="تغيير_كلمة()">حفظ التغييرات</button>
+<input id="newUser" placeholder="اسم مستخدم جديد">
+<input id="newPass" type="password" placeholder="كلمة مرور جديدة">
+<input id="newPass2" type="password" placeholder="تأكيد كلمة المرور">
+<button type="button" onclick="changePass()">حفظ التغييرات</button>
 </div>
 </div>
-<div class="row"><button onclick="فتح_الدردشة_مدير()">دخول الدردشة 💬</button><button class="sec" onclick="خروج()">خروج</button></div>
-</div>
-
-<!-- الدردشة -->
-<div id="شاشة_الدردشة">
-<div class="messages" id="الرسائل"><div class="msg">أهلاً بك في واتساب الأمن 🔒</div></div>
-<div class="bar"><input id="نص_الرسالة" placeholder="اكتب رسالة..."><button onclick="ارسال()">➤</button></div>
-<button class="sec" style="margin:10px" onclick="رجوع()">رجوع</button>
-</div>
+<div class="row"><button type="button" onclick="openChatAdmin()">دخول الدردشة 💬</button><button type="button" class="sec" onclick="logout()">خروج</button></div>
 </div>
 
-<!-- مودال المدير -->
-<div class="modal" id="مودال_المدير"><div class="modal-in">
+<div id="chatScreen">
+<div class="messages" id="msgBox"><div class="msg">أهلاً بك في واتساب الأمن 🔒</div></div>
+<div class="bar"><input id="msgInput" placeholder="اكتب رسالة..."><button type="button" onclick="sendMsg()">➤</button></div>
+<button type="button" class="sec" style="margin:10px" onclick="goBack()">رجوع</button>
+</div>
+</div>
+
+<div class="modal" id="adminModal"><div class="modal-in">
 <h3>دخول المدير</h3>
-<input id="مدير_اسم" placeholder="اسم المستخدم">
-<input id="مدير_كلمة" type="password" placeholder="كلمة المرور">
-<button onclick="دخول_مدير()">دخول</button>
-<button class="sec" onclick="اغلاق_مدير()">إلغاء</button>
-<div id="خطأ_مدير" style="color:#ff6b6b;text-align:center;margin-top:10px;font-size:13px"></div>
+<input id="adminUser" placeholder="اسم المستخدم" autocomplete="off">
+<input id="adminPass" type="password" placeholder="كلمة المرور" autocomplete="off">
+<button type="button" onclick="loginAdmin()">دخول</button>
+<button type="button" class="sec" onclick="closeAdmin()">إلغاء</button>
+<div id="adminError" style="color:#ff6b6b;text-align:center;margin-top:10px;font-size:13px"></div>
 </div></div>
 
 <script>
-var firebaseConfig={apiKey:"AIzaSyBvH0siWoOLreCbBeKrTVpkB4uy6RJbyBQ",authDomain:"chatstruct.firebaseapp.com",databaseURL:"https://chatstruct-default-rtdb.europe-west1.firebasedatabase.app",projectId:"chatstruct",storageBucket:"chatstruct.firebasestorage.app",messagingSenderId:"1058907485659",appId:"1:1058907485659:web:4b26228c6a74f4c2f223fe"};
+var firebaseConfig = {apiKey:"AIzaSyBvH0siWoOLreCbBeKrTVpkB4uy6RJbyBQ",authDomain:"chatstruct.firebaseapp.com",databaseURL:"https://chatstruct-default-rtdb.europe-west1.firebasedatabase.app",projectId:"chatstruct",storageBucket:"chatstruct.firebasestorage.app",messagingSenderId:"1058907485659",appId:"1:1058907485659:web:4b26228c6a74f4c2f223fe"};
 firebase.initializeApp(firebaseConfig);
-var db=firebase.database();
-var رقمي="", طلب_حالي="", رمز_صحيح="", دور="مستخدم";
-function هاش(s){var h=5381;for(var i=0;i<s.length;i++){h=((h*33)+s.charCodeAt(i))>>>0}return h}
-var الافتراضي_اسم=2090536207, الافتراضي_كلمة=291771953;
-function فتح_مدير(){document.getElementById("مودال_المدير").classList.add("open")}
-function اغلاق_مدير(){document.getElementById("مودال_المدير").classList.remove("open")}
-function دخول_مدير(){
-  var u=document.getElementById("مدير_اسم").value.trim();
-  var p=document.getElementById("مدير_كلمة").value;
-  if(!u||!p){document.getElementById("خطأ_مدير").innerText="أدخل اسم المستخدم وكلمة المرور";return}
+var db = firebase.database();
+var myPhone = "";
+var currentReq = "";
+var myRole = "user";
+
+function myHash(s){ var h=5381; for(var i=0;i<s.length;i++){ h = ((h*33) + s.charCodeAt(i)) >>> 0; } return h; }
+var DEF_USER = 2090536207;
+var DEF_PASS = 291771953;
+
+function openAdmin(){ document.getElementById("adminModal").classList.add("open"); }
+function closeAdmin(){ document.getElementById("adminModal").classList.remove("open"); }
+
+function loginAdmin(){
+  var u = document.getElementById("adminUser").value.trim();
+  var p = document.getElementById("adminPass").value;
+  if(!u || !p){ document.getElementById("adminError").innerText = "أدخل اسم المستخدم وكلمة المرور"; return; }
+  document.getElementById("adminError").innerText = "جاري التحقق...";
   db.ref("admin_config").once("value").then(function(snap){
-    var cfg=snap.val()||{u:الافتراضي_اسم,p:الافتراضي_كلمة};
-    if(هاش(u)===cfg.u && هاش(p)===cfg.p){
-      اغلاق_مدير(); دور="مدير";
-      document.getElementById("شاشة_الدخول").style.display="none";
-      document.getElementById("شاشة_المدير").style.display="block";
-      تحميل_الطلبات(); تحميل_المستخدمين();
-    } else { document.getElementById("خطأ_مدير").innerText="بيانات غير صحيحة"; }
+    var cfg = snap.val() || {u: DEF_USER, p: DEF_PASS};
+    if(myHash(u) === cfg.u && myHash(p) === cfg.p){
+      closeAdmin();
+      myRole = "admin";
+      document.getElementById("loginScreen").style.display = "none";
+      document.getElementById("adminScreen").style.display = "block";
+      loadRequests();
+      loadUsers();
+    } else {
+      document.getElementById("adminError").innerText = "بيانات غير صحيحة";
+    }
+  }).catch(function(e){
+    document.getElementById("adminError").innerText = "خطأ في الاتصال، حاول مرة أخرى";
   });
 }
-function تغيير_كلمة(){
-  var nu=document.getElementById("اسم_جديد").value.trim();
-  var np=document.getElementById("كلمة_جديدة").value;
-  var cp=document.getElementById("تأكيد_جديدة").value;
-  if(!nu||!np){alert("أدخل الاسم وكلمة المرور");return}
-  if(np!==cp){alert("كلمتا المرور غير متطابقتين");return}
-  db.ref("admin_config").set({u:هاش(nu),p:هاش(np)}).then(function(){alert("تم حفظ بيانات المدير الجديدة ✅")});
+
+function changePass(){
+  var nu = document.getElementById("newUser").value.trim();
+  var np = document.getElementById("newPass").value;
+  var cp = document.getElementById("newPass2").value;
+  if(!nu || !np){ alert("أدخل الاسم وكلمة المرور"); return; }
+  if(np !== cp){ alert("كلمتا المرور غير متطابقتين"); return; }
+  db.ref("admin_config").set({u: myHash(nu), p: myHash(np)}).then(function(){ alert("تم حفظ بيانات المدير الجديدة"); });
 }
-function طلب_دخول(){
-  رقمي=document.getElementById("الهاتف").value.trim().replace(/[^0-9]/g,"");
-  if(!رقمي||رقمي.length<9){alert("أدخل رقم صحيح");return}
-  رمز_صحيح=Math.floor(100000+Math.random()*900000).toString();
-  طلب_حالي=رقمي+"_"+Date.now();
-  db.ref("طلبات_دخول/"+طلب_حالي).set({phone:رقمي,code:رمز_صحيح,status:"pending",createdAt:Date.now()});
-  document.getElementById("حالة").innerText="تم إرسال طلبك، انتظر موافقة الإدارة...";
-  db.ref("طلبات_دخول/"+طلب_حالي).on("value",function(snap){
-    var d=snap.val(); if(!d) return;
-    if(d.status==="approved"){document.getElementById("حالة").innerText="تمت الموافقة ✅ أدخل الرمز";document.getElementById("صندوق_الرمز").style.display="block"}
-    if(d.status==="rejected"){document.getElementById("حالة").innerText="تم رفض طلبك ❌"}
-    if(d.status==="blocked"){document.getElementById("حالة").innerText="تم حظرك"}
+
+function requestLogin(){
+  myPhone = document.getElementById("phoneInput").value.trim().replace(/[^0-9]/g,"");
+  if(!myPhone || myPhone.length < 9){ alert("أدخل رقم صحيح"); return; }
+  var code = Math.floor(100000 + Math.random()*900000).toString();
+  currentReq = myPhone + "_" + Date.now();
+  db.ref("طلبات_دخول/" + currentReq).set({phone: myPhone, code: code, status: "pending", createdAt: Date.now()});
+  document.getElementById("status").innerText = "تم إرسال طلبك، انتظر موافقة الإدارة...";
+  db.ref("طلبات_دخول/" + currentReq).on("value", function(snap){
+    var d = snap.val(); if(!d) return;
+    if(d.status === "approved"){ document.getElementById("status").innerText = "تمت الموافقة، أدخل الرمز"; document.getElementById("codeBox").style.display = "block"; }
+    if(d.status === "rejected"){ document.getElementById("status").innerText = "تم رفض طلبك"; }
+    if(d.status === "blocked"){ document.getElementById("status").innerText = "تم حظرك"; }
   });
 }
-function تأكيد_الرمز(){
-  var v=document.getElementById("ادخال_الرمز").value.trim();
-  db.ref("طلبات_دخول/"+طلب_حالي).once("value").then(function(snap){
-    var d=snap.val(); if(!d){alert("الطلب غير موجود");return}
-    if(v===d.code && d.status==="approved"){
-      db.ref("مستخدمون/"+رقمي).set({phone:رقمي,joinedAt:Date.now(),status:"active"});
-      document.getElementById("شاشة_الدخول").style.display="none";
-      document.getElementById("شاشة_الدردشة").style.display="flex";
+
+function confirmCode(){
+  var v = document.getElementById("codeInput").value.trim();
+  if(!currentReq){ alert("اطلب الدخول أولاً"); return; }
+  db.ref("طلبات_دخول/" + currentReq).once("value").then(function(snap){
+    var d = snap.val();
+    if(!d){ alert("الطلب غير موجود"); return; }
+    if(v === d.code && d.status === "approved"){
+      db.ref("مستخدمون/" + myPhone).set({phone: myPhone, joinedAt: Date.now(), status: "active"});
+      document.getElementById("loginScreen").style.display = "none";
+      document.getElementById("chatScreen").style.display = "flex";
     } else { alert("الرمز غير صحيح أو لم تتم الموافقة بعد"); }
   });
 }
-function تبويب(t){
-  document.getElementById("قسم_طلبات").style.display=t==="طلبات"?"block":"none";
-  document.getElementById("قسم_مستخدمين").style.display=t==="مستخدمين"?"block":"none";
-  document.getElementById("قسم_اعدادات").style.display=t==="اعدادات"?"block":"none";
-  document.getElementById("تبويب_طلبات").className=t==="طلبات"?"active":"";
-  document.getElementById("تبويب_مستخدمين").className=t==="مستخدمين"?"active":"";
-  document.getElementById("تبويب_اعدادات").className=t==="اعدادات"?"active":"";
+
+function showTab(t){
+  document.getElementById("secReq").style.display = t==="req" ? "block" : "none";
+  document.getElementById("secUsers").style.display = t==="users" ? "block" : "none";
+  document.getElementById("secSet").style.display = t==="set" ? "block" : "none";
+  document.getElementById("tabReq").className = t==="req" ? "active" : "";
+  document.getElementById("tabUsers").className = t==="users" ? "active" : "";
+  document.getElementById("tabSet").className = t==="set" ? "active" : "";
 }
-function تحميل_الطلبات(){
-  db.ref("طلبات_دخول").on("value",function(snap){
-    var all=snap.val(); var el=document.getElementById("قائمة_الطلبات");
-    if(!all){el.innerHTML="لا توجد طلبات";return}
-    el.innerHTML="";
+
+function loadRequests(){
+  db.ref("طلبات_دخول").on("value", function(snap){
+    var all = snap.val();
+    var el = document.getElementById("reqList");
+    if(!all){ el.innerHTML = "لا توجد طلبات"; return; }
+    el.innerHTML = "";
     Object.keys(all).reverse().forEach(function(id){
-      var d=all[id];
-      var div=document.createElement("div"); div.className="item";
-      div.innerHTML="<b>"+d.phone+"</b> <span class='badge'>"+d.status+"</span><br>الرمز: <b>"+d.code+"</b><br><button class='small' onclick=\"موافقة('"+id+"')\">✅ موافقة</button><button class='small red' onclick=\"رفض('"+id+"')\">❌ رفض</button><button class='small sec' onclick=\"حظر('"+id+"')\">🚫 حظر</button>";
+      var d = all[id];
+      var div = document.createElement("div"); div.className = "item";
+      div.innerHTML = "<b>"+d.phone+"</b> <span class='badge'>"+d.status+"</span><br>الرمز: <b>"+d.code+"</b><br><button class='small' onclick=\"approveReq('"+id+"')\">✅ موافقة</button><button class='small red' onclick=\"rejectReq('"+id+"')\">❌ رفض</button><button class='small sec' onclick=\"blockReq('"+id+"')\">🚫 حظر</button>";
       el.appendChild(div);
     });
   });
 }
-function تحميل_المستخدمين(){
-  db.ref("مستخدمون").on("value",function(snap){
-    var all=snap.val(); var el=document.getElementById("قائمة_المستخدمين");
-    if(!all){el.innerHTML="لا يوجد مستخدمون";return}
-    el.innerHTML="";
-    Object.keys(all).forEach(function(phone){
-      var d=all[phone];
-      var div=document.createElement("div"); div.className="item";
-      div.innerHTML="<b>"+phone+"</b> <span class='badge'>"+(d.status||"active")+"</span><br><button class='small red' onclick=\"حذف_مستخدم('"+phone+"')\">حذف</button><button class='small sec' onclick=\"حظر_مستخدم('"+phone+"')\">حظر</button>";
+
+function loadUsers(){
+  db.ref("مستخدمون").on("value", function(snap){
+    var all = snap.val();
+    var el = document.getElementById("userList");
+    if(!all){ el.innerHTML = "لا يوجد مستخدمون"; return; }
+    el.innerHTML = "";
+    Object.keys(all).forEach(function(ph){
+      var d = all[ph];
+      var div = document.createElement("div"); div.className = "item";
+      div.innerHTML = "<b>"+ph+"</b> <span class='badge'>"+(d.status||"active")+"</span><br><button class='small red' onclick=\"deleteUser('"+ph+"')\">حذف</button><button class='small sec' onclick=\"blockUser('"+ph+"')\">حظر</button>";
       el.appendChild(div);
     });
   });
 }
-function موافقة(id){db.ref("طلبات_دخول/"+id).update({status:"approved"});alert("تمت الموافقة ✅ أرسل الرمز للمستخدم");}
-function رفض(id){db.ref("طلبات_دخول/"+id).update({status:"rejected"});}
-function حظر(id){db.ref("طلبات_دخول/"+id).update({status:"blocked"});}
-function حذف_مستخدم(p){if(confirm("حذف "+p+" ؟")) db.ref("مستخدمون/"+p).remove();}
-function حظر_مستخدم(p){db.ref("مستخدمون/"+p).update({status:"blocked"});alert("تم الحظر");}
-function فتح_الدردشة_مدير(){document.getElementById("شاشة_المدير").style.display="none";document.getElementById("شاشة_الدردشة").style.display="flex";}
-function رجوع(){document.getElementById("شاشة_الدردشة").style.display="none"; if(dور==="مدير") document.getElementById("شاشة_المدير").style.display="block"; else document.getElementById("شاشة_الدخول").style.display="block";}
-function خروج(){location.reload();}
-function ارسال(){var i=document.getElementById("نص_الرسالة");if(!i.value.trim())return;var d=document.createElement("div");d.className="msg me";d.innerText=i.value;document.getElementById("الرسائل").appendChild(d);i.value="";}
+
+function approveReq(id){ db.ref("طلبات_دخول/"+id).update({status:"approved"}); alert("تمت الموافقة، أرسل الرمز للمستخدم"); }
+function rejectReq(id){ db.ref("طلبات_دخول/"+id).update({status:"rejected"}); }
+function blockReq(id){ db.ref("طلبات_دخول/"+id).update({status:"blocked"}); }
+function deleteUser(ph){ if(confirm("حذف "+ph+" ؟")) db.ref("مستخدمون/"+ph).remove(); }
+function blockUser(ph){ db.ref("مستخدمون/"+ph).update({status:"blocked"}); alert("تم الحظر"); }
+function openChatAdmin(){ document.getElementById("adminScreen").style.display="none"; document.getElementById("chatScreen").style.display="flex"; }
+function goBack(){ document.getElementById("chatScreen").style.display="none"; if(myRole==="admin") document.getElementById("adminScreen").style.display="block"; else document.getElementById("loginScreen").style.display="block"; }
+function logout(){ location.reload(); }
+function sendMsg(){ var i=document.getElementById("msgInput"); if(!i.value.trim()) return; var d=document.createElement("div"); d.className="msg me"; d.innerText=i.value; document.getElementById("msgBox").appendChild(d); i.value=""; }
 </script>
 </body>
 </html>
