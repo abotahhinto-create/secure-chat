@@ -23,6 +23,7 @@ body{margin:0;background:#f0f2f5;color:#111b21;display:flex;justify-content:cent
 input,textarea{width:100%;padding:13px;border-radius:10px;border:1px solid #d9dee3;background:#fff;color:#111b21;font-size:15px;outline:none;margin-top:10px}
 button{width:100%;padding:13px;border:none;border-radius:10px;background:#00a884;color:#fff;font-size:15px;font-weight:bold;cursor:pointer;margin-top:10px}
 button.sec{background:#e9edef;color:#111b21}button.red{background:#e74c3c}button.small{padding:8px 12px;font-size:12px;width:auto;margin:5px 0 0 5px}
+button.adminBtn{background:#075E54!important;color:#fff!important;border:2px solid #075E54!important;font-size:16px!important;padding:14px!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:8px!important}
 .avatar{width:48px;height:48px;border-radius:50%;background:#00a884;display:flex;align-items:center;justify-content:center;font-size:24px;color:#fff;flex-shrink:0}
 .chat-item{display:flex;gap:12px;align-items:center;padding:11px;background:#fff;border-bottom:1px solid #e9edef;cursor:pointer}
 .chat-item .info{flex:1}.chat-item b{font-size:15px}.chat-item span{font-size:12px;color:#8696a0;display:block;margin-top:2px}
@@ -38,7 +39,6 @@ button.sec{background:#e9edef;color:#111b21}button.red{background:#e74c3c}button
 .bar{display:flex;gap:8px;padding:10px;background:#f0f2f5;align-items:center}.bar input{flex:1;margin:0}.bar button{width:48px;margin:0;padding:12px}
 #status{text-align:center;color:#075E54;margin-top:10px;font-size:13px;font-weight:bold}
 #codeBox{display:none;background:#d9fdd3;border:1px solid #00a884;border-radius:12px;padding:14px;margin-top:12px}
-.admin-link{text-align:center;color:#8696a0;font-size:12px;margin-top:16px;cursor:pointer;text-decoration:underline}
 .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);align-items:center;justify-content:center;padding:20px;z-index:99}.modal.open{display:flex}.modal-in{background:#fff;width:100%;max-width:380px;border-radius:16px;padding:20px;color:#111b21}.modal-in h3{margin:0;color:#075E54}
 #loginScreen,#mainScreen,#adminScreen,#chatView,#callScreen,#encScreen,#callsScreen{display:none;flex-direction:column;flex:1}
 #loginScreen{display:flex}
@@ -66,8 +66,8 @@ button.sec{background:#e9edef;color:#111b21}button.red{background:#e74c3c}button
 <button type="button" class="sec" onclick="checkStatus()">🔄 تحديث الحالة - تحقق من الموافقة</button>
 <div id="status"></div>
 <div id="codeBox"><h4 style="color:#075E54;margin:0">✅ تمت الموافقة</h4><p style="font-size:12px;color:#54656f">أدخل رمز التأكيد الذي وصلك واتساب من الإدارة</p><input id="codeInput" type="tel" placeholder="رمز التأكيد - 6 أرقام"><button type="button" onclick="confirmCode()">تأكيد ودخول</button></div>
-<div class="admin-link" onclick="openAdmin()">دخول المدير</div>
 </div>
+<button type="button" class="adminBtn" onclick="openAdmin()">👑 دخول المدير</button>
 <p style="font-size:12px;color:#8696a0">🔒 دردشة مشفرة • آمنة • لحماية البلاد</p>
 </div>
 
@@ -123,7 +123,7 @@ button.sec{background:#e9edef;color:#111b21}button.red{background:#e74c3c}button
 <div class="row"><button type="button" onclick="enterMainAsAdmin()">دخول الدردشة 💬</button><button type="button" class="sec" onclick="logout()">خروج</button></div></div>
 </div>
 
-<div class="modal" id="adminModal"><div class="modal-in"><h3>دخول المدير</h3><input id="adminUser" placeholder="اسم المستخدم" autocomplete="off"><input id="adminPass" type="password" placeholder="كلمة المرور" autocomplete="off"><button type="button" onclick="loginAdmin()">دخول</button><button type="button" class="sec" onclick="closeAdmin()">إلغاء</button><div id="adminError" style="color:#ff6b6b;text-align:center;margin-top:10px;font-size:13px"></div></div></div>
+<div class="modal" id="adminModal"><div class="modal-in"><h3>👑 دخول المدير</h3><input id="adminUser" placeholder="اسم المستخدم" autocomplete="off"><input id="adminPass" type="password" placeholder="كلمة المرور" autocomplete="off"><button type="button" onclick="loginAdmin()">دخول</button><button type="button" class="sec" onclick="closeAdmin()">إلغاء</button><div id="adminError" style="color:#ff6b6b;text-align:center;margin-top:10px;font-size:13px"></div></div></div>
 
 <script>
 var firebaseConfig={apiKey:"AIzaSyBvH0siWoOLreCbBeKrTVpkB4uy6RJbyBQ",authDomain:"chatstruct.firebaseapp.com",databaseURL:"https://chatstruct-default-rtdb.europe-west1.firebasedatabase.app",projectId:"chatstruct",storageBucket:"chatstruct.firebasestorage.app",messagingSenderId:"1058907485659",appId:"1:1058907485659:web:4b26228c6a74f4c2f223fe"};
@@ -135,7 +135,6 @@ var DEF_USER=2090536207, DEF_PASS=291771953;
 window.onload=function(){
   var saved=localStorage.getItem("wa_logged");
   if(saved==="yes" && myPhone){ enterMain(); return; }
-  // اذا له طلب معلق من قبل، ارجع راقبه تلقائيا
   if(currentReq && myPhone){
     document.getElementById("phoneInput").value=myPhone;
     document.getElementById("status").innerText="تم إرسال طلبك من قبل، جاري التحقق من الموافقة...";
@@ -188,7 +187,7 @@ function requestLogin(){
   db.ref("login_requests/"+currentReq).set({phone:myPhone,code:code,status:"pending",createdAt:Date.now()}).then(function(){
     document.getElementById("status").innerText="تم إرسال طلبك ✅ انتظر موافقة الإدارة...";
     listenReq();
-  }).catch(function(e){document.getElementById("status").innerText="فشل الإرسال: "+e.message+" - تأكد من Rules"};
+  }).catch(function(e){document.getElementById("status").innerText="فشل الإرسال: "+e.message+" - تأكد من Rules"});
 }
 function listenReq(){
   if(!currentReq) return;
@@ -324,12 +323,8 @@ function showAdmin(t){
   document.getElementById("aUsers").className=t==="users"?"active":"";
   document.getElementById("aSet").className=t==="set"?"active":"";
 }
-function loadRequests(){
-  db.ref("login_requests").on("value",function(snap){ renderReq(snap.val()); });
-}
-function loadRequestsOnce(){
-  db.ref("login_requests").once("value").then(function(snap){ renderReq(snap.val()); });
-}
+function loadRequests(){ db.ref("login_requests").on("value",function(snap){ renderReq(snap.val()); }); }
+function loadRequestsOnce(){ db.ref("login_requests").once("value").then(function(snap){ renderReq(snap.val()); }); }
 function renderReq(all){
   var el=document.getElementById("reqList");
   if(!all){el.innerHTML="لا توجد طلبات";return}
