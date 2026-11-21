@@ -10,20 +10,20 @@
 *{box-sizing:border-box;font-family:'Segoe UI',Tahoma,sans-serif}
 body{margin:0;background:#f0f2f5;color:#111b21;display:flex;justify-content:center;min-height:100vh}
 .app{width:100%;max-width:450px;background:#fff;min-height:100vh;display:flex;flex-direction:column;position:relative;overflow:hidden}
-.top{background:#075E54;padding:14px 14px 10px;color:#fff}
+.top{background:#075E54;padding:12px 12px 8px;color:#fff}
 .topRow{display:flex;justify-content:space-between;align-items:flex-start}
 .top h2{margin:0;font-size:20px}.top p{margin:3px 0 0;font-size:13px;color:#d9fdd3}
-.topBtns{display:flex;gap:6px}.topBtns button{width:auto;padding:7px 10px;font-size:12px;background:#fff;color:#075E54;border:none;border-radius:20px;font-weight:bold;cursor:pointer;margin:0}
-.search{display:flex;gap:8px;background:#fff;border-radius:25px;padding:9px 14px;margin-top:12px;color:#666;font-size:14px;align-items:center}
-.search input{border:none;outline:none;flex:1;font-size:14px;background:transparent}
-.filters{display:flex;gap:8px;margin-top:10px}.filters button{width:auto;padding:7px 14px;border-radius:20px;border:none;background:rgba(255,255,255,.25);color:#fff;font-size:13px;cursor:pointer;margin:0}.filters button.active{background:#fff;color:#075E54;font-weight:bold}
+.topBtns{display:flex;gap:6px}.topBtns button{width:auto;padding:6px 9px;font-size:11px;background:#fff;color:#075E54;border:none;border-radius:20px;font-weight:bold;cursor:pointer;margin:0}
+.search{display:flex;gap:6px;background:#fff;border-radius:20px;padding:6px 10px;margin-top:8px;color:#666;font-size:13px;align-items:center}
+.search input{border:none;outline:none;flex:1;font-size:13px;background:transparent;padding:0}
+.filters{display:flex;gap:8px;margin-top:8px}.filters button{width:auto;padding:6px 12px;border-radius:20px;border:none;background:rgba(255,255,255,.25);color:#fff;font-size:12px;cursor:pointer;margin:0}.filters button.active{background:#fff;color:#075E54;font-weight:bold}
 .box{padding:12px;flex:1;overflow-y:auto;background:#fff}
 .card{background:#f0f2f5;border-radius:14px;padding:16px;margin-bottom:12px}
 .card h3{margin:0 0 6px;color:#075E54}.card p{font-size:13px;color:#54656f;line-height:1.7;margin:0}
 input,textarea{width:100%;padding:13px;border-radius:10px;border:1px solid #d9dee3;background:#fff;color:#111b21;font-size:15px;outline:none;margin-top:10px}
 button{width:100%;padding:13px;border:none;border-radius:10px;background:#00a884;color:#fff;font-size:15px;font-weight:bold;cursor:pointer;margin-top:10px}
 button.sec{background:#e9edef;color:#111b21}button.red{background:#e74c3c}button.small{padding:8px 12px;font-size:12px;width:auto;margin:5px 0 0 5px}
-button.adminBtn{background:#075E54!important;color:#fff!important;border:2px solid #075E54!important;font-size:16px!important;padding:14px!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:8px!important}
+button.adminBtn{background:#075E54!important;color:#fff!important;font-size:16px!important;padding:14px!important}
 .avatar{width:48px;height:48px;border-radius:50%;background:#00a884;display:flex;align-items:center;justify-content:center;font-size:24px;color:#fff;flex-shrink:0}
 .chat-item{display:flex;gap:12px;align-items:center;padding:11px;background:#fff;border-bottom:1px solid #e9edef;cursor:pointer}
 .chat-item .info{flex:1}.chat-item b{font-size:15px}.chat-item span{font-size:12px;color:#8696a0;display:block;margin-top:2px}
@@ -60,12 +60,11 @@ button.adminBtn{background:#075E54!important;color:#fff!important;border:2px sol
 <h2 style="margin:5px 0;color:#075E54">واتساب نشوان الأمن</h2>
 <p style="color:#54656f;font-size:13px">👑 المدير - حماية البلاد 🇾🇪</p>
 <div class="duaa">🤲 اللهم احفظ اليمن وأهلها 🇾🇪</div>
-<div class="card" style="text-align:right"><h3>تسجيل الدخول</h3><p>أدخل رقم هاتفك لطلب الدخول. بعد موافقة الإدارة، أدخل رمز التأكيد.</p>
+<div class="card" style="text-align:right"><h3>تسجيل الدخول</h3><p>أول مرة فقط أدخل رقمك. بعدها تدخل على طول بدون أي سؤال.</p>
 <input id="phoneInput" type="tel" placeholder="رقم الهاتف - مثال 77xxxxxxx">
-<button type="button" onclick="requestLogin()">طلب الدخول</button>
-<button type="button" class="sec" onclick="checkStatus()">🔄 تحديث الحالة - تحقق من الموافقة</button>
+<button type="button" onclick="requestLogin()">دخول</button>
 <div id="status"></div>
-<div id="codeBox"><h4 style="color:#075E54;margin:0">✅ تمت الموافقة</h4><p style="font-size:12px;color:#54656f">أدخل رمز التأكيد الذي وصلك واتساب من الإدارة</p><input id="codeInput" type="tel" placeholder="رمز التأكيد - 6 أرقام"><button type="button" onclick="confirmCode()">تأكيد ودخول</button></div>
+<div id="codeBox"><h4 style="color:#075E54;margin:0">✅ تمت الموافقة</h4><p style="font-size:12px;color:#54656f">جاري دخولك تلقائياً...</p></div>
 </div>
 <button type="button" class="adminBtn" onclick="openAdmin()">👑 دخول المدير</button>
 <p style="font-size:12px;color:#8696a0">🔒 دردشة مشفرة • آمنة • لحماية البلاد</p>
@@ -132,21 +131,23 @@ var db=firebase.database();
 var myPhone=localStorage.getItem("wa_phone")||"", currentReq=localStorage.getItem("wa_req")||"", myRole=localStorage.getItem("wa_role")||"user", currentChat="الإدارة - الدعم", callInterval=null, callSec=0, curFilter="all";
 function myHash(s){var h=5381;for(var i=0;i<s.length;i++){h=((h*33)+s.charCodeAt(i))>>>0}return h}
 var DEF_USER=2090536207, DEF_PASS=291771953;
+function saveLogin(){
+  localStorage.setItem("wa_logged","yes"); localStorage.setItem("wa_phone",myPhone); localStorage.setItem("wa_role","user");
+}
 window.onload=function(){
-  var saved=localStorage.getItem("wa_logged");
-  if(saved==="yes" && myPhone){ enterMain(); return; }
-  if(currentReq && myPhone){
-    document.getElementById("phoneInput").value=myPhone;
-    document.getElementById("status").innerText="تم إرسال طلبك من قبل، جاري التحقق من الموافقة...";
-    listenReq();
-    setInterval(checkStatus,5000);
-  }
+  if(localStorage.getItem("wa_logged")==="yes" && myPhone){ enterMain(); return; }
   if(myRole==="admin" && localStorage.getItem("wa_admin")==="yes"){
     document.getElementById("loginScreen").style.display="none";
     document.getElementById("adminScreen").style.display="flex";
-    loadRequests(); loadUsers();
-    setInterval(loadRequestsOnce,3000);
+    loadRequests(); loadUsers(); setInterval(loadRequestsOnce,3000); return;
   }
+  // اذا كان مسجل من قبل في قاعدة البيانات، يدخل على طول بدون سؤال
+  if(myPhone){
+    db.ref("users/"+myPhone).once("value").then(function(snap){
+      if(snap.val()){ saveLogin(); enterMain(); }
+    });
+  }
+  if(currentReq && myPhone){ listenReq(); }
 };
 function openAdmin(){document.getElementById("adminModal").classList.add("open")}
 function closeAdmin(){document.getElementById("adminModal").classList.remove("open")}
@@ -162,8 +163,7 @@ function loginAdmin(){
       localStorage.setItem("wa_role","admin"); localStorage.setItem("wa_admin","yes");
       document.getElementById("loginScreen").style.display="none";
       document.getElementById("adminScreen").style.display="flex";
-      loadRequests(); loadUsers();
-      setInterval(loadRequestsOnce,3000);
+      loadRequests(); loadUsers(); setInterval(loadRequestsOnce,3000);
     } else document.getElementById("adminError").innerText="بيانات غير صحيحة";
   }).catch(function(){document.getElementById("adminError").innerText="خطأ في الاتصال، حاول مرة أخرى"});
 }
@@ -179,47 +179,38 @@ function requestLogin(){
   var input=document.getElementById("phoneInput").value.trim().replace(/[^0-9]/g,"");
   if(input) myPhone=input;
   if(!myPhone||myPhone.length<9){alert("أدخل رقم صحيح");return}
-  if(localStorage.getItem("wa_logged")==="yes" && localStorage.getItem("wa_phone")===myPhone){ enterMain(); return; }
-  var code=Math.floor(100000+Math.random()*900000).toString();
-  currentReq=myPhone+"_"+Date.now();
-  localStorage.setItem("wa_phone",myPhone); localStorage.setItem("wa_req",currentReq);
-  document.getElementById("status").innerText="جاري إرسال الطلب...";
-  db.ref("login_requests/"+currentReq).set({phone:myPhone,code:code,status:"pending",createdAt:Date.now()}).then(function(){
-    document.getElementById("status").innerText="تم إرسال طلبك ✅ انتظر موافقة الإدارة...";
-    listenReq();
-  }).catch(function(e){document.getElementById("status").innerText="فشل الإرسال: "+e.message+" - تأكد من Rules"});
+  localStorage.setItem("wa_phone",myPhone);
+  document.getElementById("status").innerText="جاري التحقق...";
+  // 1 - اذا مسجل من قبل، يدخل على طول بدون رمز وبدون طلب
+  db.ref("users/"+myPhone).once("value").then(function(snap){
+    if(snap.val()){
+      document.getElementById("status").innerText="أهلاً بك من جديد، جاري دخولك...";
+      saveLogin(); enterMain(); return;
+    }
+    // 2 - اذا مو مسجل، يرسل طلب، واذا وافقت انت بيدخل تلقائيا بدون رمز
+    var code=Math.floor(100000+Math.random()*900000).toString();
+    currentReq=myPhone+"_"+Date.now();
+    localStorage.setItem("wa_req",currentReq);
+    db.ref("login_requests/"+currentReq).set({phone:myPhone,code:code,status:"pending",createdAt:Date.now()}).then(function(){
+      document.getElementById("status").innerText="تم إرسال طلبك ✅ انتظر موافقة الإدارة، وبعدها بتدخل تلقائياً...";
+      listenReq();
+    });
+  });
 }
 function listenReq(){
   if(!currentReq) return;
   db.ref("login_requests/"+currentReq).on("value",function(snap){
     var d=snap.val(); if(!d) return;
-    if(d.status==="approved"){document.getElementById("status").innerText="تمت الموافقة ✅ أدخل الرمز الذي وصلك واتساب";document.getElementById("codeBox").style.display="block"}
+    if(d.status==="approved"){
+      // موافقة المدير = دخول تلقائي، بدون رمز
+      document.getElementById("status").innerText="تمت الموافقة ✅ جاري دخولك...";
+      document.getElementById("codeBox").style.display="block";
+      db.ref("users/"+myPhone).set({phone:myPhone,joinedAt:Date.now(),status:"active"});
+      saveLogin();
+      setTimeout(enterMain,800);
+    }
     if(d.status==="rejected"){document.getElementById("status").innerText="تم رفض طلبك ❌ تواصل مع الإدارة"}
     if(d.status==="blocked"){document.getElementById("status").innerText="تم حظرك 🚫"}
-  });
-}
-function checkStatus(){
-  if(!currentReq){alert("اطلب الدخول أولاً");return}
-  document.getElementById("status").innerText="جاري التحقق...";
-  db.ref("login_requests/"+currentReq).once("value").then(function(snap){
-    var d=snap.val();
-    if(!d){document.getElementById("status").innerText="الطلب غير موجود، اضغط طلب الدخول من جديد";return}
-    if(d.status==="approved"){document.getElementById("status").innerText="تمت الموافقة ✅ أدخل الرمز";document.getElementById("codeBox").style.display="block"}
-    else if(d.status==="pending"){document.getElementById("status").innerText="لسه بانتظار موافقة الإدارة... اضغط تحديث بعد شوي"}
-    else if(d.status==="rejected"){document.getElementById("status").innerText="تم رفض طلبك ❌"}
-    else if(d.status==="blocked"){document.getElementById("status").innerText="تم حظرك 🚫"}
-  });
-}
-function confirmCode(){
-  var v=document.getElementById("codeInput").value.trim();
-  if(!currentReq){alert("اطلب الدخول أولاً");return}
-  db.ref("login_requests/"+currentReq).once("value").then(function(snap){
-    var d=snap.val(); if(!d){alert("الطلب غير موجود");return}
-    if(v===d.code && d.status==="approved"){
-      localStorage.setItem("wa_logged","yes"); localStorage.setItem("wa_phone",myPhone); localStorage.setItem("wa_role","user");
-      db.ref("users/"+myPhone).set({phone:myPhone,joinedAt:Date.now(),status:"active"});
-      enterMain();
-    } else alert("الرمز غير صحيح أو لم تتم الموافقة بعد - اضغط تحديث الحالة");
   });
 }
 function enterMain(){
@@ -331,9 +322,7 @@ function renderReq(all){
   el.innerHTML="";
   Object.keys(all).reverse().forEach(function(id){
     var d=all[id]; var div=document.createElement("div"); div.className="item";
-    var waNum=d.phone.startsWith("967")?d.phone:"967"+d.phone.replace(/^0/,"");
-    var waMsg=encodeURIComponent("أهلاً بك في واتساب نشوان الأمن 🇾🇪\nرمز التأكيد الخاص بك هو: "+d.code+"\nأدخله في التطبيق للدخول");
-    div.innerHTML="<b>"+d.phone+"</b> <span class='badge'>"+d.status+"</span><br>الرمز: <b>"+d.code+"</b><br><button class='small' onclick=\"approveReq('"+id+"')\">✅ موافقة</button><button class='small' style='background:#25D366' onclick=\"window.open('https://wa.me/"+waNum+"?text="+waMsg+"','_blank')\">📲 إرسال الرمز واتساب</button><br><button class='small red' onclick=\"rejectReq('"+id+"')\">❌ رفض</button><button class='small sec' onclick=\"blockReq('"+id+"')\">🚫 حظر</button>";
+    div.innerHTML="<b>"+d.phone+"</b> <span class='badge'>"+d.status+"</span><br><button class='small' onclick=\"approveReq('"+id+"','"+d.phone+"')\">✅ موافقة ودخول تلقائي</button><br><button class='small red' onclick=\"rejectReq('"+id+"')\">❌ رفض</button><button class='small sec' onclick=\"blockReq('"+id+"')\">🚫 حظر</button>";
     el.appendChild(div);
   });
 }
@@ -349,7 +338,11 @@ function loadUsers(){
     });
   });
 }
-function approveReq(id){db.ref("login_requests/"+id).update({status:"approved"});alert("تمت الموافقة ✅ الآن اضغط إرسال الرمز واتساب")}
+function approveReq(id,phone){
+  db.ref("login_requests/"+id).update({status:"approved"});
+  db.ref("users/"+phone).set({phone:phone,joinedAt:Date.now(),status:"active"});
+  alert("تمت الموافقة ✅ العميل بيدخل الآن تلقائياً بدون رمز");
+}
 function rejectReq(id){db.ref("login_requests/"+id).update({status:"rejected"})}
 function blockReq(id){db.ref("login_requests/"+id).update({status:"blocked"})}
 function deleteUser(ph){if(confirm("حذف "+ph+" ؟")) db.ref("users/"+ph).remove()}
