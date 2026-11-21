@@ -42,12 +42,10 @@
     <div style="width:45px;height:45px;background:#00a884;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px">💬</div>
     <div><h2>واتساب نشوان الأمن</h2><p id="حالة_الاتصال">متصل • المدير: 771713275</p></div>
   </div>
-
-  <!-- شاشة الدخول -->
   <div id="شاشة_الدخول" class="box">
     <div class="card">
       <h3>تسجيل الدخول</h3>
-      <p>اكتب رقمك واضغط دخول.<br>لو انت المدير <b>771713275</b> بتدخل على طول بدون انتظار.<br>لو انت زبون بيتم إرسال طلب للمدير ويطلع لك الرمز هنا.</p>
+      <p>اكتب رقمك واضغط دخول.<br>لو انت المدير <b>771713275</b> بتدخل على طول بدون انتظار.</p>
     </div>
     <label>رقم الهاتف</label>
     <input id="الهاتف" type="tel" placeholder="77xxxxxxx">
@@ -62,15 +60,11 @@
       <button onclick="دخول_نهائي()" style="background:#fff;color:#00a884;margin-top:12px">تأكيد الدخول</button>
     </div>
   </div>
-
-  <!-- شاشة المدير -->
   <div id="شاشة_المدير" class="box">
     <div class="card"><h3>👑 أهلا يا مدير</h3><p>انت دخلت برقم المدير 771713275، تقدر تشوف الطلبات وتوافق عليها من هنا.</p>
     <button onclick="فتح_الدردشة_من_المدير()">دخول الدردشة 💬</button></div>
     <div class="card"><h3>الطلبات المعلقة</h3><div id="القائمة">لا توجد طلبات</div><button class="sec" onclick="location.reload()">تحديث 🔄</button></div>
   </div>
-
-  <!-- شاشة الدردشة -->
   <div id="شاشة_الدردشة">
     <div class="messages" id="الرسائل"><div class="msg">أهلا بك في واتساب نشوان الأمن 🔒</div></div>
     <div class="input-bar"><input id="نص_الرسالة" placeholder="اكتب رسالة..."><button onclick="ارسال()">➤</button></div>
@@ -78,19 +72,17 @@
   </div>
   <div class="footer">نسخة نهائية - ملف واحد - المدير: 771713275</div>
 </div>
-
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getDatabase, ref, set, onValue, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-
 const firebaseConfig = {
-  apiKey: "ضع_API_KEY_هنا",
-  authDomain: "ضع_AUTH_DOMAIN_هنا",
-  databaseURL: "ضع_DATABASE_URL_هنا",
-  projectId: "ضع_PROJECT_ID_هنا",
-  storageBucket: "ضع_STORAGE_هنا",
-  messagingSenderId: "ضع_SENDER_ID_هنا",
-  appId: "ضع_APP_ID_هنا"
+  apiKey: "AIzaSyBvH0siWoOLreCbBeKrTVpkB4uy6RJbyBQ",
+  authDomain: "chatstruct.firebaseapp.com",
+  databaseURL: "https://chatstruct-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "chatstruct",
+  storageBucket: "chatstruct.firebasestorage.app",
+  messagingSenderId: "1058907485659",
+  appId: "1:1058907485659:web:4b26228c6a74f4c2f223fe"
 };
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
@@ -98,12 +90,9 @@ const رقم_المدير = "967771713275";
 const رقم_المدير_عرض = "771713275";
 let طلب_الحالي = null;
 let رقمي = "";
-
 window.dخول = async function() {
   رقمي = document.getElementById("الهاتف").value.trim().replace(/[^0-9]/g,"");
   if (رقمي.length < 9) { alert("اكتب رقم صحيح"); return; }
-
-  // === لو انت المدير ادخل على طول بدون انتظار ===
   if (رقمي === رقم_المدير_عرض || رقمي === رقم_المدير || رقمي.endsWith("771713275")) {
     document.getElementById("شاشة_الدخول").style.display = "none";
     document.getElementById("شاشة_المدير").style.display = "block";
@@ -111,8 +100,6 @@ window.dخول = async function() {
     تحميل_الطلبات();
     return;
   }
-
-  // === لو زبون ===
   const زر = document.getElementById("زر_دخول");
   زر.disabled = true; زر.innerText = "جاري إرسال الطلب...";
   document.getElementById("لودر").style.display = "block";
@@ -137,7 +124,6 @@ window.dخول = async function() {
     }
   });
 };
-
 function تحميل_الطلبات() {
   onValue(ref(db, "طلبات_دخول"), (snap) => {
     const all = snap.val();
@@ -156,7 +142,6 @@ function تحميل_الطلبات() {
 }
 window.موافقة = async function(id){ await update(ref(db,"طلبات_دخول/"+id),{status:"approved"}); alert("تمت الموافقة ✅"); };
 window.رفض = async function(id){ await update(ref(db,"طلبات_دخول/"+id),{status:"rejected"}); alert("تم الرفض"); };
-
 window.دخول_نهائي = function() {
   document.getElementById("شاشة_الدخول").style.display = "none";
   document.getElementById("شاشة_الدردشة").style.display = "flex";
