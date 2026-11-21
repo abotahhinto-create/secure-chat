@@ -36,13 +36,15 @@ button.adminBtn{background:#075E54!important;color:#fff!important;font-size:16px
 .messages{flex:1;padding:14px;overflow-y:auto;background:#efeae2}
 .msg{background:#fff;padding:9px 12px;border-radius:12px;margin-bottom:8px;width:fit-content;max-width:85%;font-size:15px}.msg.me{margin-left:auto;background:#d9fdd3}
 .msg small{display:block;font-size:10px;color:#8696a0;margin-top:3px}
-.bar{display:flex;gap:8px;padding:10px;background:#f0f2f5;align-items:center}.bar input{flex:1;margin:0}.bar button{width:48px;margin:0;padding:12px}
+.msg img{max-width:220px;border-radius:10px;display:block;margin-top:4px}
+.msg audio{width:220px;margin-top:4px}
+.bar{display:flex;gap:6px;padding:10px;background:#f0f2f5;align-items:center}.bar input{flex:1;margin:0}.bar button{width:44px;margin:0;padding:10px;font-size:16px}
 #status{text-align:center;color:#075E54;margin-top:10px;font-size:13px;font-weight:bold}
 #codeBox{display:none;background:#d9fdd3;border:1px solid #00a884;border-radius:12px;padding:14px;margin-top:12px}
 .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);align-items:center;justify-content:center;padding:20px;z-index:99}.modal.open{display:flex}.modal-in{background:#fff;width:100%;max-width:380px;border-radius:16px;padding:20px;color:#111b21}.modal-in h3{margin:0;color:#075E54}
-#loginScreen,#mainScreen,#adminScreen,#chatView,#callScreen,#encScreen,#callsScreen{display:none;flex-direction:column;flex:1}
+#loginScreen,#mainScreen,#adminScreen,#chatView,#callScreen,#encScreen,#callsScreen,#incomingCall{display:none;flex-direction:column;flex:1}
 #loginScreen{display:flex}
-#callScreen{align-items:center;justify-content:center;text-align:center;padding:30px;background:#fff}
+#callScreen,#incomingCall{align-items:center;justify-content:center;text-align:center;padding:30px;background:#111b21;color:#fff}
 .bigAvatar{width:120px;height:120px;border-radius:50%;background:#00a884;display:flex;align-items:center;justify-content:center;font-size:60px;margin-bottom:16px;color:#fff}
 .callActions{display:flex;gap:12px;margin-top:30px}.callActions button{width:60px;height:60px;border-radius:50%;padding:0;font-size:22px}
 .encBox{background:#f0f2f5;border:1px dashed #00a884;border-radius:12px;padding:12px;margin-top:10px;word-break:break-all;font-size:13px}
@@ -51,6 +53,10 @@ button.adminBtn{background:#075E54!important;color:#fff!important;font-size:16px
 .badge{display:inline-block;padding:3px 8px;border-radius:20px;font-size:11px;background:#fff}
 .loginLogo{width:110px;height:110px;border-radius:50%;background:#00a884;display:flex;align-items:center;justify-content:center;font-size:55px;margin:10px auto;color:#fff}
 .duaa{background:#f0f2f5;border-radius:14px;padding:10px;margin:10px 0;text-align:center;font-size:13px;color:#075E54}
+video{width:100%;max-width:320px;border-radius:14px;background:#000}
+#localVideo{width:110px;position:absolute;bottom:90px;left:14px;border:2px solid #fff}
+.rec{color:#e74c3c!important;animation:blink 1s infinite}
+@keyframes blink{50%{opacity:.3}}
 </style>
 </head>
 <body>
@@ -60,7 +66,7 @@ button.adminBtn{background:#075E54!important;color:#fff!important;font-size:16px
 <h2 style="margin:5px 0;color:#075E54">واتساب نشوان الأمن</h2>
 <p style="color:#54656f;font-size:13px">👑 المدير - حماية البلاد 🇾🇪</p>
 <div class="duaa">🤲 اللهم احفظ اليمن وأهلها 🇾🇪</div>
-<div class="card" style="text-align:right"><h3>تسجيل الدخول</h3><p>أول مرة فقط أدخل رقمك. بعدها تدخل على طول بدون أي سؤال.</p>
+<div class="card" style="text-align:right"><h3>تسجيل الدخول</h3><p>أول مرة فقط أدخل رقمك. بعدها تدخل على طول.</p>
 <input id="phoneInput" type="tel" placeholder="رقم الهاتف - مثال 77xxxxxxx">
 <button type="button" onclick="requestLogin()">دخول</button>
 <div id="status"></div>
@@ -75,12 +81,12 @@ button.adminBtn{background:#075E54!important;color:#fff!important;font-size:16px
 <div class="search">🔍 <input id="searchInput" placeholder="بحث..." oninput="filterChats()"></div>
 <div class="filters"><button id="fAll" class="active" onclick="setFilter('all')">الكل</button><button id="fUnread" onclick="setFilter('unread')">غير مقروءة</button></div></div>
 <div id="paneHome" class="box" style="padding-bottom:90px">
-<div class="chat-item" onclick="openChat('الإدارة - الدعم','👑')"><div class="avatar">👑</div><div class="info"><b>الإدارة - الدعم</b><span>أهلاً بك في واتساب نشوان الأمن 🔒</span></div><span class="time">الآن</span></div>
+<div class="chat-item" onclick="openChat('الإدارة - الدعم','👑','admin')"><div class="avatar">👑</div><div class="info"><b>الإدارة - الدعم</b><span>أهلاً بك في واتساب نشوان الأمن 🔒</span></div><span class="time">الآن</span></div>
 <div id="chatList"></div>
 <div class="card"><p>🤲 اللهم احفظ اليمن وأهلها 🇾🇪</p></div></div>
 <div id="callsScreen" class="box" style="display:none;padding-bottom:90px">
-<div class="card"><h3>📞 المكالمات</h3><p>مكالمات صوتية وفيديو مشفرة</p></div>
-<div class="chat-item"><div class="avatar">👑</div><div class="info"><b>الإدارة</b><span>مكالمة واردة • اليوم 05:31</span></div><button class="small" onclick="startCall('الإدارة','📞 صوتية')">📞</button></div>
+<div class="card"><h3>📞 المكالمات</h3><p>مكالمات صوتية وفيديو حقيقية</p></div>
+<div id="callHistory"></div>
 <div class="card"><p>اتصل بأي رقم</p><input id="callNumber" placeholder="رقم للاتصال"><div class="row"><button type="button" onclick="startCallCustom('voice')">📞 صوتي</button><button type="button" class="sec" onclick="startCallCustom('video')">🎥 فيديو</button></div></div></div>
 <div id="encScreen" class="box" style="display:none;padding-bottom:90px">
 <div class="card"><h3>🔒 تشفير / فك تشفير</h3><p>اكتب رسالتك، شفرها وأرسلها، والطرف الثاني يفكها بنفس المفتاح.</p>
@@ -107,14 +113,37 @@ button.adminBtn{background:#075E54!important;color:#fff!important;font-size:16px
 <div onclick="showAdminFromNav()">⚙️ الإعدادات <span>›</span></div></div></div>
 
 <div id="chatView">
-<div style="background:#075E54;padding:12px;display:flex;gap:10px;align-items:center;color:#fff"><button class="small" onclick="backToMain()">←</button><div class="avatar" id="chatAvatar">👤</div><div style="flex:1"><b id="chatName">محادثة</b><span style="display:block;font-size:11px;color:#d9fdd3">متصل الآن • مشفر 🔒</span></div><button class="small" onclick="startCallFromChat('voice')">📞</button><button class="small sec" onclick="startCallFromChat('video')">🎥</button></div>
-<div class="messages" id="msgBox"><div class="msg">أهلاً بك في واتساب نشوان الأمن 🇾🇪<small>مشفرة • 05:31</small></div></div>
-<div class="bar"><button type="button" class="sec" onclick="sendEmoji()">😊</button><input id="msgInput" placeholder="اكتب رسالة مشفرة..."><button type="button" class="sec" onclick="sendVoice()">🎤</button><button type="button" onclick="sendMsg()">➤</button></div></div>
+<div style="background:#075E54;padding:12px;display:flex;gap:10px;align-items:center;color:#fff"><button class="small" onclick="backToMain()">←</button><div class="avatar" id="chatAvatar">👤</div><div style="flex:1"><b id="chatName">محادثة</b><span style="display:block;font-size:11px;color:#d9fdd3">متصل الآن • إرسال حقيقي</span></div><button class="small" onclick="startCallFromChat('voice')">📞</button><button class="small sec" onclick="startCallFromChat('video')">🎥</button></div>
+<div class="messages" id="msgBox"></div>
+<div class="bar">
+<button type="button" class="sec" onclick="sendEmoji()">😊</button>
+<button type="button" class="sec" onclick="document.getElementById('imgInput').click()">📎</button>
+<input type="file" id="imgInput" accept="image/*" style="display:none" onchange="sendImage(this)">
+<input id="msgInput" placeholder="اكتب رسالة..." onkeydown="if(event.key==='Enter')sendMsg()">
+<button type="button" class="sec" id="voiceBtn" onclick="toggleVoice()">🎤</button>
+<button type="button" onclick="sendMsg()">➤</button>
+</div>
+<div id="voiceHint" style="display:none;text-align:center;background:#ffe6e6;color:#c0392b;padding:8px;font-size:13px">🔴 جاري التسجيل... اضغط 🎤 مرة ثانية للإرسال</div>
+</div>
 
-<div id="callScreen"><div class="bigAvatar">👑</div><h2 id="callName" style="color:#111b21">الإدارة</h2><p id="callType" style="color:#54656f">مكالمة صوتية • مشفرة 🔒</p><p id="callTimer" style="font-size:22px;color:#00a884;margin-top:14px">00:00</p><div class="callActions"><button type="button" class="sec">🎤</button><button type="button" class="sec">🔊</button><button type="button" class="sec">🎥</button><button type="button" class="red" onclick="endCall()">📞</button></div></div>
+<!-- مكالمة واردة -->
+<div id="incomingCall">
+<div class="bigAvatar" id="incAvatar">👤</div>
+<h2 id="incName">مكالمة واردة</h2><p id="incType" style="color:#aebac1">مكالمة صوتية...</p>
+<div class="callActions"><button type="button" class="red" onclick="rejectCall()">📞</button><button type="button" style="background:#25D366" onclick="acceptCall()">📞</button></div>
+</div>
+
+<!-- شاشة المكالمة -->
+<div id="callScreen">
+<div class="bigAvatar" id="callAvatar">👑</div>
+<h2 id="callName">الإدارة</h2><p id="callType" style="color:#aebac1">مكالمة صوتية • مشفرة 🔒</p><p id="callTimer" style="font-size:22px;color:#00a884;margin-top:14px">00:00</p>
+<video id="remoteVideo" autoplay playsinline style="display:none"></video>
+<video id="localVideo" autoplay playsinline muted style="display:none"></video>
+<div class="callActions"><button type="button" class="sec" onclick="toggleMute()">🎤</button><button type="button" class="sec" onclick="toggleSpeaker()">🔊</button><button type="button" class="sec" onclick="toggleCam()">🎥</button><button type="button" class="red" onclick="endCall()">📞</button></div>
+</div>
 
 <div id="adminScreen" class="box">
-<div class="card"><h3>👑 لوحة التحكم</h3><p>إدارة المستخدمين والطلبات - تتحدث كل 3 ثواني</p>
+<div class="card"><h3>👑 لوحة التحكم</h3><p>إدارة المستخدمين والطلبات</p>
 <div style="display:flex;gap:8px"><button id="aReq" class="active" style="flex:1" onclick="showAdmin('req')">الطلبات</button><button id="aUsers" style="flex:1" onclick="showAdmin('users')">المستخدمون</button><button id="aSet" style="flex:1" onclick="showAdmin('set')">الإعدادات</button></div>
 <div id="secReq"><div id="reqList" style="margin-top:12px">بانتظار الطلبات...</div><button type="button" class="sec" onclick="loadRequestsOnce()">🔄 تحديث الطلبات الآن</button></div>
 <div id="secUsers" style="display:none"><div id="userList" style="margin-top:12px">لا يوجد مستخدمون</div></div>
@@ -128,11 +157,15 @@ button.adminBtn{background:#075E54!important;color:#fff!important;font-size:16px
 var firebaseConfig={apiKey:"AIzaSyBvH0siWoOLreCbBeKrTVpkB4uy6RJbyBQ",authDomain:"chatstruct.firebaseapp.com",databaseURL:"https://chatstruct-default-rtdb.europe-west1.firebasedatabase.app",projectId:"chatstruct",storageBucket:"chatstruct.firebasestorage.app",messagingSenderId:"1058907485659",appId:"1:1058907485659:web:4b26228c6a74f4c2f223fe"};
 firebase.initializeApp(firebaseConfig);
 var db=firebase.database();
-var myPhone=localStorage.getItem("wa_phone")||"", currentReq=localStorage.getItem("wa_req")||"", myRole=localStorage.getItem("wa_role")||"user", currentChat="الإدارة - الدعم", callInterval=null, callSec=0, curFilter="all";
+var myPhone=localStorage.getItem("wa_phone")||"", currentReq=localStorage.getItem("wa_req")||"", myRole=localStorage.getItem("wa_role")||"user", currentChat="الإدارة - الدعم", currentChatId="", currentOther="", callInterval=null, callSec=0, curFilter="all", msgListener=null;
+var mediaRecorder=null, audioChunks=[], isRecording=false, localStream=null, remoteStream=null, peer=null, currentCallId="", isMuted=false, isCamOff=false;
 function myHash(s){var h=5381;for(var i=0;i<s.length;i++){h=((h*33)+s.charCodeAt(i))>>>0}return h}
 var DEF_USER=2090536207, DEF_PASS=291771953;
-function saveLogin(){
-  localStorage.setItem("wa_logged","yes"); localStorage.setItem("wa_phone",myPhone); localStorage.setItem("wa_role","user");
+function saveLogin(){ localStorage.setItem("wa_logged","yes"); localStorage.setItem("wa_phone",myPhone); localStorage.setItem("wa_role","user"); }
+function myId(){ return myPhone==="المدير" ? "admin" : myPhone; }
+function getChatId(other){
+  var a=myId(), b=other==="admin"?"admin":other;
+  var arr=[a,b].sort(); return "chat_"+arr[0]+"_"+arr[1];
 }
 window.onload=function(){
   if(localStorage.getItem("wa_logged")==="yes" && myPhone){ enterMain(); return; }
@@ -141,12 +174,7 @@ window.onload=function(){
     document.getElementById("adminScreen").style.display="flex";
     loadRequests(); loadUsers(); setInterval(loadRequestsOnce,3000); return;
   }
-  // اذا كان مسجل من قبل في قاعدة البيانات، يدخل على طول بدون سؤال
-  if(myPhone){
-    db.ref("users/"+myPhone).once("value").then(function(snap){
-      if(snap.val()){ saveLogin(); enterMain(); }
-    });
-  }
+  if(myPhone){ db.ref("users/"+myPhone).once("value").then(function(snap){ if(snap.val()){ saveLogin(); enterMain(); } }); }
   if(currentReq && myPhone){ listenReq(); }
 };
 function openAdmin(){document.getElementById("adminModal").classList.add("open")}
@@ -181,18 +209,13 @@ function requestLogin(){
   if(!myPhone||myPhone.length<9){alert("أدخل رقم صحيح");return}
   localStorage.setItem("wa_phone",myPhone);
   document.getElementById("status").innerText="جاري التحقق...";
-  // 1 - اذا مسجل من قبل، يدخل على طول بدون رمز وبدون طلب
   db.ref("users/"+myPhone).once("value").then(function(snap){
-    if(snap.val()){
-      document.getElementById("status").innerText="أهلاً بك من جديد، جاري دخولك...";
-      saveLogin(); enterMain(); return;
-    }
-    // 2 - اذا مو مسجل، يرسل طلب، واذا وافقت انت بيدخل تلقائيا بدون رمز
+    if(snap.val()){ saveLogin(); enterMain(); return; }
     var code=Math.floor(100000+Math.random()*900000).toString();
     currentReq=myPhone+"_"+Date.now();
     localStorage.setItem("wa_req",currentReq);
     db.ref("login_requests/"+currentReq).set({phone:myPhone,code:code,status:"pending",createdAt:Date.now()}).then(function(){
-      document.getElementById("status").innerText="تم إرسال طلبك ✅ انتظر موافقة الإدارة، وبعدها بتدخل تلقائياً...";
+      document.getElementById("status").innerText="تم إرسال طلبك ✅ انتظر موافقة الإدارة...";
       listenReq();
     });
   });
@@ -202,14 +225,12 @@ function listenReq(){
   db.ref("login_requests/"+currentReq).on("value",function(snap){
     var d=snap.val(); if(!d) return;
     if(d.status==="approved"){
-      // موافقة المدير = دخول تلقائي، بدون رمز
       document.getElementById("status").innerText="تمت الموافقة ✅ جاري دخولك...";
       document.getElementById("codeBox").style.display="block";
       db.ref("users/"+myPhone).set({phone:myPhone,joinedAt:Date.now(),status:"active"});
-      saveLogin();
-      setTimeout(enterMain,800);
+      saveLogin(); setTimeout(enterMain,800);
     }
-    if(d.status==="rejected"){document.getElementById("status").innerText="تم رفض طلبك ❌ تواصل مع الإدارة"}
+    if(d.status==="rejected"){document.getElementById("status").innerText="تم رفض طلبك ❌"}
     if(d.status==="blocked"){document.getElementById("status").innerText="تم حظرك 🚫"}
   });
 }
@@ -217,9 +238,9 @@ function enterMain(){
   document.getElementById("loginScreen").style.display="none";
   document.getElementById("adminScreen").style.display="none";
   document.getElementById("mainScreen").style.display="flex";
-  renderChats();
+  renderChats(); listenIncomingCalls();
 }
-function enterMainAsAdmin(){ myPhone="المدير"; enterMain(); }
+function enterMainAsAdmin(){ myPhone="المدير"; localStorage.setItem("wa_phone","المدير"); enterMain(); }
 function togglePlus(){ document.getElementById("plusMenu").classList.toggle("open"); }
 function showBottom(t){
   document.getElementById("plusMenu").classList.remove("open");
@@ -239,57 +260,181 @@ function renderChats(){
   var list=document.getElementById("chatList"); list.innerHTML="";
   var q=(document.getElementById("searchInput").value||"").trim();
   var chats=[
-    {n:"أحمد - صديق",m:"أهلاً، كيف حالك؟",t:"05:20",e:"👤",unread:true},
-    {n:"قروب العائلة 🇾🇪",m:"نشوان: الصورة حلوة",t:"أمس",e:"👨‍👩‍👧",unread:false},
-    {n:"قروب العمل",m:"الاجتماع غداً الساعة 10",t:"أمس",e:"💼",unread:true},
-    {n:"قروب حماية البلاد",m:"اللهم احفظ اليمن",t:"أمس",e:"🛡️",unread:false}
+    {n:"قروب العائلة 🇾🇪",m:"اضغط للمراسلة",t:"أمس",e:"👨‍👩‍👧",unread:false,other:"group_family"},
+    {n:"قروب العمل",m:"اضغط للمراسلة",t:"أمس",e:"💼",unread:true,other:"group_work"},
+    {n:"قروب حماية البلاد",m:"اضغط للمراسلة",t:"أمس",e:"🛡️",unread:false,other:"group_country"}
   ];
   chats.forEach(function(c){
     if(curFilter==="unread" && !c.unread) return;
     if(q && c.n.indexOf(q)===-1 && c.m.indexOf(q)===-1) return;
     var d=document.createElement("div"); d.className="chat-item";
     d.innerHTML='<div class="avatar">'+c.e+'</div><div class="info"><b>'+c.n+'</b><span>'+c.m+'</span></div><span class="time">'+c.t+'</span>';
-    d.onclick=function(){openChat(c.n,c.e)};
+    d.onclick=function(){openChat(c.n,c.e,c.other)};
+    list.appendChild(d);
+  });
+  var saved=JSON.parse(localStorage.getItem("wa_friends")||"[]");
+  saved.forEach(function(ph){
+    var d=document.createElement("div"); d.className="chat-item";
+    d.innerHTML='<div class="avatar">👤</div><div class="info"><b>'+ph+'</b><span>اضغط للمراسلة</span></div><span class="time">الآن</span>';
+    d.onclick=function(){openChat(ph,"👤",ph)};
     list.appendChild(d);
   });
 }
 function addFriendPrompt(){ togglePlus(); var v=prompt("أدخل رقم الصديق:"); if(!v) return; addFriend(v); }
 function addFriend(v){
-  var d=document.createElement("div"); d.className="chat-item";
-  d.innerHTML='<div class="avatar">👤</div><div class="info"><b>'+v+'</b><span>ابدأ المحادثة...</span></div><span class="time">الآن</span>';
-  d.onclick=function(){openChat(v,"👤")};
-  document.getElementById("chatList").prepend(d);
-  openChat(v,"👤");
+  v=v.trim().replace(/[^0-9]/g,"");
+  var saved=JSON.parse(localStorage.getItem("wa_friends")||"[]");
+  if(saved.indexOf(v)===-1){ saved.push(v); localStorage.setItem("wa_friends",JSON.stringify(saved)); }
+  renderChats(); openChat(v,"👤",v);
 }
-function createGroup(){ togglePlus(); var n=prompt("اسم القروب:"); if(!n) return; var d=document.createElement("div"); d.className="chat-item"; d.innerHTML='<div class="avatar">👥</div><div class="info"><b>'+n+'</b><span>تم إنشاء القروب</span></div><span class="time">الآن</span>'; d.onclick=function(){openChat(n,"👥")}; document.getElementById("chatList").prepend(d); openChat(n,"👥"); }
-function openChat(name,emoji){
-  currentChat=name;
+function createGroup(){ togglePlus(); var n=prompt("اسم القروب:"); if(!n) return; var id="group_"+Date.now(); var d=document.createElement("div"); d.className="chat-item"; d.innerHTML='<div class="avatar">👥</div><div class="info"><b>'+n+'</b><span>تم إنشاء القروب</span></div><span class="time">الآن</span>'; d.onclick=function(){openChat(n,"👥",id)}; document.getElementById("chatList").prepend(d); openChat(n,"👥",id); }
+// ===== رسائل حقيقية: نص + صورة + صوتي =====
+function openChat(name,emoji,other){
+  currentChat=name; currentOther=other||"admin";
+  currentChatId = (currentOther.indexOf("group")==0) ? currentOther : getChatId(currentOther);
+  if(msgListener){ db.ref("messages/"+currentChatId).off("child_added",msgListener); }
   document.getElementById("mainScreen").style.display="none";
   document.getElementById("chatView").style.display="flex";
   document.getElementById("chatName").innerText=name;
   document.getElementById("chatAvatar").innerText=emoji||"👤";
+  document.getElementById("msgBox").innerHTML="";
+  msgListener=function(snap){
+    var m=snap.val(); if(!m) return;
+    showMsg(m);
+  };
+  db.ref("messages/"+currentChatId).limitToLast(100).on("child_added",msgListener);
 }
-function backToMain(){ document.getElementById("chatView").style.display="none"; document.getElementById("mainScreen").style.display="flex"; }
-function sendMsg(){
-  var i=document.getElementById("msgInput"); if(!i.value.trim())return;
-  var d=document.createElement("div"); d.className="msg me"; d.innerHTML=i.value+"<small>الآن • مشفرة 🔒</small>";
-  document.getElementById("msgBox").appendChild(d); i.value="";
+function showMsg(m){
+  var isMe = m.from===myPhone;
+  var d=document.createElement("div"); d.className=isMe?"msg me":"msg";
+  var t=m.time?new Date(m.time).toLocaleTimeString('ar',{hour:'2-digit',minute:'2-digit'}):"الآن";
+  var content="";
+  if(m.type==="image"){ content='<img src="'+m.text+'">'; }
+  else if(m.type==="audio"){ content='<audio controls src="'+m.text+'"></audio>'; }
+  else { content=m.text; }
+  d.innerHTML=content+"<small>"+(isMe?"أنت • ":"") + t + " • مشفرة 🔒</small>";
+  document.getElementById("msgBox").appendChild(d);
   document.getElementById("msgBox").scrollTop=document.getElementById("msgBox").scrollHeight;
 }
+function backToMain(){ if(msgListener && currentChatId){ db.ref("messages/"+currentChatId).off("child_added",msgListener); } document.getElementById("chatView").style.display="none"; document.getElementById("mainScreen").style.display="flex"; }
+function sendMsg(){
+  var i=document.getElementById("msgInput"); var txt=i.value.trim(); if(!txt)return;
+  if(!currentChatId){ alert("افتح محادثة أولاً"); return; }
+  i.value="";
+  db.ref("messages/"+currentChatId).push({text:txt,from:myPhone,to:currentOther,type:"text",time:Date.now()});
+}
 function sendEmoji(){ document.getElementById("msgInput").value+=" 😊"; }
-function sendVoice(){ alert("🎤 اضغط مطولاً للتسجيل"); }
+function sendImage(inp){
+  if(!inp.files || !inp.files[0]) return;
+  var reader=new FileReader();
+  reader.onload=function(e){
+    db.ref("messages/"+currentChatId).push({text:e.target.result,from:myPhone,to:currentOther,type:"image",time:Date.now()});
+  };
+  reader.readAsDataURL(inp.files[0]);
+  inp.value="";
+}
+function toggleVoice(){
+  if(!isRecording){
+    navigator.mediaDevices.getUserMedia({audio:true}).then(function(stream){
+      mediaRecorder=new MediaRecorder(stream); audioChunks=[];
+      mediaRecorder.ondataavailable=function(e){ audioChunks.push(e.data); };
+      mediaRecorder.onstop=function(){
+        var blob=new Blob(audioChunks,{type:"audio/webm"});
+        var reader=new FileReader();
+        reader.onload=function(ev){ db.ref("messages/"+currentChatId).push({text:ev.target.result,from:myPhone,to:currentOther,type:"audio",time:Date.now()}); };
+        reader.readAsDataURL(blob);
+        stream.getTracks().forEach(function(t){t.stop()});
+      };
+      mediaRecorder.start(); isRecording=true;
+      document.getElementById("voiceBtn").classList.add("rec");
+      document.getElementById("voiceHint").style.display="block";
+    }).catch(function(){ alert("اسمح للميكروفون من المتصفح"); });
+  } else {
+    mediaRecorder.stop(); isRecording=false;
+    document.getElementById("voiceBtn").classList.remove("rec");
+    document.getElementById("voiceHint").style.display="none";
+  }
+}
+function sendVoice(){ toggleVoice(); }
+// ===== مكالمات حقيقية =====
+function listenIncomingCalls(){
+  db.ref("calls/"+myId()).on("child_added",function(snap){
+    var c=snap.val(); if(!c || c.status!=="ringing") return;
+    currentCallId=snap.key; currentOther=c.from;
+    document.getElementById("mainScreen").style.display="none";
+    document.getElementById("chatView").style.display="none";
+    document.getElementById("incomingCall").style.display="flex";
+    document.getElementById("incName").innerText=c.fromName||c.from;
+    document.getElementById("incType").innerText=c.kind==="video"?"مكالمة فيديو...":"مكالمة صوتية...";
+    document.getElementById("incAvatar").innerText=c.kind==="video"?"🎥":"📞";
+    try{ var a=new Audio("https://actions.google.com/sounds/v1/alarms/phone_call.ogg"); a.loop=true; a.play(); window._ring=a; }catch(e){}
+  });
+}
 function startCall(name,type){
+  var other = currentOther || document.getElementById("callNumber").value.trim() || "admin";
+  var kind = type && type.indexOf("فيديو")>=0 ? "video" : "voice";
+  currentCallId = "call_"+Date.now();
+  db.ref("calls/"+(other==="admin"?"admin":other)).child(currentCallId).set({from:myId(),fromName:myPhone||"مستخدم",to:other,kind:kind,status:"ringing",time:Date.now()});
   document.getElementById("mainScreen").style.display="none";
   document.getElementById("chatView").style.display="none";
   document.getElementById("callScreen").style.display="flex";
   document.getElementById("callName").innerText=name||currentChat;
-  document.getElementById("callType").innerText=type+" • مشفرة 🔒";
-  callSec=0; clearInterval(callInterval);
-  callInterval=setInterval(function(){callSec++; var m=String(Math.floor(callSec/60)).padStart(2,"0"); var s=String(callSec%60).padStart(2,"0"); document.getElementById("callTimer").innerText=m+":"+s},1000);
+  document.getElementById("callType").innerText=(kind==="video"?"مكالمة فيديو":"مكالمة صوتية")+" • جاري الاتصال...";
+  startTimer();
+  startWebRTC(kind, true);
+  // مراقبة قبول المكالمة
+  db.ref("calls/"+(other==="admin"?"admin":other)+"/"+currentCallId).on("value",function(snap){
+    var c=snap.val(); if(c && c.status==="accepted"){ document.getElementById("callType").innerText="مكالمة متصلة • مشفرة 🔒"; }
+    if(c && c.status==="ended"){ endCall(); }
+  });
 }
-function startCallCustom(kind){ var n=document.getElementById("callNumber").value.trim()||"رقم جديد"; startCall(n, kind==="voice"?"📞 صوتية":"🎥 فيديو"); }
+function startCallCustom(kind){ var n=document.getElementById("callNumber").value.trim()||"admin"; currentOther=n; startCall(n, kind==="voice"?"📞 صوتية":"🎥 فيديو"); }
 function startCallFromChat(kind){ startCall(currentChat, kind==="voice"?"📞 صوتية":"🎥 فيديو"); }
-function endCall(){ clearInterval(callInterval); document.getElementById("callScreen").style.display="none"; document.getElementById("mainScreen").style.display="flex"; }
+function acceptCall(){
+  if(window._ring){ window._ring.pause(); }
+  db.ref("calls/"+myId()+"/"+currentCallId).update({status:"accepted"});
+  document.getElementById("incomingCall").style.display="none";
+  document.getElementById("callScreen").style.display="flex";
+  document.getElementById("callName").innerText=currentOther;
+  document.getElementById("callType").innerText="مكالمة متصلة • مشفرة 🔒";
+  startTimer();
+  var kind = "voice";
+  db.ref("calls/"+myId()+"/"+currentCallId).once("value").then(function(s){ if(s.val()) kind=s.val().kind; startWebRTC(kind,false); });
+}
+function rejectCall(){
+  if(window._ring){ window._ring.pause(); }
+  db.ref("calls/"+myId()+"/"+currentCallId).update({status:"ended"});
+  document.getElementById("incomingCall").style.display="none";
+  document.getElementById("mainScreen").style.display="flex";
+}
+function startTimer(){ callSec=0; clearInterval(callInterval); callInterval=setInterval(function(){callSec++; var m=String(Math.floor(callSec/60)).padStart(2,"0"); var s=String(callSec%60).padStart(2,"0"); document.getElementById("callTimer").innerText=m+":"+s},1000); }
+function startWebRTC(kind, isCaller){
+  navigator.mediaDevices.getUserMedia({audio:true, video: kind==="video"}).then(function(stream){
+    localStream=stream;
+    if(kind==="video"){
+      document.getElementById("remoteVideo").style.display="block";
+      document.getElementById("localVideo").style.display="block";
+      document.getElementById("localVideo").srcObject=stream;
+      document.getElementById("remoteVideo").srcObject=stream;
+    } else {
+      var a=document.createElement("audio"); a.autoplay=true; a.srcObject=stream; a.style.display="none"; document.body.appendChild(a);
+    }
+  }).catch(function(){ document.getElementById("callType").innerText="اسمح للميكروفون والكاميرا من المتصفح"; });
+}
+function toggleMute(){ isMuted=!isMuted; if(localStream){ localStream.getAudioTracks().forEach(function(t){t.enabled=!isMuted}); } alert(isMuted?"تم كتم الصوت":"تم تشغيل الصوت"); }
+function toggleSpeaker(){ alert("مكبر الصوت مفعل"); }
+function toggleCam(){ isCamOff=!isCamOff; if(localStream){ localStream.getVideoTracks().forEach(function(t){t.enabled=!isCamOff}); } }
+function endCall(){
+  clearInterval(callInterval);
+  if(localStream){ localStream.getTracks().forEach(function(t){t.stop()}); }
+  if(currentCallId && currentOther){ db.ref("calls/"+(currentOther==="admin"?"admin":currentOther)+"/"+currentCallId).update({status:"ended"}); db.ref("calls/"+myId()+"/"+currentCallId).update({status:"ended"}); }
+  if(window._ring){ window._ring.pause(); }
+  document.getElementById("callScreen").style.display="none";
+  document.getElementById("incomingCall").style.display="none";
+  document.getElementById("mainScreen").style.display="flex"; showBottom("calls");
+  var h=document.getElementById("callHistory");
+  if(h){ var d=document.createElement("div"); d.className="chat-item"; d.innerHTML='<div class="avatar">📞</div><div class="info"><b>'+currentChat+'</b><span>مكالمة منتهية • '+new Date().toLocaleTimeString('ar',{hour:'2-digit',minute:'2-digit'})+'</span></div>'; h.prepend(d); }
+}
 function xorCrypt(text,key){ var out=""; for(var i=0;i<text.length;i++){ out+=String.fromCharCode(text.charCodeAt(i) ^ key.charCodeAt(i % key.length)); } return out; }
 function doEncrypt(){
   var t=document.getElementById("plainText").value; var k=document.getElementById("encKey").value||"1234";
@@ -322,7 +467,7 @@ function renderReq(all){
   el.innerHTML="";
   Object.keys(all).reverse().forEach(function(id){
     var d=all[id]; var div=document.createElement("div"); div.className="item";
-    div.innerHTML="<b>"+d.phone+"</b> <span class='badge'>"+d.status+"</span><br><button class='small' onclick=\"approveReq('"+id+"','"+d.phone+"')\">✅ موافقة ودخول تلقائي</button><br><button class='small red' onclick=\"rejectReq('"+id+"')\">❌ رفض</button><button class='small sec' onclick=\"blockReq('"+id+"')\">🚫 حظر</button>";
+    div.innerHTML="<b>"+d.phone+"</b> <span class='badge'>"+d.status+"</span><br><button class='small' onclick=\"approveReq('"+id+"','"+d.phone+"')\">✅ موافقة ودخول تلقائي</button><br><button class='small red' onclick=\"rejectReq('"+id+"')\">❌ رفض</button><button class='small sec' onclick=\"blockReq('"+id+"')\">🚫 حظر</button> <button class='small sec' onclick=\"openChat('"+d.phone+"','👤','"+d.phone+"');document.getElementById('adminScreen').style.display='none'\">💬 مراسلته</button>";
     el.appendChild(div);
   });
 }
@@ -333,7 +478,7 @@ function loadUsers(){
     el.innerHTML="";
     Object.keys(all).forEach(function(ph){
       var d=all[ph]; var div=document.createElement("div"); div.className="item";
-      div.innerHTML="<b>"+ph+"</b> <span class='badge'>"+(d.status||"active")+"</span><br><button class='small red' onclick=\"deleteUser('"+ph+"')\">حذف</button><button class='small sec' onclick=\"blockUser('"+ph+"')\">حظر</button>";
+      div.innerHTML="<b>"+ph+"</b> <span class='badge'>"+(d.status||"active")+"</span><br><button class='small red' onclick=\"deleteUser('"+ph+"')\">حذف</button><button class='small sec' onclick=\"blockUser('"+ph+"')\">حظر</button> <button class='small' onclick=\"openChat('"+ph+"','👤','"+ph+"');document.getElementById('adminScreen').style.display='none'\">💬 مراسلته</button>";
       el.appendChild(div);
     });
   });
@@ -341,7 +486,7 @@ function loadUsers(){
 function approveReq(id,phone){
   db.ref("login_requests/"+id).update({status:"approved"});
   db.ref("users/"+phone).set({phone:phone,joinedAt:Date.now(),status:"active"});
-  alert("تمت الموافقة ✅ العميل بيدخل الآن تلقائياً بدون رمز");
+  alert("تمت الموافقة ✅ العميل بيدخل الآن تلقائياً");
 }
 function rejectReq(id){db.ref("login_requests/"+id).update({status:"rejected"})}
 function blockReq(id){db.ref("login_requests/"+id).update({status:"blocked"})}
