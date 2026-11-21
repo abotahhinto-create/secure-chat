@@ -9,7 +9,6 @@
   body{margin:0;background:#0b141a;color:#fff;display:flex;justify-content:center;min-height:100vh}
   .app{width:100%;max-width:420px;background:#111b21;min-height:100vh;display:flex;flex-direction:column}
   .header{background:#202c33;padding:15px;display:flex;align-items:center;gap:10px}
-  .header img{width:45px;height:45px;border-radius:50%;background:#00a884;display:flex;align-items:center;justify-content:center;font-size:22px}
   .header h2{margin:0;font-size:18px}
   .header p{margin:0;font-size:12px;color:#8696a0}
   .box{padding:20px;flex:1}
@@ -18,7 +17,7 @@
   .card p{font-size:13px;color:#aebac1;line-height:1.6}
   input{width:100%;padding:14px;border-radius:10px;border:none;background:#2a3942;color:#fff;font-size:16px;outline:none;text-align:left;direction:ltr}
   button{width:100%;padding:14px;border:none;border-radius:10px;background:#00a884;color:#fff;font-size:16px;font-weight:bold;cursor:pointer;margin-top:12px}
-  button:disabled{background:#555;cursor:not-allowed}
+  button:disabled{background:#555}
   button.sec{background:#2a3942}
   #رمزك{display:none;background:#00a884;color:#fff;text-align:center;padding:20px;border-radius:12px;margin-top:15px}
   #رمزك b{font-size:32px;letter-spacing:5px;display:block;margin-top:5px}
@@ -28,43 +27,35 @@
   #شاشة_الدردشة{display:none;flex:1;flex-direction:column}
   .messages{flex:1;padding:15px;overflow-y:auto}
   .msg{background:#005c4b;padding:9px 12px;border-radius:10px;margin-bottom:8px;width:fit-content;max-width:80%}
-  .msg.me{background:#005c4b;margin-left:auto}
+  .msg.me{margin-left:auto}
   .input-bar{display:flex;gap:8px;padding:10px;background:#202c33}
   .input-bar input{flex:1}
   .input-bar button{width:60px;margin:0}
   .footer{text-align:center;font-size:11px;color:#8696a0;padding:10px}
-  a{color:#53bdeb;text-decoration:none}
 </style>
 </head>
 <body>
-
 <div class="app">
-
-  <!-- الهيدر -->
   <div class="header">
     <div style="width:45px;height:45px;background:#00a884;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px">💬</div>
-    <div>
-      <h2>واتساب نشوان الأمن</h2>
-      <p id="حالة_الاتصال">متصل • مشفر</p>
-    </div>
+    <div><h2>واتساب نشوان الأمن</h2><p id="حالة_الاتصال">متصل • مشفر • المدير: 771713275</p></div>
   </div>
 
-  <!-- ===== شاشة الدخول ===== -->
+  <!-- شاشة الدخول -->
   <div id="شاشة_الدخول" class="box">
     <div class="card">
       <h3>تسجيل الدخول الآمن</h3>
-      <p>اكتب رقمك، بيتم إرسال طلب للمدير، وبمجرد ما يضغط تأكيد بيظهر لك الرمز في نفس الشاشة بدون SMS.</p>
+      <p>اكتب رقمك، بيتم إرسال طلب للمدير <b>771713275</b>، وبمجرد ما يضغط تأكيد بيظهر لك الرمز في نفس الشاشة بدون SMS.</p>
     </div>
 
     <label>رقم الهاتف</label>
-    <input id="الهاتف" type="tel" placeholder="772013529" value="">
+    <input id="الهاتف" type="tel" placeholder="77xxxxxxx">
     <button id="زر_دخول" onclick="طلب_دخول()">طلب الدخول / إرسال للمدير</button>
-    <button class="sec" onclick="فتح_واتساب_المدير()">مراسلة المدير مباشرة</button>
+    <button class="sec" onclick="فتح_واتساب_المدير()">مراسلة المدير 771713275 مباشرة</button>
 
     <div id="حالة"></div>
     <div class="loader" id="لودر"></div>
 
-    <!-- الرمز يظهر هنا بعد موافقة المدير -->
     <div id="رمزك">
       تمت الموافقة ✅
       <span>رمز الدخول الخاص بك:</span>
@@ -75,32 +66,26 @@
     <div class="card" style="margin-top:15px">
       <h3>كيف يشتغل؟</h3>
       <p>1. تكتب رقمك وتضغط طلب دخول<br>
-         2. توصل رسالة للمدير على واتساب<br>
+         2. توصل رسالة للمدير 771713275 على واتساب<br>
          3. المدير يضغط تأكيد<br>
          4. يطلع لك الرمز هنا في نفس الشاشة</p>
     </div>
   </div>
 
-  <!-- ===== شاشة الدردشة ===== -->
+  <!-- شاشة الدردشة -->
   <div id="شاشة_الدردشة">
-    <div class="messages" id="الرسائل">
-      <div class="msg">أهلا بك في واتساب نشوان الأمن 🔒</div>
-    </div>
-    <div class="input-bar">
-      <input id="نص_الرسالة" placeholder="اكتب رسالة...">
-      <button onclick="ارسال()">➤</button>
-    </div>
+    <div class="messages" id="الرسائل"><div class="msg">أهلا بك في واتساب نشوان الأمن 🔒</div></div>
+    <div class="input-bar"><input id="نص_الرسالة" placeholder="اكتب رسالة..."><button onclick="ارسال()">➤</button></div>
   </div>
 
-  <div class="footer">Secure Chat • Nashwan • v2.0 - نظام موافقة المدير</div>
+  <div class="footer">Secure Chat • Nashwan • المدير: 771713275</div>
 </div>
 
-<!-- Firebase -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, doc, setDoc, onSnapshot, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-// ===== ضع بيانات مشروعك هنا =====
+// ===== بيانات Firebase - غيرها ببياناتك =====
 const firebaseConfig = {
   apiKey: "ضع_API_KEY_هنا",
   authDomain: "ضع_AUTH_DOMAIN_هنا",
@@ -112,10 +97,11 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// ===== إعدادات المدير =====
-const رقم_المدير = "967772013529"; // غيره لرقمك
+// ===== رقم المدير =====
+const رقم_المدير = "967771713275";
+const رقم_المدير_عرض = "771713275";
+
 let طلب_الحالي = null;
-let رمز_الحالي = "";
 
 window.طلب_دخول = async function() {
   const هاتف = document.getElementById("الهاتف").value.trim();
@@ -125,34 +111,31 @@ window.طلب_دخول = async function() {
   زر.disabled = true;
   زر.innerText = "جاري إرسال الطلب...";
   document.getElementById("لودر").style.display = "block";
-  document.getElementById("حالة").innerText = "تم إرسال الطلب للمدير، انتظر الموافقة...";
+  document.getElementById("حالة").innerText = "تم إرسال الطلب للمدير " + رقم_المدير_عرض + "، انتظر الموافقة...";
 
-  رمز_الحالي = Math.floor(100000 + Math.random() * 900000).toString();
+  const رمز_الحالي = Math.floor(100000 + Math.random() * 900000).toString();
   طلب_الحالي = هاتف + "_" + Date.now();
 
-  // 1. إنشاء الطلب في Firestore
   await setDoc(doc(db, "طلبات_دخول", طلب_الحالي), {
     phone: هاتف,
     code: رمز_الحالي,
     status: "pending",
+    manager: رقم_المدير_عرض,
     createdAt: Date.now()
   });
 
-  // 2. إرسال رسالة واتساب للمدير فيها رابط التأكيد
   const رابط_المدير = `${location.origin}/admin.html?id=${طلب_الحالي}`;
-  const رسالة = `🔔 طلب دخول جديد\nرقم: ${هاتف}\nالرمز: ${رمز_الحالي}\nللتأكيد اضغط: ${رابط_المدير}`;
+  const رسالة = `🔔 طلب دخول جديد - واتساب نشوان\nرقم المستخدم: ${هاتف}\nالرمز: ${رمز_الحالي}\nللتأكيد اضغط: ${رابط_المدير}`;
   window.open(`https://wa.me/${رقم_المدير}?text=${encodeURIComponent(رسالة)}`, '_blank');
 
-  // 3. الاستماع لحظة بلحظة - لما المدير يوافق يطلع الرمز في نفس الشاشة
   onSnapshot(doc(db, "طلبات_دخول", طلب_الحالي), (snap) => {
     if (!snap.exists()) return;
     const data = snap.data();
     if (data.status === "approved") {
       document.getElementById("لودر").style.display = "none";
-      document.getElementById("حالة").innerText = "تمت الموافقة من المدير ✅";
+      document.getElementById("حالة").innerText = "تمت الموافقة من المدير " + رقم_المدير_عرض + " ✅";
       document.getElementById("رمزك").style.display = "block";
       document.getElementById("الرمز_الظاهر").innerText = data.code;
-      // اهتزاز تنبيه
       if (navigator.vibrate) navigator.vibrate([200,100,200]);
     }
     if (data.status === "rejected") {
@@ -171,15 +154,14 @@ window.دخول_نهائي = function() {
 };
 
 window.فتح_واتساب_المدير = function() {
-  window.open(`https://wa.me/${رقم_المدير}?text=${encodeURIComponent("مرحبا، أريد الدخول للواتساب")}`, '_blank');
+  window.open(`https://wa.me/${رقم_المدير}?text=${encodeURIComponent("مرحبا يا مدير، أريد الدخول للواتساب")}`, '_blank');
 };
 
 window.ارسال = function() {
   const inp = document.getElementById("نص_الرسالة");
   if (!inp.value.trim()) return;
   const div = document.createElement("div");
-  div.className = "msg me";
-  div.innerText = inp.value;
+  div.className = "msg me"; div.innerText = inp.value;
   document.getElementById("الرسائل").appendChild(div);
   inp.value = "";
 };
