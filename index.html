@@ -4,78 +4,51 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>واتساب نشوان الأمن</title>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 <style>
-  *{box-sizing:border-box;font-family:'Segoe UI',Tahoma,sans-serif}
-  body{margin:0;background:#0b141a;color:#fff;display:flex;justify-content:center;min-height:100vh}
-  .app{width:100%;max-width:420px;background:#111b21;min-height:100vh;display:flex;flex-direction:column}
-  .header{background:#202c33;padding:15px;display:flex;align-items:center;gap:10px}
-  .header h2{margin:0;font-size:18px}
-  .header p{margin:0;font-size:12px;color:#8696a0}
-  .box{padding:20px;flex:1}
-  .card{background:#202c33;border-radius:12px;padding:18px;margin-bottom:15px}
-  .card h3{margin:0 0 5px 0;color:#00a884}
-  .card p{font-size:13px;color:#aebac1;line-height:1.6}
-  input{width:100%;padding:14px;border-radius:10px;border:none;background:#2a3942;color:#fff;font-size:16px;outline:none;text-align:left;direction:ltr}
-  button{width:100%;padding:14px;border:none;border-radius:10px;background:#00a884;color:#fff;font-size:16px;font-weight:bold;cursor:pointer;margin-top:12px}
-  button:disabled{background:#555}
-  button.sec{background:#2a3942}
-  button.red{background:#e74c3c}
-  #رمزك{display:none;background:#00a884;color:#fff;text-align:center;padding:20px;border-radius:12px;margin-top:15px}
-  #رمزك b{font-size:32px;letter-spacing:5px;display:block;margin-top:5px}
-  #حالة{margin-top:12px;text-align:center;color:#ffd166;font-size:14px;min-height:20px}
-  .loader{width:40px;height:40px;border:4px solid #2a3942;border-top:4px solid #00a884;border-radius:50%;animation:spin 1s linear infinite;margin:15px auto;display:none}
-  @keyframes spin{to{transform:rotate(360deg)}}
-  #شاشة_الدردشة,#شاشة_المدير{display:none;flex:1;flex-direction:column}
-  .messages{flex:1;padding:15px;overflow-y:auto}
-  .msg{background:#005c4b;padding:9px 12px;border-radius:10px;margin-bottom:8px;width:fit-content;max-width:80%}
-  .msg.me{margin-left:auto}
-  .input-bar{display:flex;gap:8px;padding:10px;background:#202c33}
-  .input-bar input{flex:1}
-  .input-bar button{width:60px;margin:0}
-  .item{background:#2a3942;padding:12px;border-radius:10px;margin-bottom:10px}
-  .footer{text-align:center;font-size:11px;color:#8696a0;padding:10px}
+*{box-sizing:border-box;font-family:'Segoe UI',Tahoma,sans-serif}
+body{margin:0;background:#0b141a;color:#fff;display:flex;justify-content:center;min-height:100vh}
+.app{width:100%;max-width:420px;background:#111b21;min-height:100vh;display:flex;flex-direction:column}
+.header{background:#202c33;padding:15px;display:flex;align-items:center;gap:10px}
+.header h2{margin:0;font-size:18px}.header p{margin:0;font-size:12px;color:#8696a0}
+.box{padding:20px;flex:1}.card{background:#202c33;border-radius:12px;padding:18px;margin-bottom:15px}
+.card h3{margin:0 0 5px 0;color:#00a884}.card p{font-size:13px;color:#aebac1;line-height:1.6}
+input{width:100%;padding:14px;border-radius:10px;border:none;background:#2a3942;color:#fff;font-size:16px;outline:none;text-align:left;direction:ltr}
+button{width:100%;padding:14px;border:none;border-radius:10px;background:#00a884;color:#fff;font-size:16px;font-weight:bold;cursor:pointer;margin-top:12px}
+button.sec{background:#2a3942}button.red{background:#e74c3c}
+#رمزك{display:none;background:#00a884;color:#fff;text-align:center;padding:20px;border-radius:12px;margin-top:15px}
+#رمزك b{font-size:32px;letter-spacing:5px;display:block}
+#حالة{margin-top:12px;text-align:center;color:#ffd166;font-size:14px}
+#شاشة_الدردشة,#شاشة_المدير{display:none;flex:1;flex-direction:column}
+.messages{flex:1;padding:15px;overflow-y:auto}.msg{background:#005c4b;padding:9px 12px;border-radius:10px;margin-bottom:8px;width:fit-content;max-width:80%}.msg.me{margin-left:auto}
+.input-bar{display:flex;gap:8px;padding:10px;background:#202c33}.input-bar input{flex:1}.input-bar button{width:60px;margin:0}
+.item{background:#2a3942;padding:12px;border-radius:10px;margin-bottom:10px}
 </style>
 </head>
 <body>
 <div class="app">
-  <div class="header">
-    <div style="width:45px;height:45px;background:#00a884;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px">💬</div>
-    <div><h2>واتساب نشوان الأمن</h2><p id="حالة_الاتصال">متصل • المدير: 771713275</p></div>
-  </div>
-  <div id="شاشة_الدخول" class="box">
-    <div class="card">
-      <h3>تسجيل الدخول</h3>
-      <p>اكتب رقمك واضغط دخول.<br>لو انت المدير <b>771713275</b> بتدخل على طول بدون انتظار.</p>
-    </div>
-    <label>رقم الهاتف</label>
-    <input id="الهاتف" type="tel" placeholder="77xxxxxxx">
-    <button id="زر_دخول" onclick="دخول()">دخول / طلب الدخول</button>
-    <button class="sec" onclick="فتح_واتساب_المدير()">مراسلة المدير 771713275</button>
-    <div id="حالة"></div>
-    <div class="loader" id="لودر"></div>
-    <div id="رمزك">
-      تمت الموافقة ✅
-      <span>رمز الدخول:</span>
-      <b id="الرمز_الظاهر">------</b>
-      <button onclick="دخول_نهائي()" style="background:#fff;color:#00a884;margin-top:12px">تأكيد الدخول</button>
-    </div>
-  </div>
-  <div id="شاشة_المدير" class="box">
-    <div class="card"><h3>👑 أهلا يا مدير</h3><p>انت دخلت برقم المدير 771713275، تقدر تشوف الطلبات وتوافق عليها من هنا.</p>
-    <button onclick="فتح_الدردشة_من_المدير()">دخول الدردشة 💬</button></div>
-    <div class="card"><h3>الطلبات المعلقة</h3><div id="القائمة">لا توجد طلبات</div><button class="sec" onclick="location.reload()">تحديث 🔄</button></div>
-  </div>
-  <div id="شاشة_الدردشة">
-    <div class="messages" id="الرسائل"><div class="msg">أهلا بك في واتساب نشوان الأمن 🔒</div></div>
-    <div class="input-bar"><input id="نص_الرسالة" placeholder="اكتب رسالة..."><button onclick="ارسال()">➤</button></div>
-    <button class="sec" style="margin:10px" onclick="رجوع()">رجوع</button>
-  </div>
-  <div class="footer">نسخة نهائية - ملف واحد - المدير: 771713275</div>
+<div class="header"><div style="width:45px;height:45px;background:#00a884;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px">💬</div><div><h2>واتساب نشوان الأمن</h2><p>متصل • المدير: 771713275</p></div></div>
+<div id="شاشة_الدخول" class="box">
+<div class="card"><h3>تسجيل الدخول</h3><p>اكتب رقمك واضغط دخول.<br>لو انت المدير <b>771713275</b> بتدخل على طول.</p></div>
+<input id="الهاتف" type="tel" placeholder="77xxxxxxx" value="771713275">
+<button id="زر_دخول" onclick="دخول()">دخول / طلب الدخول</button>
+<button class="sec" onclick="فتح_واتساب()">مراسلة المدير 771713275</button>
+<div id="حالة"></div>
+<div id="رمزك">تمت الموافقة ✅<br><b id="الرمز_الظاهر">------</b><button onclick="دخول_نهائي()" style="background:#fff;color:#00a884">تأكيد الدخول</button></div>
 </div>
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getDatabase, ref, set, onValue, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-const firebaseConfig = {
+<div id="شاشة_المدير" class="box">
+<div class="card"><h3>👑 أهلا يا مدير</h3><p>دخلت برقم 771713275</p><button onclick="فتح_الدردشة_من_المدير()">دخول الدردشة 💬</button></div>
+<div class="card"><h3>الطلبات</h3><div id="القائمة">لا توجد طلبات</div><button class="sec" onclick="location.reload()">تحديث 🔄</button></div>
+</div>
+<div id="شاشة_الدردشة">
+<div class="messages" id="الرسائل"><div class="msg">أهلا بك في واتساب نشوان الأمن 🔒</div></div>
+<div class="input-bar"><input id="نص_الرسالة" placeholder="اكتب رسالة..."><button onclick="ارسال()">➤</button></div>
+<button class="sec" style="margin:10px" onclick="رجوع()">رجوع</button>
+</div>
+</div>
+<script>
+var firebaseConfig = {
   apiKey: "AIzaSyBvH0siWoOLreCbBeKrTVpkB4uy6RJbyBQ",
   authDomain: "chatstruct.firebaseapp.com",
   databaseURL: "https://chatstruct-default-rtdb.europe-west1.firebasedatabase.app",
@@ -84,86 +57,54 @@ const firebaseConfig = {
   messagingSenderId: "1058907485659",
   appId: "1:1058907485659:web:4b26228c6a74f4c2f223fe"
 };
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
-const رقم_المدير = "967771713275";
-const رقم_المدير_عرض = "771713275";
-let طلب_الحالي = null;
-let رقمي = "";
-window.dخول = async function() {
+firebase.initializeApp(firebaseConfig);
+var db = firebase.database();
+var رقمي = "";
+function دخول(){
   رقمي = document.getElementById("الهاتف").value.trim().replace(/[^0-9]/g,"");
-  if (رقمي.length < 9) { alert("اكتب رقم صحيح"); return; }
-  if (رقمي === رقم_المدير_عرض || رقمي === رقم_المدير || رقمي.endsWith("771713275")) {
-    document.getElementById("شاشة_الدخول").style.display = "none";
-    document.getElementById("شاشة_المدير").style.display = "block";
-    document.getElementById("حالة_الاتصال").innerText = "مدير • 771713275";
+  if(!رقمي || رقمي.length < 9){ alert("اكتب رقم صحيح"); return; }
+  if(رقمي === "771713275" || رقمي.endsWith("771713275")){
+    document.getElementById("شاشة_الدخول").style.display="none";
+    document.getElementById("شاشة_المدير").style.display="block";
     تحميل_الطلبات();
     return;
   }
-  const زر = document.getElementById("زر_دخول");
-  زر.disabled = true; زر.innerText = "جاري إرسال الطلب...";
-  document.getElementById("لودر").style.display = "block";
-  document.getElementById("حالة").innerText = "تم إرسال الطلب للمدير 771713275، انتظر الموافقة...";
-  const رمز_الحالي = Math.floor(100000 + Math.random() * 900000).toString();
-  طلب_الحالي = رقمي + "_" + Date.now();
-  await set(ref(db, "طلبات_دخول/" + طلب_الحالي), { phone: رقمي, code: رمز_الحالي, status: "pending", manager: رقم_المدير_عرض, createdAt: Date.now() });
-  const رسالة = `🔔 طلب دخول جديد\nرقم المستخدم: ${رقمي}\nالرمز: ${رمز_الحالي}`;
-  window.open(`https://wa.me/${رقم_المدير}?text=${encodeURIComponent(رسالة)}`, '_blank');
-  onValue(ref(db, "طلبات_دخول/" + طلب_الحالي), (snap) => {
-    const data = snap.val(); if (!data) return;
-    if (data.status === "approved") {
-      document.getElementById("لودر").style.display = "none";
+  document.getElementById("حالة").innerText = "تم إرسال الطلب للمدير، انتظر الموافقة...";
+  var رمز = Math.floor(100000 + Math.random()*900000).toString();
+  var id = رقمي + "_" + Date.now();
+  db.ref("طلبات_دخول/" + id).set({phone: رقمي, code: رمز, status: "pending", createdAt: Date.now()});
+  window.open("https://wa.me/967771713275?text=" + encodeURIComponent("طلب دخول جديد رقم: " + رقمي + " الرمز: " + رمز), "_blank");
+  db.ref("طلبات_دخول/" + id).on("value", function(snap){
+    var data = snap.val(); if(!data) return;
+    if(data.status === "approved"){
       document.getElementById("حالة").innerText = "تمت الموافقة ✅";
-      document.getElementById("رمزك").style.display = "block";
+      document.getElementById("رمزك").style.display="block";
       document.getElementById("الرمز_الظاهر").innerText = data.code;
     }
-    if (data.status === "rejected") {
-      document.getElementById("لودر").style.display = "none";
-      document.getElementById("حالة").innerText = "تم الرفض ❌";
-      زر.disabled = false; زر.innerText = "دخول / طلب الدخول";
-    }
+    if(data.status === "rejected"){ document.getElementById("حالة").innerText = "تم الرفض ❌"; }
   });
-};
-function تحميل_الطلبات() {
-  onValue(ref(db, "طلبات_دخول"), (snap) => {
-    const all = snap.val();
-    const قائمة = document.getElementById("القائمة");
-    if (!all) { قائمة.innerHTML = "لا توجد طلبات"; return; }
-    قائمة.innerHTML = "";
-    Object.entries(all).reverse().forEach(([id, data]) => {
-      const div = document.createElement("div");
-      div.className = "item";
-      div.innerHTML = `<b>${data.phone}</b> - ${data.status} - الرمز: ${data.code}<br>
-        <button onclick="موافقة('${id}')">✅ موافقة</button>
-        <button class="red" onclick="رفض('${id}')">❌ رفض</button>`;
+}
+function تحميل_الطلبات(){
+  db.ref("طلبات_دخول").on("value", function(snap){
+    var all = snap.val();
+    var قائمة = document.getElementById("القائمة");
+    if(!all){ قائمة.innerHTML="لا توجد طلبات"; return; }
+    قائمة.innerHTML="";
+    Object.keys(all).reverse().forEach(function(id){
+      var data = all[id];
+      var div = document.createElement("div"); div.className="item";
+      div.innerHTML = "<b>"+data.phone+"</b> - "+data.status+" - الرمز: "+data.code+"<br><button onclick=\"موافقة('"+id+"')\">✅ موافقة</button> <button class='red' onclick=\"رفض('"+id+"')\">❌ رفض</button>";
       قائمة.appendChild(div);
     });
   });
 }
-window.موافقة = async function(id){ await update(ref(db,"طلبات_دخول/"+id),{status:"approved"}); alert("تمت الموافقة ✅"); };
-window.رفض = async function(id){ await update(ref(db,"طلبات_دخول/"+id),{status:"rejected"}); alert("تم الرفض"); };
-window.دخول_نهائي = function() {
-  document.getElementById("شاشة_الدخول").style.display = "none";
-  document.getElementById("شاشة_الدردشة").style.display = "flex";
-};
-window.فتح_الدردشة_من_المدير = function() {
-  document.getElementById("شاشة_المدير").style.display = "none";
-  document.getElementById("شاشة_الدردشة").style.display = "flex";
-};
-window.رجوع = function() {
-  document.getElementById("شاشة_الدردشة").style.display = "none";
-  if (رقمي.endsWith("771713275")) document.getElementById("شاشة_المدير").style.display = "block";
-  else document.getElementById("شاشة_الدخول").style.display = "block";
-};
-window.فتح_واتساب_المدير = function() {
-  window.open(`https://wa.me/${رقم_المدير}?text=${encodeURIComponent("مرحبا يا مدير، أريد الدخول")}`, '_blank');
-};
-window.ارسال = function() {
-  const inp = document.getElementById("نص_الرسالة");
-  if (!inp.value.trim()) return;
-  const div = document.createElement("div"); div.className = "msg me"; div.innerText = inp.value;
-  document.getElementById("الرسائل").appendChild(div); inp.value = "";
-};
+function موافقة(id){ db.ref("طلبات_دخول/"+id).update({status:"approved"}); alert("تمت الموافقة ✅"); }
+function رفض(id){ db.ref("طلبات_دخول/"+id).update({status:"rejected"}); alert("تم الرفض"); }
+function دخول_نهائي(){ document.getElementById("شاشة_الدخول").style.display="none"; document.getElementById("شاشة_الدردشة").style.display="flex"; }
+function فتح_الدردشة_من_المدير(){ document.getElementById("شاشة_المدير").style.display="none"; document.getElementById("شاشة_الدردشة").style.display="flex"; }
+function رجوع(){ document.getElementById("شاشة_الدردشة").style.display="none"; if(رقمي.endsWith("771713275")) document.getElementById("شاشة_المدير").style.display="block"; else document.getElementById("شاشة_الدخول").style.display="block"; }
+function فتح_واتساب(){ window.open("https://wa.me/967771713275?text=" + encodeURIComponent("مرحبا يا مدير"), "_blank"); }
+function ارسال(){ var inp=document.getElementById("نص_الرسالة"); if(!inp.value.trim()) return; var div=document.createElement("div"); div.className="msg me"; div.innerText=inp.value; document.getElementById("الرسائل").appendChild(div); inp.value=""; }
 </script>
 </body>
 </html>
