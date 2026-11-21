@@ -41,96 +41,66 @@
     <div><h2>واتساب نشوان الأمن</h2><p id="حالة_الاتصال">متصل • مشفر • المدير: 771713275</p></div>
   </div>
 
-  <!-- شاشة الدخول -->
   <div id="شاشة_الدخول" class="box">
     <div class="card">
       <h3>تسجيل الدخول الآمن</h3>
       <p>اكتب رقمك، بيتم إرسال طلب للمدير <b>771713275</b>، وبمجرد ما يضغط تأكيد بيظهر لك الرمز في نفس الشاشة بدون SMS.</p>
     </div>
-
     <label>رقم الهاتف</label>
     <input id="الهاتف" type="tel" placeholder="77xxxxxxx">
     <button id="زر_دخول" onclick="طلب_دخول()">طلب الدخول / إرسال للمدير</button>
     <button class="sec" onclick="فتح_واتساب_المدير()">مراسلة المدير 771713275 مباشرة</button>
-
     <div id="حالة"></div>
     <div class="loader" id="لودر"></div>
-
     <div id="رمزك">
       تمت الموافقة ✅
       <span>رمز الدخول الخاص بك:</span>
       <b id="الرمز_الظاهر">------</b>
       <button onclick="دخول_نهائي()" style="background:#fff;color:#00a884;margin-top:12px">تأكيد الدخول</button>
     </div>
-
-    <div class="card" style="margin-top:15px">
-      <h3>كيف يشتغل؟</h3>
-      <p>1. تكتب رقمك وتضغط طلب دخول<br>
-         2. توصل رسالة للمدير 771713275 على واتساب<br>
-         3. المدير يضغط تأكيد<br>
-         4. يطلع لك الرمز هنا في نفس الشاشة</p>
-    </div>
   </div>
 
-  <!-- شاشة الدردشة -->
   <div id="شاشة_الدردشة">
     <div class="messages" id="الرسائل"><div class="msg">أهلا بك في واتساب نشوان الأمن 🔒</div></div>
     <div class="input-bar"><input id="نص_الرسالة" placeholder="اكتب رسالة..."><button onclick="ارسال()">➤</button></div>
   </div>
-
-  <div class="footer">Secure Chat • Nashwan • المدير: 771713275</div>
+  <div class="footer">Secure Chat • Nashwan • النسخة النهائية • المدير: 771713275</div>
 </div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-// ===== بيانات Firebase - غيرها ببياناتك =====
 const firebaseConfig = {
   apiKey: "ضع_API_KEY_هنا",
   authDomain: "ضع_AUTH_DOMAIN_هنا",
+  databaseURL: "ضع_DATABASE_URL_هنا",
   projectId: "ضع_PROJECT_ID_هنا",
   storageBucket: "ضع_STORAGE_هنا",
   messagingSenderId: "ضع_SENDER_ID_هنا",
   appId: "ضع_APP_ID_هنا"
 };
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-// ===== رقم المدير =====
+const db = getDatabase(app);
 const رقم_المدير = "967771713275";
 const رقم_المدير_عرض = "771713275";
-
 let طلب_الحالي = null;
 
 window.طلب_دخول = async function() {
   const هاتف = document.getElementById("الهاتف").value.trim();
   if (هاتف.length < 9) { alert("اكتب رقم صحيح"); return; }
-
   const زر = document.getElementById("زر_دخول");
-  زر.disabled = true;
-  زر.innerText = "جاري إرسال الطلب...";
+  زر.disabled = true; زر.innerText = "جاري إرسال الطلب...";
   document.getElementById("لودر").style.display = "block";
   document.getElementById("حالة").innerText = "تم إرسال الطلب للمدير " + رقم_المدير_عرض + "، انتظر الموافقة...";
-
   const رمز_الحالي = Math.floor(100000 + Math.random() * 900000).toString();
   طلب_الحالي = هاتف + "_" + Date.now();
-
-  await setDoc(doc(db, "طلبات_دخول", طلب_الحالي), {
-    phone: هاتف,
-    code: رمز_الحالي,
-    status: "pending",
-    manager: رقم_المدير_عرض,
-    createdAt: Date.now()
-  });
-
+  await set(ref(db, "طلبات_دخول/" + طلب_الحالي), { phone: هاتف, code: رمز_الحالي, status: "pending", manager: رقم_المدير_عرض, createdAt: Date.now() });
   const رابط_المدير = `${location.origin}/admin.html?id=${طلب_الحالي}`;
   const رسالة = `🔔 طلب دخول جديد - واتساب نشوان\nرقم المستخدم: ${هاتف}\nالرمز: ${رمز_الحالي}\nللتأكيد اضغط: ${رابط_المدير}`;
   window.open(`https://wa.me/${رقم_المدير}?text=${encodeURIComponent(رسالة)}`, '_blank');
-
-  onSnapshot(doc(db, "طلبات_دخول", طلب_الحالي), (snap) => {
-    if (!snap.exists()) return;
-    const data = snap.data();
+  onValue(ref(db, "طلبات_دخول/" + طلب_الحالي), (snap) => {
+    const data = snap.val(); if (!data) return;
     if (data.status === "approved") {
       document.getElementById("لودر").style.display = "none";
       document.getElementById("حالة").innerText = "تمت الموافقة من المدير " + رقم_المدير_عرض + " ✅";
@@ -141,29 +111,23 @@ window.طلب_دخول = async function() {
     if (data.status === "rejected") {
       document.getElementById("لودر").style.display = "none";
       document.getElementById("حالة").innerText = "تم رفض الطلب من المدير ❌";
-      زر.disabled = false;
-      زر.innerText = "طلب الدخول / إرسال للمدير";
+      زر.disabled = false; زر.innerText = "طلب الدخول / إرسال للمدير";
     }
   });
 };
-
 window.دخول_نهائي = function() {
   document.getElementById("شاشة_الدخول").style.display = "none";
   document.getElementById("شاشة_الدردشة").style.display = "flex";
   document.getElementById("حالة_الاتصال").innerText = "تم الدخول • " + document.getElementById("الهاتف").value;
 };
-
 window.فتح_واتساب_المدير = function() {
   window.open(`https://wa.me/${رقم_المدير}?text=${encodeURIComponent("مرحبا يا مدير، أريد الدخول للواتساب")}`, '_blank');
 };
-
 window.ارسال = function() {
   const inp = document.getElementById("نص_الرسالة");
   if (!inp.value.trim()) return;
-  const div = document.createElement("div");
-  div.className = "msg me"; div.innerText = inp.value;
-  document.getElementById("الرسائل").appendChild(div);
-  inp.value = "";
+  const div = document.createElement("div"); div.className = "msg me"; div.innerText = inp.value;
+  document.getElementById("الرسائل").appendChild(div); inp.value = "";
 };
 </script>
 </body>
